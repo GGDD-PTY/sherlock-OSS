@@ -15,9 +15,9 @@ import type { Id } from '../../../convex/_generated/dataModel'
 // TYPE DEFINITIONS
 // ============================================================================
 
-export type UserRole = 'COMPANY' | 'ADMIN'
-export type CapitalSeekingType = 'DEBT' | 'EQUITY' | 'BOTH' | 'BRIDGE'
-export type KYCStatus =
+type UserRole = 'COMPANY' | 'ADMIN'
+type CapitalSeekingType = 'DEBT' | 'EQUITY' | 'BOTH' | 'BRIDGE'
+type KYCStatus =
   'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'REJECTED' | 'EXPIRED' | 'RESUBMIT_REQUIRED'
 
 // ============================================================================
@@ -190,7 +190,7 @@ export function createMockCompany(overrides: Partial<MockCompany> = {}): MockCom
 // CONVEX NOTIFICATIONS TABLE
 // ============================================================================
 
-export type NotificationType =
+type NotificationType =
   | 'connection_request'
   | 'connection_accepted'
   | 'new_message'

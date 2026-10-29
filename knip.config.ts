@@ -21,14 +21,10 @@ const config: KnipConfig = {
         'scripts/**/*.test.mjs',
       ],
       project: [`scripts/${sourceFiles}`],
-      // `effect` lo declara `sherlock/app` y bun lo iza a la raíz; Knip solo
-      // mira el manifiesto del workspace y sus ancestros, así que un script de
-      // la raíz que corre sobre Effect queda como dependencia sin declarar.
-      // Declararla otra vez acá duplicaría la versión en dos manifiestos.
-      ignoreDependencies: ['effect'],
-      // `journeys-local.mjs` lee los puertos del banco vivo con `lsof` y `ps`
-      // del sistema; no son paquetes de npm. Mismo criterio que `sherlock/app`.
-      ignoreBinaries: ['lsof', 'ps'],
+      // `journeys-local.mjs` lee los puertos del banco vivo con `lsof` y `ps`.
+      // El escaneo de secretos usa el CLI de Gitleaks instalado en la máquina.
+      // Ninguno de los tres es un paquete de npm de Sherlock.
+      ignoreBinaries: ['gitleaks', 'lsof', 'ps'],
     },
     'sherlock/app': {
       // Convex descubre los módulos públicos por nombre. Los helpers anidados

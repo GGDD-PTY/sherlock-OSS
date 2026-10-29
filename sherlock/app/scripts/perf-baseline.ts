@@ -79,7 +79,7 @@ export const BUDGETS = {
   xlsxViewer: 2400 * KB,
 } as const
 
-export type SurfaceId = keyof typeof BUDGETS
+type SurfaceId = keyof typeof BUDGETS
 
 type RouteSurface = {
   id: SurfaceId
@@ -156,7 +156,7 @@ const BuildManifestSchema = Schema.StructWithRest(
   [JsonRecordSchema]
 )
 
-export type BuildManifest = typeof BuildManifestSchema.Type
+type BuildManifest = typeof BuildManifestSchema.Type
 
 const ReactLoadableManifestSchema = Schema.Record(
   Schema.String,
@@ -165,14 +165,12 @@ const ReactLoadableManifestSchema = Schema.Record(
   ])
 )
 
-export type ReactLoadableManifest = typeof ReactLoadableManifestSchema.Type
+type ReactLoadableManifest = typeof ReactLoadableManifestSchema.Type
 
 const MogAssetManifestSchema = Schema.StructWithRest(
   Schema.Struct({ prefetch: Schema.optionalKey(Schema.Array(Schema.String)) }),
   [JsonRecordSchema]
 )
-
-export type MogAssetManifest = typeof MogAssetManifestSchema.Type
 
 const NftManifestSchema = Schema.StructWithRest(
   Schema.Struct({ files: Schema.optionalKey(Schema.Array(Schema.String)) }),
@@ -196,7 +194,7 @@ const PreviousReceiptSchema = Schema.StructWithRest(
 
 type PreviousReceipt = typeof PreviousReceiptSchema.Type
 
-export type SurfaceMeasurement = {
+type SurfaceMeasurement = {
   id: SurfaceId
   label: string
   source: string
@@ -209,7 +207,7 @@ export type SurfaceMeasurement = {
   notes: string[]
 }
 
-export type OriginSample = {
+type OriginSample = {
   path: string
   status: number | null
   cacheControl: string | null
@@ -218,7 +216,7 @@ export type OriginSample = {
   error?: string
 }
 
-export type Receipt = {
+type Receipt = {
   version: 1
   sha: string
   buildId: string
@@ -317,7 +315,7 @@ export function median(values: readonly number[]): number | null {
     : ((sorted[middle - 1] ?? 0) + (sorted[middle] ?? 0)) / 2
 }
 
-export function formatKb(bytes: number): string {
+function formatKb(bytes: number): string {
   return `${(bytes / KB).toFixed(1)} KB`
 }
 

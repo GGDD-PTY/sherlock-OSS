@@ -69,7 +69,7 @@ describe('open-source CI contract', () => {
       'bun run lint',
       expect.stringMatching(/^bun run test(?: --maxWorkers=\d+)?$/),
     ])
-    expect(rootPackage.scripts.test).toBe('bun --cwd=sherlock/app run test:run')
+    expect(rootPackage.scripts.test).toBe('"$npm_execpath" --cwd=sherlock/app run test:run')
   })
 
   it('requires no installation credentials, pins actions, and cannot deploy', () => {

@@ -101,6 +101,9 @@ const steps = [
   {
     name: "production build",
     command: ["bun", "--cwd=sherlock/app", "run", "build"],
+    environment: {
+      NEXT_PUBLIC_APP_URL: "https://sherlock.example.invalid",
+    },
   },
   {
     name: "bundle size",

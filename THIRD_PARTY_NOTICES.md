@@ -11,6 +11,7 @@ This inventory covers the application's direct runtime dependencies as installed
 | `@headless-tree/react` | 1.7.0 | MIT |
 | `@modelcontextprotocol/server` | 2.3.0 | Apache-2.0 |
 | `@mog-sdk/sdk` | 0.10.5 | Apache-2.0 |
+| `@mog-sdk/spreadsheet-app` | 0.10.8-rc.6 | Apache-2.0 |
 | `@napi-rs/canvas` | 1.0.8 | MIT |
 | `@radix-ui/react-accordion` | 1.2.14 | MIT |
 | `@radix-ui/react-alert-dialog` | 1.1.17 | MIT |

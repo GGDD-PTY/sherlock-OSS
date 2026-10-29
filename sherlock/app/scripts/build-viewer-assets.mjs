@@ -16,16 +16,23 @@
 //   - `scripts/vercel-build.sh` (deploy manual, ambas ramas)
 // y tambien antes del `next dev` que levanta Playwright.
 //
-// Idempotente: si la salida ya es mas nueva que sus fuentes, no reconstruye.
 // `--force` la regenera; `SKIP_MOG_SIDECAR=true` salta solo el sidecar (para
 // entornos sin el workspace instalado), y entonces el visor XLSX cae a la
 // descarga en vez de romper el build.
 // ============================================================================
 
 import { spawnSync } from 'node:child_process'
-import { cpSync, existsSync, mkdirSync, rmSync, statSync } from 'node:fs'
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  statSync,
+} from 'node:fs'
 import { createRequire } from 'node:module'
-import { dirname, join } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const APP_DIR = dirname(dirname(fileURLToPath(import.meta.url)))
@@ -51,6 +58,31 @@ function isFresh(output, sources) {
   return statSync(output).mtimeMs >= newestMtime(sources)
 }
 
+function copiedPathMatches(source, output) {
+  if (!existsSync(source) || !existsSync(output)) return false
+  const sourceStat = statSync(source)
+  const outputStat = statSync(output)
+  if (sourceStat.isFile() !== outputStat.isFile()) return false
+  if (sourceStat.isDirectory() !== outputStat.isDirectory()) return false
+
+  if (sourceStat.isFile()) {
+    return sourceStat.size === outputStat.size && readFileSync(source).equals(readFileSync(output))
+  }
+  if (!sourceStat.isDirectory()) return false
+
+  const sourceEntries = readdirSync(source).sort()
+  const outputEntries = readdirSync(output).sort()
+  if (
+    sourceEntries.length !== outputEntries.length ||
+    sourceEntries.some((entry, index) => entry !== outputEntries[index])
+  ) {
+    return false
+  }
+  return sourceEntries.every((entry) =>
+    copiedPathMatches(join(source, entry), join(output, entry))
+  )
+}
+
 // ===== pdfjs-dist ===========================================================
 const require = createRequire(join(APP_DIR, 'package.json'))
 
@@ -59,26 +91,33 @@ function resolvePdfjsDir() {
   return dirname(dirname(require.resolve('pdfjs-dist')))
 }
 
-function buildPdfjsAssets() {
-  const pdfjsDir = resolvePdfjsDir()
-  const sources = [
-    join(pdfjsDir, 'build/pdf.worker.min.mjs'),
-    join(pdfjsDir, 'cmaps'),
-    join(pdfjsDir, 'standard_fonts'),
-    join(pdfjsDir, 'wasm'),
-    join(pdfjsDir, 'iccs'),
+export function buildPdfjsAssets({
+  pdfjsDir = resolvePdfjsDir(),
+  pdfjsOut = PDFJS_OUT,
+  forceBuild = force,
+} = {}) {
+  const copiedPaths = [
+    ['build/pdf.worker.min.mjs', 'pdf.worker.min.mjs'],
+    ['cmaps', 'cmaps'],
+    ['standard_fonts', 'standard_fonts'],
+    ['wasm', 'wasm'],
+    ['iccs', 'iccs'],
   ]
 
-  if (isFresh(join(PDFJS_OUT, 'pdf.worker.min.mjs'), sources)) {
+  if (
+    !forceBuild &&
+    copiedPaths.every(([source, output]) =>
+      copiedPathMatches(join(pdfjsDir, source), join(pdfjsOut, output))
+    )
+  ) {
     console.log('[viewer-assets] public/pdfjs esta al dia')
     return
   }
 
-  rmSync(PDFJS_OUT, { recursive: true, force: true })
-  mkdirSync(PDFJS_OUT, { recursive: true })
-  cpSync(join(pdfjsDir, 'build/pdf.worker.min.mjs'), join(PDFJS_OUT, 'pdf.worker.min.mjs'))
-  for (const directory of ['cmaps', 'standard_fonts', 'wasm', 'iccs']) {
-    cpSync(join(pdfjsDir, directory), join(PDFJS_OUT, directory), { recursive: true })
+  rmSync(pdfjsOut, { recursive: true, force: true })
+  mkdirSync(pdfjsOut, { recursive: true })
+  for (const [source, output] of copiedPaths) {
+    cpSync(join(pdfjsDir, source), join(pdfjsOut, output), { recursive: true })
   }
   console.log('[viewer-assets] public/pdfjs regenerado')
 }
@@ -130,5 +169,7 @@ function buildMogSidecar() {
   console.log('[viewer-assets] public/mog regenerado')
 }
 
-buildPdfjsAssets()
-buildMogSidecar()
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  buildPdfjsAssets()
+  buildMogSidecar()
+}

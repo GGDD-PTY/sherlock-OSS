@@ -18,7 +18,9 @@ import path from 'node:path'
 const scriptPath = import.meta.filename
 const scriptDir = import.meta.dirname
 const appDir = path.resolve(scriptDir, '..')
-const sandboxDir = path.join(appDir, '.convex-local')
+const sandboxDir = process.env.CONVEX_LOCAL_STATE_DIR
+  ? path.resolve(appDir, process.env.CONVEX_LOCAL_STATE_DIR)
+  : path.join(appDir, '.convex-local')
 const secretsFile = path.join(sandboxDir, 'local-secrets.env')
 const devMcpPrivateKeyFile = path.join(sandboxDir, 'dev-mcp-private.pem')
 const devMcpJwksFile = path.join(sandboxDir, 'dev-jwks.json')
@@ -280,7 +282,7 @@ function ensureSandbox() {
   writeIfChanged(path.join(sandboxDir, '.gitignore'), '*\n')
   writeIfChanged(
     path.join(sandboxDir, 'convex.json'),
-    `${JSON.stringify({ functions: '../convex/' }, null, 2)}\n`
+    `${JSON.stringify({ functions: `${path.relative(sandboxDir, path.join(appDir, 'convex'))}/` }, null, 2)}\n`
   )
   // El CLI lee el package.json de su cwd para exigir la dependencia `convex` y
   // para adivinar el framework; sin él aborta antes de empaquetar.

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
   createCompany,
@@ -10,7 +10,8 @@ import {
 } from '../../../convex/companies'
 import { get, getByCompany, getFolders, listVersions } from '../../../convex/_documents/queries'
 import { create as createDocument } from '../../../convex/_documents/mutations'
-import { getDownloadUrl } from '../../../convex/_documents/storage'
+import { consumeDownloadGrant, getDownloadUrl } from '../../../convex/_documents/storage'
+import { createDocumentDeliveryProof } from '../../../convex/_documents/deliveryProof'
 import { createConvexCtx, runHandler, type Row, type Tables } from './nda-convex-harness'
 
 const MEMBER_IDENTITY = {
@@ -208,6 +209,127 @@ function bindCompanyToOtherOrganization(
   })
   return tables
 }
+
+const DELIVERY_TEST_SECRET = 'company-vdr-delivery-secret-for-tests'
+
+async function issueOwnerDownload() {
+  const tables = baseTables()
+  tables.documents[0]!.storageId = 'storage_index'
+  const ctx = {
+    ...createConvexCtx(tables, { identity: OWNER_IDENTITY }),
+    storage: { getUrl: vi.fn(async () => 'https://storage.example.test/document') },
+  }
+  const url = await runHandler<{ documentId: string }, string>(getDownloadUrl, ctx, {
+    documentId: 'document_index',
+  })
+  const issued = new URL(url, 'https://sherlock.example.test')
+  const grantId = issued.pathname.split('/').pop()!
+  const token = issued.searchParams.get('token')!
+  expect(tables.documentAccessGrants).toHaveLength(1)
+  expect(tables.documentAccessGrants[0]).toMatchObject({
+    _id: grantId,
+    profileId: 'profile_owner',
+    companyId: 'company_issuer',
+    documentId: 'document_index',
+    useCount: 0,
+  })
+  return { ctx, tables, grantId, token }
+}
+
+async function ownerDeliveryArgs(grantId: string, token: string, profileId = 'profile_owner') {
+  const deliveryIssuedAt = Date.now()
+  return {
+    grantId,
+    token,
+    deliveryIssuedAt,
+    deliveryProof: await createDocumentDeliveryProof(DELIVERY_TEST_SECRET, {
+      grantId,
+      token,
+      profileId,
+      issuedAt: deliveryIssuedAt,
+    }),
+  }
+}
+
+describe('download consumption rechecks live company authorization', () => {
+  beforeEach(() => {
+    vi.stubEnv('STORAGE_SECRET', DELIVERY_TEST_SECRET)
+  })
+
+  afterEach(() => {
+    vi.unstubAllEnvs()
+  })
+
+  it('delivers an issued grant when the exact owner membership remains active', async () => {
+    const { ctx, tables, grantId, token } = await issueOwnerDownload()
+
+    await expect(
+      runHandler(consumeDownloadGrant, ctx, await ownerDeliveryArgs(grantId, token))
+    ).resolves.toMatchObject({
+      downloadUrl: 'https://storage.example.test/document',
+      documentId: 'document_index',
+      action: 'DOWNLOAD',
+    })
+    expect(ctx.storage.getUrl).toHaveBeenCalledExactlyOnceWith('storage_index')
+    expect(tables.documentAccessGrants[0]).toMatchObject({
+      outcome: 'CONSUMED',
+      useCount: 1,
+      revokedAt: expect.any(Number),
+    })
+    expect(tables.documentAccessLogs).toEqual([
+      expect.objectContaining({ action: 'DOWNLOAD_GRANT_ISSUED', decision: 'ALLOW' }),
+      expect.objectContaining({ action: 'DOWNLOAD', decision: 'ALLOW', grantId }),
+    ])
+  })
+
+  it('denies an already issued grant after the exact owner membership is revoked and audits the denial', async () => {
+    const { ctx, tables, grantId, token } = await issueOwnerDownload()
+    await ctx.db.patch('membership_owner', { status: 'INACTIVE' })
+
+    await expect(
+      runHandler(consumeDownloadGrant, ctx, await ownerDeliveryArgs(grantId, token))
+    ).resolves.toMatchObject({
+      allowed: false,
+      code: 'DENIED_COMPANY_AUTHORIZATION_REVOKED',
+    })
+    expect(ctx.storage.getUrl).not.toHaveBeenCalled()
+    expect(tables.documentAccessGrants[0]).toMatchObject({ useCount: 0 })
+    expect(tables.documentAccessGrants[0]).not.toHaveProperty('revokedAt')
+    expect(tables.documentAccessLogs).toEqual([
+      expect.objectContaining({ action: 'DOWNLOAD_GRANT_ISSUED', decision: 'ALLOW' }),
+      expect.objectContaining({
+        documentId: 'document_index',
+        companyId: 'company_issuer',
+        accessedById: 'profile_owner',
+        action: 'DOWNLOAD_DENIED',
+        decision: 'DENY',
+        outcome: 'DENIED_COMPANY_AUTHORIZATION_REVOKED',
+        grantId,
+      }),
+    ])
+  })
+
+  it('rejects another profile even with the issued token and a valid proof for that profile', async () => {
+    const { tables, grantId, token } = await issueOwnerDownload()
+    const ctx = {
+      ...createConvexCtx(tables, { identity: MEMBER_IDENTITY }),
+      storage: { getUrl: vi.fn() },
+    }
+
+    await expect(
+      runHandler(
+        consumeDownloadGrant,
+        ctx,
+        await ownerDeliveryArgs(grantId, token, 'profile_member')
+      )
+    ).rejects.toThrow(/Grant de acceso inválido/)
+    expect(ctx.storage.getUrl).not.toHaveBeenCalled()
+    expect(tables.documentAccessGrants[0]).toMatchObject({ useCount: 0 })
+    expect(tables.documentAccessLogs).toEqual([
+      expect.objectContaining({ action: 'DOWNLOAD_GRANT_ISSUED', decision: 'ALLOW' }),
+    ])
+  })
+})
 
 describe('company VDR organization authorization', () => {
   it('returns the exact target company to an admin', async () => {

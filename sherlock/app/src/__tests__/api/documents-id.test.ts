@@ -5,6 +5,7 @@
 
 import { afterEach, describe, it, expect, beforeEach, vi } from 'vitest'
 import { NextRequest, NextResponse } from 'next/server'
+import { ConvexError } from 'convex/values'
 
 // ============================================================================
 // MOCK SETUP
@@ -243,6 +244,42 @@ describe('DELETE /api/documents/[id]', () => {
   // AUTHORIZATION
   // =========================================================================
   describe('Authorization', () => {
+    it.each([
+      { step: 'document', code: 'AUTHZ_UNAUTHORIZED' },
+      { step: 'company', code: 'AUTHZ_UNAUTHORIZED' },
+      { step: 'archive', code: 'AUTHZ_UNAUTHORIZED' },
+      { step: 'document', code: 'AUTHZ_NOT_OWNER' },
+      { step: 'document', code: 'AUTHZ_ROLE_REQUIRED' },
+      { step: 'document', code: 'AUTHZ_ADMIN_REQUIRED' },
+    ])('returns 403 for $code at the $step step', async ({ step, code }) => {
+      const denial = new ConvexError({
+        code,
+        message: 'Private company authorization details',
+      })
+      if (step === 'document') {
+        mockFetchQuery.mockRejectedValueOnce(denial)
+      } else {
+        mockFetchQuery.mockResolvedValueOnce(createMockDocument())
+        if (step === 'company') {
+          mockFetchQuery.mockRejectedValueOnce(denial)
+        } else {
+          mockFetchQuery.mockResolvedValueOnce(createMockCompany())
+          mockFetchMutation.mockRejectedValueOnce(denial)
+        }
+      }
+
+      const response = await DELETE(createMockRequest(), {
+        params: Promise.resolve({ id: 'doc_123' }),
+      })
+      const data = await response.json()
+
+      expect(response.status).toBe(403)
+      expect(data.error).toBe('No tienes permiso para eliminar este documento')
+      expect(JSON.stringify(data)).not.toContain('Private company authorization details')
+      expect(response.headers.get('x-request-id')).toBeTruthy()
+      if (step !== 'archive') expect(mockFetchMutation).not.toHaveBeenCalled()
+    })
+
     it('should return 403 when the role is not COMPANY ni ADMIN', async () => {
       // ===== ARRANGE =====
       setAuthenticatedUser(createMockUser({ role: undefined }))
@@ -389,6 +426,23 @@ describe('DELETE /api/documents/[id]', () => {
   // ERROR HANDLING
   // =========================================================================
   describe('Error Handling', () => {
+    it.each([
+      new Error('AUTHZ_UNAUTHORIZED'),
+      new ConvexError('AUTHZ_UNAUTHORIZED'),
+      new ConvexError({ code: 'INTERNAL_ERROR', message: 'Private database outage' }),
+      { data: { code: 'AUTHZ_UNAUTHORIZED' } },
+    ])('keeps unrecognized backend failures as 500: %j', async (failure) => {
+      mockFetchQuery.mockRejectedValueOnce(failure)
+
+      const response = await DELETE(createMockRequest(), {
+        params: Promise.resolve({ id: 'doc_123' }),
+      })
+
+      expect(response.status).toBe(500)
+      expect((await response.json()).error).toBe('Error interno')
+      expect(mockFetchMutation).not.toHaveBeenCalled()
+    })
+
     it('should return 500 on database error', async () => {
       // ===== ARRANGE =====
       mockFetchQuery.mockRejectedValue(new Error('Database error'))

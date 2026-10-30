@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { resolve } from 'node:path'
 
 import { Effect, Option, Schema } from 'effect'
 
@@ -9,7 +9,11 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 const ROUTE = '/api/dev/jwks'
-const JWKS_PATH = join(process.cwd(), '.convex-local', 'dev-jwks.json')
+const JWKS_PATH = resolve(
+  process.cwd(),
+  process.env.CONVEX_LOCAL_STATE_DIR || '.convex-local',
+  'dev-jwks.json'
+)
 const LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '::1'])
 
 const JwksDocumentSchema = Schema.Struct({

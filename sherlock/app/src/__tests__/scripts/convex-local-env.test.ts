@@ -87,3 +87,32 @@ it.each(['.convex-local', 'test-state/isolated'])(
     }
   }
 )
+
+it('local startup resolves functions from the physical location of a linked state directory', () => {
+  const app = realpathSync(mkdtempSync(join(tmpdir(), 'sherlock-env-')))
+  const external = realpathSync(mkdtempSync(join(tmpdir(), 'sherlock-state-')))
+  const script = join(app, 'scripts', 'convex-local.mjs')
+  const target = join(external, 'nested', 'state')
+  const stateDirectory = join(app, 'linked-state', 'isolated')
+  mkdirSync(join(app, 'scripts'))
+  mkdirSync(join(app, 'convex'))
+  mkdirSync(target, { recursive: true })
+  copyFileSync(resolve('scripts/convex-local.mjs'), script)
+  symlinkSync(resolve('../../node_modules'), join(app, 'node_modules'), 'dir')
+  symlinkSync(target, join(app, 'linked-state'), 'dir')
+
+  try {
+    const result = spawnSync(process.execPath, [script, 'env'], {
+      encoding: 'utf8',
+      env: { ...process.env, CONVEX_LOCAL_STATE_DIR: stateDirectory },
+    })
+    expect(result.status).toBe(0)
+    const config = JSON.parse(readFileSync(join(stateDirectory, 'convex.json'), 'utf8'))
+    const functionsDirectory = resolve(realpathSync(stateDirectory), config.functions)
+    expect(functionsDirectory).toBe(join(app, 'convex'))
+    expect(statSync(functionsDirectory).isDirectory()).toBe(true)
+  } finally {
+    rmSync(app, { recursive: true, force: true })
+    rmSync(external, { recursive: true, force: true })
+  }
+})

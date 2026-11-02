@@ -11,7 +11,7 @@
 
 import { createPrivateKey, generateKeyPairSync, randomBytes, sign } from 'node:crypto'
 import { spawn, spawnSync } from 'node:child_process'
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs'
 import net from 'node:net'
 import path from 'node:path'
 
@@ -276,13 +276,17 @@ function writeIfChanged(file, content) {
 
 function ensureSandbox() {
   mkdirSync(sandboxDir, { recursive: true })
+  const functionsPath = path.relative(
+    realpathSync(sandboxDir),
+    path.join(realpathSync(appDir), 'convex')
+  )
   // El sandbox se auto-ignora: adentro viven la base sqlite, los blobs y los
   // secretos locales, y ninguno de los tres entra a git.
   // Reescribir la misma config despierta a los watchers durante los journeys.
   writeIfChanged(path.join(sandboxDir, '.gitignore'), '*\n')
   writeIfChanged(
     path.join(sandboxDir, 'convex.json'),
-    `${JSON.stringify({ functions: `${path.relative(sandboxDir, path.join(appDir, 'convex'))}/` }, null, 2)}\n`
+    `${JSON.stringify({ functions: `${functionsPath}/` }, null, 2)}\n`
   )
   // El CLI lee el package.json de su cwd para exigir la dependencia `convex` y
   // para adivinar el framework; sin él aborta antes de empaquetar.

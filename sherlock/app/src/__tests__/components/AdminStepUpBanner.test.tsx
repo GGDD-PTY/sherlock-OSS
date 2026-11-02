@@ -31,7 +31,10 @@ describe('AdminStepUpBanner', () => {
     render(<AdminStepUpBanner locale="es" />)
 
     const cta = screen.getByRole('link', { name: /passkey/i })
-    expect(cta).toHaveAttribute('href', `/login?returnTo=${encodeURIComponent('/es/admin')}`)
+    expect(cta).toHaveAttribute(
+      'href',
+      `/login?returnTo=${encodeURIComponent('/es/admin')}&stepUp=1`
+    )
   })
 
   // El banner recibe el locale como `string` porque vive en una ruta `[locale]`.
@@ -41,7 +44,10 @@ describe('AdminStepUpBanner', () => {
     render(<AdminStepUpBanner locale="es" />)
 
     const cta = screen.getByRole('link', { name: /passkey/i })
-    expect(cta).toHaveAttribute('href', `/login?returnTo=${encodeURIComponent('/es/admin')}`)
+    expect(cta).toHaveAttribute(
+      'href',
+      `/login?returnTo=${encodeURIComponent('/es/admin')}&stepUp=1`
+    )
     expect(cta.getAttribute('href')).not.toContain('/en/')
   })
 

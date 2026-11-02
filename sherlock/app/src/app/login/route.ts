@@ -15,7 +15,15 @@ const getLogin = Effect.fn('Login.GET')(function* (request: NextRequest) {
   const returnTo = decoded._tag === 'Some' ? decoded.value : `/${defaultLocale}/onboarding`
 
   return yield* Effect.tryPromise({
-    try: () => getSignInUrl({ returnTo }),
+    try: async () => {
+      const authorizationUrl = await getSignInUrl({ returnTo })
+      if (request.nextUrl.searchParams.get('stepUp') !== '1') return authorizationUrl
+
+      const freshLoginUrl = new URL(authorizationUrl)
+      freshLoginUrl.searchParams.set('prompt', 'login')
+      freshLoginUrl.searchParams.set('max_age', '0')
+      return freshLoginUrl.toString()
+    },
     catch: (cause) => new LoginError({ cause }),
   })
 })

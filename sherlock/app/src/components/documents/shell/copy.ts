@@ -24,6 +24,15 @@ const ROOM_FOLDER_HINTS_ES: Record<string, string> = {
   room_marketing: 'Opcional por ahora. Un pitch, un catálogo o fotos del producto.',
 }
 
+const ROOM_FOLDER_HINTS_EN: Record<string, string> = {
+  room_legal: 'Drop a contract with a client, a supplier or a bank here.',
+  room_corporate:
+    'Drop the public registry record, the articles of incorporation or board minutes here.',
+  room_financial: 'Drop the financial statements for the last 3 to 5 years here.',
+  room_operations: 'Optional for now. Licenses, operating contracts or photos of the plant.',
+  room_marketing: 'Optional for now. A pitch, a catalog or photos of the product.',
+}
+
 export const ROOM_SHELL_COPY = {
   es: {
     region: 'Sistema de archivos del Data Room',
@@ -230,9 +239,208 @@ export const ROOM_SHELL_COPY = {
     kindImage: 'Imagen',
     kindOther: 'Archivo',
   },
+  en: {
+    region: 'Data Room file system',
+    tree: 'Folders',
+    treeDescription: 'Five fixed folders. Documents move between them.',
+    treeSelectionChanged: (count: number) =>
+      count === 1 ? '1 document selected' : `${count} documents selected`,
+    treeSelectionLimitReached: (max: number) =>
+      max === 1 ? 'You can only select 1 document' : `You can select up to ${max} documents`,
+    treeRevealed: (label: string) => `Document revealed: ${label}`,
+    treeActiveChanged: (label: string) => `Active document: ${label}`,
+    renameInput: (name: string) => `Rename ${name}`,
+    renamePending: (name: string) => `Renaming document to ${name}`,
+    renameSucceeded: (name: string) => `Document renamed: ${name}`,
+    renameFailed: (name: string) => `We could not rename ${name}`,
+    renameCancelled: (name: string) => `Rename cancelled for ${name}`,
+    renameEmpty: 'Enter a name for the document',
+    dropConflictTitle: 'Change upload folder',
+    dropConflictDescription: (currentFolder: string, nextFolder: string) =>
+      `You already have files in ${currentFolder}. If you continue, the whole batch will be uploaded to ${nextFolder}.`,
+    dropConflictClose: 'Close folder confirmation',
+    dropConflictCancel: 'Keep current folder',
+    dropConflictConfirm: 'Change folder',
+    dropConflictPending: 'Changing folder',
+    bulkSelectDocument: (name: string) => `Select ${name}`,
+    bulkSelectLoadedFolder: (folder: string) => `Select loaded documents in ${folder}`,
+    bulkDocumentDisabled: (name: string, reason: string) => `You cannot select ${name}: ${reason}`,
+    bulkSummary: (selected: number, hidden: number) =>
+      `${selected} selected${hidden > 0 ? `, ${hidden} outside this view` : ''}`,
+    bulkMove: 'Move',
+    bulkDisclosure: 'Disclosure',
+    bulkArchive: 'Archive',
+    bulkPurge: 'Delete',
+    bulkClear: 'Clear',
+    bulkMoveTitle: 'Move documents',
+    bulkMoveDescription: (count: number) =>
+      `Move ${count} ${count === 1 ? 'document' : 'documents'} within this Data Room. Access will not change.`,
+    bulkDestinationFolder: 'Destination folder',
+    bulkDestinationPlaceholder: 'Choose a folder',
+    bulkConfirmMove: 'Confirm move',
+    bulkMoveNoop: 'Those documents are already in this folder.',
+    bulkDisclosureTitle: 'Change disclosure',
+    bulkDisclosureDescription: (count: number) =>
+      `The change will apply to ${count} ${count === 1 ? 'document' : 'documents'} and will revoke open access.`,
+    bulkAccessPlaceholder: 'Choose who can view',
+    bulkClassification: 'Classification',
+    bulkClassificationPlaceholder: 'Choose the classification',
+    bulkDeclassifyWarning: (count: number) =>
+      count === 1
+        ? 'You are widening who can view this document. Open access will be revoked.'
+        : `You are widening who can view these ${count} documents. Open access will be revoked.`,
+    bulkConfirmDisclosure: 'Confirm disclosure',
+    bulkArchiveTitle: 'Archive the selection?',
+    bulkArchiveDescription: (count: number) =>
+      count === 1
+        ? '1 document will leave the active Data Room. Its file, versions and audit trail will stay protected.'
+        : `${count} documents will leave the active Data Room. Their files, versions and audit trail will stay protected.`,
+    bulkPurgeTitle: (count: number) =>
+      count === 1 ? 'Delete this document?' : `Delete ${count} documents?`,
+    bulkPurgeTeamDeliverable: (names: readonly string[]) =>
+      names.length === 1
+        ? `“${names[0]}” was prepared by the Sherlock team. Ask the team to withdraw it and try again.`
+        : `${names.map((name) => `“${name}”`).join(', ')} were prepared by the Sherlock team. Ask the team to withdraw them and try again.`,
+    bulkCancel: 'Cancel',
+    documentIndex: 'Document index',
+    search: 'Search documents',
+    searchPlaceholder: 'Search by name',
+    sort: 'Sort',
+    sortProcess: 'Process',
+    sortName: 'Name',
+    sortModified: 'Modified',
+    emptyFolder: (folder: string) =>
+      ROOM_FOLDER_HINTS_EN[folder] ?? 'Drop here whatever belongs in this folder.',
+    folderNoMatchesTitle: 'No matches in this folder',
+    folderNoMatches: (count: number, term: string) =>
+      count === 1
+        ? `This folder has 1 document, but none matches “${term}”.`
+        : `This folder has ${count} documents, but none matches “${term}”.`,
+    folderMoreBelow: (count: number) =>
+      count === 1
+        ? '1 more document below: load more to see it.'
+        : `${count} more documents below: load more to see them.`,
+    emptyRoom: 'There are no documents in this Data Room yet.',
+    upload: 'Upload document',
+    activity: 'View activity',
+    results: (visible: number, total: number, searching = false) =>
+      searching
+        ? total === 1
+          ? `Showing ${visible} of 1 result`
+          : `Showing ${visible} of ${total} results`
+        : total === 1
+          ? `Showing ${visible} of 1 document`
+          : `Showing ${visible} of ${total} documents`,
+    loadMore: (count: number) =>
+      count === 1 ? 'Load 1 more document' : `Load ${count} more documents`,
+    centerEmptyTitle: 'Open a file to view it here',
+    centerEmptyDescription: 'Pick one on the left or drop it in the folder where it belongs.',
+    centerMissing: 'Missing',
+    centerOptional: (folders: readonly string[]) =>
+      `Optional for now: ${new Intl.ListFormat('en-US', { type: 'conjunction' }).format(folders)}.`,
+    centerRecent: 'Latest activity',
+    noResultsTitle: 'No matches',
+    noResultsFor: (term: string) => `No Data Room document matches “${term}”.`,
+    clearSearch: 'Clear search',
+    coverNoMatches: (total: number) =>
+      total === 1 ? 'No matches in 1 document' : `No matches in ${total} documents`,
+    coverResults: (matches: number, total: number) => {
+      const matchLabel = matches === 1 ? '1 result' : `${matches} results`
+      const totalLabel = total === 1 ? '1 document' : `${total} documents`
+      return `${matchLabel} from ${totalLabel}`
+    },
+    open: 'Open',
+    download: 'Download',
+    close: 'Close',
+    closeViewer: 'Close viewer',
+    documentCard: 'Selected document',
+    fileType: 'Type',
+    fileSize: 'Size',
+    version: 'Version',
+    versionShort: (value: number) => `v${value}`,
+    modified: 'Modified',
+    folder: 'Folder',
+    access: 'Access',
+    state: 'Status',
+    accessPublic: 'Public',
+    accessNda: 'NDA',
+    accessPrivate: 'Private',
+    statusReady: 'Published',
+    statusPending: 'Pending',
+    statusScanning: 'Scanning',
+    statusQuarantined: 'Quarantined',
+    statusArchived: 'Archived',
+    actions: 'Document actions',
+    rename: 'Rename',
+    info: 'Information',
+    moveTo: 'Move to folder',
+    archive: 'Archive',
+    purge: 'Delete',
+    purgeTitle: (name: string) => `Delete “${name}”?`,
+    purgeDescription:
+      'It is permanently deleted along with all its versions. This cannot be undone.',
+    newVersion: 'Upload new version',
+    metadata: 'Metadata',
+    versionHistoryOpen: 'Version history',
+    versionHistoryUnavailable: 'The history appears once you upload your own documents.',
+    resizeTree: 'Resize the folder tree width',
+    demoNoBytes: 'Sample documents have no file to open or download.',
+    downloadError: 'We could not prepare the download. Try again.',
+    downloadZip: 'Download all (.zip)',
+    downloadZipPending: 'Preparing the zip…',
+    downloadZipStarted: 'Your download has started.',
+    downloadZipError: 'We could not prepare the zip. Try again.',
+    downloadZipTooLarge:
+      'The Data Room exceeds the 250 MB limit. Download the documents separately.',
+    downloadZipEmpty: 'There are no published documents to download.',
+    downloadFolderZip: 'Download folder (.zip)',
+    downloadFolderZipEmpty: 'This folder has no published documents to download.',
+    openError: 'We could not prepare the document. Try again.',
+    retryOpen: 'Try again',
+    moveSuccess: 'Document moved.',
+    moveError: 'We could not move the document.',
+    coverDocuments: (count: number) => (count === 1 ? '1 document' : `${count} documents`),
+    coverUpdated: 'Last updated',
+    coverNoUpdate: 'No documents yet',
+    coverRenameAction: 'Edit name',
+    coverRenameInput: 'Company name',
+    coverRenameSave: 'Save',
+    coverRenameCancel: 'Cancel',
+    coverRenameEmpty: 'Enter your company name',
+    coverRenameSucceeded: (name: string) => `Name updated: ${name}`,
+    coverRenameFailed: 'We could not update the name',
+    mandateDebt: 'Debt mandate',
+    mandateEquity: 'Equity mandate',
+    mandateBoth: 'Debt and equity mandate',
+    mandateBridge: 'Bridge financing',
+    mandatePreparation: 'Sell-side preparation',
+    foldersToggle: 'Folders',
+    foldersHide: 'Hide folders',
+    loadingDocument: 'Preparing the document',
+    provenance: 'Provenance',
+    deliveryNote: 'Team note',
+    sourcePublic: 'Public source',
+    sourceMycroft: 'Prepared by the Sherlock team',
+    sourceUpload: 'Uploaded by the company',
+    sourceDemo: 'Sample document',
+    scanStatus: 'File review',
+    scanReady: 'Reviewed and published in the Data Room',
+    scanPending: 'Waiting for the file',
+    scanScanning: 'Reviewing the file before publishing it',
+    scanQuarantined: 'The file did not pass review. The team is looking into it.',
+    scanArchived: 'Archived; no longer shown in the Data Room',
+    kindSpreadsheet: 'Spreadsheet',
+    kindPdf: 'PDF',
+    kindDocument: 'Text document',
+    kindPresentation: 'Presentation',
+    kindImage: 'Image',
+    kindOther: 'File',
+  },
 } satisfies Record<typeof RoomLocaleSchema.Type, unknown>
 
-export type RoomShellCopy = (typeof ROOM_SHELL_COPY)[RoomLocale]
+// La forma de referencia es la del español; `roomShellCopyFor` devuelve cada
+// idioma tipado como `RoomShellCopy`, así que un `en` que difiera no compila.
+export type RoomShellCopy = (typeof ROOM_SHELL_COPY)['es']
 
 const isRoomLocale = Schema.is(RoomLocaleSchema)
 

@@ -174,9 +174,7 @@ export function useCompanyVdr(params: Params) {
   // este contexto): cuando el equipo opera la sala de otra empresa, su carpeta
   // elegida a mano manda y no pasa por el clasificador de nombres.
   const adminOperator = useAdminVdrOperator()
-  const initialWorkspaceState = resolveWorkspaceUrlState(
-    new URLSearchParams(searchParamsSnapshot)
-  )
+  const initialWorkspaceState = resolveWorkspaceUrlState(new URLSearchParams(searchParamsSnapshot))
   const fileInputRef = useRef<HTMLInputElement>(null)
   const uploadQueueKeyRef = useRef(0)
   const uploadQueueRef = useRef<VdrQueuedUpload[]>([])
@@ -703,27 +701,18 @@ export function useCompanyVdr(params: Params) {
     const failed = results.length - successful - safeStopped + existingBlockedFailures
     const pending = candidates.length - successful - (failed - existingBlockedFailures)
     if (batchController.signal.aborted) {
-      toast.info(
-        `${successful} ${successful === 1 ? 'subido' : 'subidos'}; ` +
-          `${pending} ${pending === 1 ? 'pendiente' : 'pendientes'}; ` +
-          `${failed} ${failed === 1 ? 'requiere' : 'requieren'} atención.`
-      )
+      toast.info(params.copy.batchStopped(successful, pending, failed))
       return
     }
     if (failed === 0) {
-      toast.success(
-        `${successful} ${successful === 1 ? 'documento subido' : 'documentos subidos'}.`
-      )
+      toast.success(params.copy.batchUploaded(successful))
       clearUploadForm()
       return
     }
 
     // Concordancia: el lote de un archivo es el caso común de este toast, y
     // «1 subidos; 1 requieren atención» se lee como un bug del producto.
-    toast.error(
-      `${successful} ${successful === 1 ? 'subido' : 'subidos'}; ` +
-        `${failed} ${failed === 1 ? 'requiere' : 'requieren'} atención.`
-    )
+    toast.error(params.copy.batchPartial(successful, failed))
   }
 
   async function handleUpload() {
@@ -959,17 +948,11 @@ export function useCompanyVdr(params: Params) {
     setIsBulkUpdating(false)
 
     if (!Exit.isSuccess(exit)) {
-      toast.error(
-        'No pudimos actualizar la selección. Revisa que todos los documentos sigan en esta sala.'
-      )
+      toast.error(params.copy.bulkUpdateError)
       return false
     }
 
-    toast.success(
-      documentIds.length === 1
-        ? '1 documento actualizado.'
-        : `${documentIds.length} documentos actualizados.`
-    )
+    toast.success(params.copy.bulkUpdated(documentIds.length))
     setSelectedDocumentIds((current) => {
       const next = new Set(current)
       for (const documentId of documentIds) next.delete(documentId)

@@ -75,10 +75,12 @@ type Props = {
 
 const pageIdentityCopy = {
   es: { title: 'Data Room', loading: 'Cargando tu Data Room seguro' },
+  en: { title: 'Data Room', loading: 'Loading your secure Data Room' },
 }
 
 const demoRoomEvidenceCopy = {
   es: 'Documentos de ejemplo. Sube los tuyos para empezar.',
+  en: 'Sample documents. Upload your own to get started.',
 } as const
 
 const memberCopy = {
@@ -92,6 +94,17 @@ const memberCopy = {
     empty: 'No hay documentos indexados en este alcance por ahora.',
     folder: 'Carpeta',
     access: 'Acceso',
+  },
+  en: {
+    eyebrow: 'Read-only access',
+    description:
+      'Your company member role lets you review the authorized document index. Publishing, uploads, permissions, diligence, analytics and audit exports remain restricted to the company owner.',
+    index: 'Authorized document index',
+    indexDescription:
+      'This view exposes document metadata only. It does not grant downloads or administration permissions.',
+    empty: 'There are no indexed documents in this scope yet.',
+    folder: 'Folder',
+    access: 'Access',
   },
 } as const
 

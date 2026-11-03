@@ -175,7 +175,7 @@ export function roomSourceLabel(document: RoomShellDocument, copy: RoomShellCopy
   return isRoomDocumentSource(document.sourceType) ? labels[document.sourceType] : copy.sourceUpload
 }
 
-function formatTimestamp(value: number | null | undefined, locale: 'es') {
+function formatTimestamp(value: number | null | undefined, locale: RoomLocale) {
   if (!value) return '—'
   // El formateador compartido: día + mes abreviado y reloj de 24 h, igual que
   // la tabla de actividad del Data Room, para poder cruzar el mismo evento.

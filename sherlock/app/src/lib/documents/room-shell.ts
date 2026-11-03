@@ -8,6 +8,7 @@
 import { Schema } from 'effect'
 
 import { isDocumentAccessLevel, type DocumentAccessLevel } from '@/lib/documents/classification'
+import type { Locale } from '@/i18n/config'
 import { VDR_SHELL_FOLDER_VALUES, getVdrShellFolderValue } from '@/lib/vdr/document-taxonomy'
 
 // Las uniones que solo describen (orden, ícono, estado) se escriben directas:
@@ -220,7 +221,15 @@ function normalizeRoomSearch(value: string) {
 
 const SIZE_UNITS = ['B', 'KB', 'MB', 'GB'] as const
 
-export function formatRoomFileSize(bytes: number | null | undefined, _locale: 'es') {
+/**
+ * Etiqueta BCP 47 que usan los formateadores `Intl` de la sala. Ambas usan
+ * coma para miles y punto para decimales. Un idioma desconocido cae en `es-PA`.
+ */
+export function intlLocaleFor(locale: string): 'es-PA' | 'en-US' {
+  return locale === 'en' ? 'en-US' : 'es-PA'
+}
+
+export function formatRoomFileSize(bytes: number | null | undefined, locale: Locale) {
   if (typeof bytes !== 'number' || !Number.isFinite(bytes) || bytes < 0) return '—'
   if (bytes < 1024) return `${bytes} ${SIZE_UNITS[0]}`
 
@@ -231,7 +240,7 @@ export function formatRoomFileSize(bytes: number | null | undefined, _locale: 'e
     unit += 1
   }
 
-  return `${value.toLocaleString('es-PA', {
+  return `${value.toLocaleString(intlLocaleFor(locale), {
     minimumFractionDigits: value < 10 ? 1 : 0,
     maximumFractionDigits: value < 10 ? 1 : 0,
   })} ${SIZE_UNITS[unit]}`

@@ -9,15 +9,16 @@
 
 import { Schema } from 'effect'
 
+import { locales, type Locale } from '@/i18n/config'
 import {
   isDocumentAccessLevel,
   type DocumentAccessLevel,
   type DocumentClassification,
 } from '@/lib/documents/classification'
 
-/** El sitio ships en un solo idioma ([F] 2026-09-03, DECISIONS). */
-export const VdrLocaleSchema = Schema.Literals(['es'])
-export type VdrLocale = typeof VdrLocaleSchema.Type
+/** Los idiomas de la sala: los mismos del sitio (`@/i18n/config`). */
+export const VdrLocaleSchema = Schema.Literals(locales)
+export type VdrLocale = Locale
 
 export type VdrAccessLevel = DocumentAccessLevel
 
@@ -127,4 +128,9 @@ export type VdrCopy = {
   editSuccess: string
   editError: string
   declassifyWarning: string
+  bulkUpdateError: string
+  bulkUpdated: (count: number) => string
+  batchUploaded: (successful: number) => string
+  batchStopped: (successful: number, pending: number, failed: number) => string
+  batchPartial: (successful: number, failed: number) => string
 }

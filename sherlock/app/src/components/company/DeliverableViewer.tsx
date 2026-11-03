@@ -1,12 +1,13 @@
 'use client'
 
 import { Eye } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { Option, Schema } from 'effect'
 
 import type { Id } from '@/../convex/_generated/dataModel'
 import { DocumentViewerDialog } from '@/components/documents/DocumentViewerDialog'
 import { Button } from '@/components/ui/button'
+import { intlLocaleFor } from '@/lib/documents/room-shell'
 
 // ===== LA COSTURA CON EFFECT =====
 // La rendition llega por props desde una proyección del servidor, así que este
@@ -64,7 +65,7 @@ export function DeliverableViewer({
 }: DeliverableViewerProps) {
   const t = useTranslations('vdr.viewer')
   const deliverableT = useTranslations('deliverables')
-  const locale = 'es-PA'
+  const locale = intlLocaleFor(useLocale())
 
   if (!hasUsableRendition(rendition)) return null
 

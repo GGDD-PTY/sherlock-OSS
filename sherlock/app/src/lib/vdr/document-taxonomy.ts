@@ -13,7 +13,9 @@
 
 import { Array as EffectArray, Option, Schema } from 'effect'
 
-export type VdrLocale = 'es'
+import type { Locale } from '@/i18n/config'
+
+export type VdrLocale = Locale
 
 export type VdrFolderOption = {
   value: string
@@ -35,26 +37,26 @@ export type VdrShellFolderValue = typeof VdrShellFolderValueSchema.Type
 const VDR_LEGACY_FOLDERS: VdrFolderOption[] = [
   {
     value: 'teaser',
-    label: { es: 'Teaser / Resumen Ejecutivo' },
+    label: { es: 'Teaser / Resumen Ejecutivo', en: 'Teaser / Executive Summary' },
   },
   {
     value: 'management_presentation',
-    label: { es: 'Presentación de Management' },
+    label: { es: 'Presentación de Management', en: 'Management Presentation' },
     aliases: ['pitch', 'deck', 'presentation', 'presentacion'],
   },
   {
     value: 'financials',
-    label: { es: 'Estados Financieros' },
+    label: { es: 'Estados Financieros', en: 'Financial Statements' },
     aliases: ['financieros', 'financial', 'financial statements'],
   },
   {
     value: 'model',
-    label: { es: 'Modelo Financiero' },
+    label: { es: 'Modelo Financiero', en: 'Financial Model' },
     aliases: ['modelo', 'financial model', 'projections', 'proyecciones'],
   },
   {
     value: 'cap_table',
-    label: { es: 'Tabla de Capitalización' },
+    label: { es: 'Tabla de Capitalización', en: 'Capitalization Table' },
     aliases: [
       'cap table',
       'capitalization',
@@ -65,39 +67,39 @@ const VDR_LEGACY_FOLDERS: VdrFolderOption[] = [
   },
   {
     value: 'qoe',
-    label: { es: 'Quality of Earnings' },
+    label: { es: 'Quality of Earnings', en: 'Quality of Earnings' },
     aliases: ['qoe', 'earnings quality', 'calidad de utilidades'],
   },
   {
     value: 'debt_schedule',
-    label: { es: 'Cronograma de deuda' },
+    label: { es: 'Cronograma de deuda', en: 'Debt Schedule' },
     aliases: ['debt schedule', 'cronograma deuda', 'loan schedule', 'covenant'],
   },
   {
     value: 'legal',
-    label: { es: 'Documentos Legales' },
+    label: { es: 'Documentos Legales', en: 'Legal Documents' },
     aliases: ['legal', 'legal documents'],
   },
   {
     value: 'operations',
-    label: { es: 'KPIs operativos' },
+    label: { es: 'KPIs operativos', en: 'Operating KPIs' },
     aliases: ['operaciones', 'operating', 'operating kpis', 'operations', 'kpi'],
   },
   {
     value: 'data_room_index',
-    label: { es: 'Índice del Data Room' },
+    label: { es: 'Índice del Data Room', en: 'Data Room Index' },
     aliases: ['data room index', 'diligence', 'manifest', 'source index', 'indice', 'index'],
   },
   {
     value: 'technical',
-    label: { es: 'Técnico / Producto' },
+    label: { es: 'Técnico / Producto', en: 'Technical / Product' },
     aliases: ['technical', 'technical product', 'tecnico', 'product'],
   },
 ]
 
 const VDR_OTHER_FOLDER: VdrFolderOption = {
   value: 'other',
-  label: { es: 'Otros' },
+  label: { es: 'Otros', en: 'Other' },
   aliases: ['other', 'otros', 'general'],
 }
 
@@ -109,12 +111,15 @@ const VDR_OTHER_FOLDER: VdrFolderOption = {
 // La etiqueta del default vive en su propia constante porque
 // `getVdrShellFolderLabel` la necesita como salida terminal: sin ella el default
 // volvía a ser una posición del arreglo (`VDR_SHELL_FOLDERS[1]`).
-const VDR_SHELL_FALLBACK_LABEL: Record<VdrLocale, string> = { es: '2. Corporativos' }
+const VDR_SHELL_FALLBACK_LABEL: Record<VdrLocale, string> = {
+  es: '2. Corporativos',
+  en: '2. Corporate',
+}
 
 const SHELL_FOLDERS = [
   {
     value: 'room_legal',
-    label: { es: '1. Legales' },
+    label: { es: '1. Legales', en: '1. Legal' },
     aliases: ['1. legal', 'legal', 'legales'],
   },
   {
@@ -124,17 +129,17 @@ const SHELL_FOLDERS = [
   },
   {
     value: 'room_financial',
-    label: { es: '3. Financieros' },
+    label: { es: '3. Financieros', en: '3. Financial' },
     aliases: ['3. financial', 'financials', 'model', 'qoe', 'debt_schedule', 'financieros'],
   },
   {
     value: 'room_operations',
-    label: { es: '4. Operaciones' },
+    label: { es: '4. Operaciones', en: '4. Operations' },
     aliases: ['4. operations', 'operations', 'technical', 'operaciones'],
   },
   {
     value: 'room_marketing',
-    label: { es: '5. Materiales de mercadeo' },
+    label: { es: '5. Materiales de mercadeo', en: '5. Marketing Materials' },
     aliases: [
       '5. marketing materials',
       'teaser',
@@ -168,7 +173,7 @@ export const VDR_SHELL_FOLDER_VALUES = VDR_SHELL_FOLDERS.map((folder) => folder.
 export const VDR_SHELL_FALLBACK_FOLDER = 'room_corporate' satisfies VdrShellFolderValue
 
 export const VDR_DOCUMENT_CATEGORY_TABS: VdrFolderOption[] = [
-  { value: 'all', label: { es: 'Todos' } },
+  { value: 'all', label: { es: 'Todos', en: 'All' } },
   ...VDR_DOCUMENT_FOLDERS,
 ]
 
@@ -183,7 +188,9 @@ function normalizeValue(value: string | null | undefined) {
 
 /** Los términos por los que se puede nombrar una carpeta: valor, etiqueta y alias. */
 function folderTerms(option: VdrFolderOption): string[] {
-  return [option.value, option.label.es, ...(option.aliases ?? [])].map(normalizeValue)
+  return [option.value, ...Object.values(option.label), ...(option.aliases ?? [])].map(
+    normalizeValue
+  )
 }
 
 // El default es `VDR_OTHER_FOLDER` por nombre, no por posición: antes era la

@@ -29,11 +29,12 @@ describe('company surface copy contract', () => {
   it('names every classification in Spanish in the VDR config', () => {
     const source = readSurface('src/components/company/vdr/config.ts')
 
-    expect(source).toContain("label: { es: 'Teaser público' }")
-    expect(source).toContain("label: { es: 'Confidencial' }")
-    expect(source).toContain("label: { es: 'Restringido' }")
-    expect(source).toContain("label: { es: 'Legal' }")
-    expect(source).toContain("label: { es: 'Sensible para KYC' }")
-    expect(source).not.toMatch(/Public teaser|KYC sensitive/)
+    expect(source).toContain("label: { es: 'Teaser público',")
+    expect(source).toContain("label: { es: 'Confidencial',")
+    expect(source).toContain("label: { es: 'Restringido',")
+    expect(source).toContain("label: { es: 'Legal',")
+    expect(source).toContain("label: { es: 'Sensible para KYC',")
+    // El inglés vive en el slot `en`; el slot `es` no puede traerlo.
+    expect(source).not.toMatch(/es: '(?:Public teaser|KYC sensitive)/)
   })
 })

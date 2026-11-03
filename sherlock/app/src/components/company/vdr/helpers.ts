@@ -79,7 +79,7 @@ type DemoDocument = {
 const decodeLocale = Schema.decodeUnknownOption(VdrLocaleSchema)
 
 export function normalizeVdrLocale(locale: string): VdrLocale {
-  // El sitio ships en un solo idioma: cualquier otra cosa cae en `es`.
+  // Cualquier idioma que la sala no conoce cae en `es`.
   const decoded = decodeLocale(locale)
   return Option.isSome(decoded) ? decoded.value : 'es'
 }

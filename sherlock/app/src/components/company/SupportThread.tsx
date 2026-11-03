@@ -3,13 +3,14 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { useMutation, usePaginatedQuery, useQuery } from 'convex/react'
 import { makeFunctionReference } from 'convex/server'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { Effect, Exit, Schema } from 'effect'
 
 import type { Id } from '@/../convex/_generated/dataModel'
 import { Button } from '@/components/ui/button'
 import { ConvexLoadFailure } from './vdr/ConvexLoadFailure'
 import { useConvexLoadTimeout } from './vdr/useConvexLoadTimeout'
+import { normalizeVdrLocale } from './vdr/helpers'
 import { Textarea } from '@/components/ui/textarea'
 import { trackSellSideEventOnce } from '@/lib/analytics/sell-side'
 import { runClientEffectExit, runClientFork } from '@/lib/effect/client-runtime'
@@ -128,6 +129,7 @@ function SupportThreadLive({
   onRetry,
 }: SupportThreadProps & { onRetry: () => void }) {
   const t = useTranslations('support')
+  const locale = normalizeVdrLocale(useLocale())
   const vdr = useTranslations('vdr')
   const liveSummary = useQuery(getCompanyThreadRef, isDemo ? 'skip' : { companyId })
   const {
@@ -163,12 +165,8 @@ function SupportThreadLive({
   )
   useEffect(() => {
     const mode = isDemo ? 'DEMO' : 'PERMANENT'
-    trackSellSideEventOnce(
-      'support_opened',
-      { locale: 'es', mode },
-      `${mode.toLowerCase()}:${companyId}`
-    )
-  }, [companyId, isDemo])
+    trackSellSideEventOnce('support_opened', { locale, mode }, `${mode.toLowerCase()}:${companyId}`)
+  }, [companyId, isDemo, locale])
 
   useEffect(() => {
     if (!summary || summary.unreadCount === 0 || summary.lastSequence === 0) return
@@ -248,7 +246,7 @@ function SupportThreadLive({
                     className="text-muted-foreground font-figure text-xs"
                     dateTime={new Date(message.createdAt).toISOString()}
                   >
-                    {formatDateTime(message.createdAt)}
+                    {formatDateTime(message.createdAt, locale)}
                   </time>
                 </div>
                 <p className="mt-1 text-sm leading-6 break-words whitespace-pre-wrap">

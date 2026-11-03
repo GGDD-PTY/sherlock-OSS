@@ -19,6 +19,7 @@ import { Effect } from 'effect'
 
 import type { Doc, Id } from '../_generated/dataModel'
 import type { QueryCtx } from '../_generated/server'
+import { isSyntheticIdentityEmail } from '../_helpers/auth.identity'
 import { normalizeCompanyName } from '../_helpers/companyName'
 import { convexPromise, runConvex } from '../_helpers/effect'
 import type { AppError } from '../_helpers/errors'
@@ -114,7 +115,10 @@ const ownerEmailFor = Effect.fn('AdminOverview.ownerEmail')(function* (
   const owner = yield* convexPromise(() => ctx.db.get(company.ownerId))
   if (!owner) return null
   const user = yield* convexPromise(() => ctx.db.get(owner.userId))
-  return user?.email ?? null
+  // La dirección sintética (`user_01…@workos.user`) es relleno de una fila sin
+  // correo: no es de nadie y el panel no la enseña como si lo fuera.
+  if (!user?.email || isSyntheticIdentityEmail(user.email)) return null
+  return user.email
 })
 
 /**

@@ -1,0 +1,2191 @@
+{
+  "common": {
+    "tagline": "Sell-side preparation for Latin America",
+    "buttons": {
+      "signIn": "Sign in",
+      "close": "Close",
+      "signOut": "Sign out"
+    },
+    "controls": {
+      "theme": {
+        "toggle": "Change theme",
+        "label": "Theme",
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      }
+    },
+    "navbar": {
+      "support": "Help",
+      "presentOpportunity": "Prepare my company",
+      "account": "Account",
+      "settings": "Settings",
+      "dataRoom": "Data Room",
+      "startDataRoom": "Start your Data Room",
+      "teamPanel": "Dashboard",
+      "demoLogin": "Start demo",
+      "aria": {
+        "mainNavigation": "Main navigation",
+        "mobileMenu": "Open menu",
+        "mobileNavigation": "Sherlock main navigation",
+        "notifications": "Notifications",
+        "sherlockHome": "Sherlock home",
+        "userMenu": "User menu",
+        "skipToContent": "Skip to main content"
+      },
+      "helpAndHow": "Help and how it works"
+    },
+    "navbarDescriptions": {
+      "startDataRoom": "Upload your documents and the team opens your room"
+    },
+    "form": {
+      "required": "(required)"
+    }
+  },
+  "site": {
+    "meta": {
+      "defaultTitle": "Sell-side preparation for Latin America",
+      "description": "Sell-side preparation for Latin American companies, with financial models and transaction materials reviewed by humans.",
+      "imageAlt": "Sherlock — sell-side preparation for Latin America"
+    }
+  },
+  "landing": {
+    "footer": {
+      "tagline": "Sell-side preparation for Latin America.",
+      "legal": {
+        "title": "Legal",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "notices": "Notices"
+      },
+      "copyright": "© {year} Sherlock. All rights reserved.",
+      "disclaimer": "This is not investment advice."
+    }
+  },
+  "ayuda": {
+    "meta": {
+      "title": "Help",
+      "description": "Write to the team, vote on what comes next, and read how your Data Room works."
+    },
+    "title": "Help",
+    "subtitle": "Write to the team, vote on what comes next, and read how your Data Room works.",
+    "feedback": {
+      "heading": "Write to the team",
+      "label": "Your message to the team",
+      "placeholder": "What do you need? Write it here.",
+      "submit": "Send",
+      "sending": "Sending…",
+      "resolving": "Loading your session…",
+      "sentCompany": "Sent. The team will reply in your Data Room thread.",
+      "sentAnonymous": "Received. The team will review it and add it to the board.",
+      "duplicate": "We already have this request on the list.",
+      "error": "It could not be sent. Try again.",
+      "rateLimited": "You have already sent several messages today; try again tomorrow.",
+      "emailFallback": "or email us",
+      "emailSubject": "Message for the Sherlock team"
+    },
+    "roadmap": {
+      "heading": "What's next",
+      "hint": "Vote on what you want first. You have three votes."
+    },
+    "docs": {
+      "heading": "How it works",
+      "items": {
+        "upload": {
+          "q": "Which documents do I upload?",
+          "a": "Whatever you have: two to five years of financial statements, notes, MD&A, your current deck, projections, and the context of the transaction. Better sources, better work."
+        },
+        "deliverables": {
+          "q": "What do you get?",
+          "a": "Depending on the agreed scope: financial model, teaser, CIM, management presentation, and credit or equity decks. The team reviews every deliverable before uploading it to your Data Room. A service fee covers only the agreed preparation work: it does not guarantee financing, a sale, a buyer, a term sheet, or a closing."
+        },
+        "room": {
+          "q": "How does your Data Room work?",
+          "a": "Your documents live in folders, with versions and an activity log. A third party can only enter when the team issues their access for that Data Room, with a one-time code and an NDA when applicable. The site does not run a public catalog of deals: the team decides whom to contact and issues the access."
+        },
+        "mcp": {
+          "q": "How do I connect my agent to my Data Room?",
+          "a": "Copy your installation's MCP URL from the Team tab of your Data Room, under \"Connect your agent\". Add it as a remote MCP in your agent. In Claude, type /mcp and sign in with the same account you use to enter Sherlock. Your agent can read your Data Room summary, your documents, search, and the model, and upload documents to your room. It cannot see other companies."
+        },
+        "contact": {
+          "q": "How do you contact the team?",
+          "a": "The box above reaches the team that runs this installation. You can also report a security issue there, without including passwords or confidential documents."
+        },
+        "price": {
+          "q": "How much does it cost?",
+          "a": "It depends on what your company needs and how much you use the room. We discuss it with you before starting. Write it in the box above."
+        }
+      }
+    }
+  },
+  "privacy": {
+    "meta": {
+      "title": "Privacy Policy",
+      "description": "Sherlock's privacy policy on how we collect, use, and protect personal data."
+    }
+  },
+  "auth": {
+    "signIn": {
+      "title": "Sign in",
+      "subtitle": "Access your private Sherlock account"
+    },
+    "signUp": {
+      "title": "Create your account",
+      "subtitle": "Upload your documents and land straight in your workspace"
+    }
+  },
+  "errors": {
+    "boundary": {
+      "title": "We could not load this page",
+      "description": "This is usually temporary. You can try again or go back to the start.",
+      "retry": "Retry",
+      "returnHome": "Back to start",
+      "reference": "Reference: {digest}"
+    },
+    "global404": {
+      "title": "Page not found",
+      "body": "The page you are looking for does not exist or was moved.",
+      "cta": "Go to start",
+      "help": "Go to Help"
+    },
+    "globalError": {
+      "title": "Something went wrong",
+      "body": "An unexpected error occurred. Our team has been notified and is working to resolve it.",
+      "cta": "Try again",
+      "reference": "Reference:"
+    }
+  },
+  "admin": {
+    "table": {
+      "empty": "No rows to show",
+      "loadMore": "Load more",
+      "loadingMore": "Loading...",
+      "sort": "Sort by {column}"
+    },
+    "operations": {
+      "pageTitle": "Operations dashboard",
+      "pageDescription": "Manage companies, preparation, Data Rooms, and their controls.",
+      "securityControls": "Security controls",
+      "loading": "Loading preparation operations",
+      "sample": {
+        "title": "Local demo data",
+        "description": "These values let you walk through the dashboard without depending on external services."
+      },
+      "bounded": "Counts use a bounded sample of {count} rows per table; they may be minimums.",
+      "actions": {
+        "dashboard": "Back to dashboard"
+      },
+      "overview": {
+        "capped": "Counts read up to {count} companies and truncate longer tables: they are verifiable minimums.",
+        "usage": {
+          "title": "Plan usage",
+          "companies": "Companies",
+          "documents": "Documents",
+          "storage": "Storage",
+          "storageOf": "of {cap}",
+          "accounts": "Accounts",
+          "team": "{count, plural, one {# team member} other {# team members}}",
+          "clients": "{count, plural, one {# client} other {# clients}}"
+        },
+        "series": {
+          "title": "Last 30 days",
+          "documents": "Documents uploaded",
+          "intake": "Intake sessions",
+          "activity": "Activity",
+          "date": "Date",
+          "value": "Quantity",
+          "empty": "No series yet: {count, plural, one {# day} other {# days}} with data.",
+          "truncated": "Series trimmed to the last 5,000 rows."
+        },
+        "rooms": {
+          "title": "Data Rooms",
+          "tableLabel": "Companies with a Data Room on Sherlock",
+          "empty": "There are no companies with a Data Room yet.",
+          "company": "Company",
+          "documents": "Doc.",
+          "legal": "Leg.",
+          "corporate": "Corp.",
+          "financial": "Fin.",
+          "operations": "Ops.",
+          "marketing": "Mkt.",
+          "storage": "Weight",
+          "lastUpload": "Last upload",
+          "deliverables": "Deliverables",
+          "support": "Support",
+          "never": "—",
+          "seeAll": "{count, plural, one {View # room} other {View # rooms}}"
+        },
+        "alerts": {
+          "title": "Team notifications",
+          "empty": "No new notifications.",
+          "unread": "unread",
+          "workspace": "New space",
+          "documents": "{count, plural, one {# file} other {# files}}"
+        },
+        "support": {
+          "title": "Support",
+          "empty": "No messages waiting for a reply.",
+          "intake": "Intake session",
+          "pending": "{count, plural, one {# message} other {# messages}}",
+          "openInbox": "Open support"
+        },
+        "links": {
+          "title": "Rest of the dashboard",
+          "companies": "Companies",
+          "support": "Support",
+          "vdrRequests": "Data Room requests",
+          "ndaMonitoring": "NDA",
+          "gdpr": "Personal data",
+          "workos": "Access"
+        }
+      }
+    },
+    "sidebar": {
+      "panelTitle": "Admin panel",
+      "menu": "Admin menu",
+      "collapse": "Collapse menu",
+      "expand": "Expand menu"
+    },
+    "companies": {
+      "metadata": {
+        "title": "Companies | Admin",
+        "description": "Platform company management"
+      },
+      "title": "Companies",
+      "subtitle": "Management of registered companies"
+    },
+    "ndaTemplates": {
+      "empty": "There are no NDA templates yet",
+      "emptyCta": "Create first template",
+      "seedCta": "Load default templates",
+      "createButton": "Create template",
+      "demoMode": "Demo mode",
+      "demo": {
+        "name": "Demo confidential access NDA",
+        "description": "Demo template used when local development access is enabled"
+      },
+      "countAvailable": "{count, plural, one {# template available} other {# templates available}}",
+      "listCardTitle": "NDA templates",
+      "listCardDescription": "Templates available to generate confidentiality agreements",
+      "table": {
+        "name": "Name",
+        "jurisdiction": "Jurisdiction",
+        "language": "Language",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "actions": {
+        "view": "View template",
+        "edit": "Edit template",
+        "delete": "Delete template"
+      },
+      "badgeDefault": "Default",
+      "badgeCustom": "Custom",
+      "defaultTemplate": "Default template",
+      "jurisdictions": {
+        "mexico": "Mexico",
+        "panama": "Panama",
+        "colombia": "Colombia",
+        "chile": "Chile",
+        "peru": "Peru",
+        "argentina": "Argentina",
+        "brazil": "Brazil",
+        "usa": "United States",
+        "international": "International"
+      },
+      "languages": {
+        "es": "Spanish",
+        "en": "English",
+        "pt": "Portuguese"
+      },
+      "form": {
+        "name": "Name *",
+        "namePlaceholder": "E.g.: Standard NDA for Mexico",
+        "jurisdiction": "Jurisdiction *",
+        "jurisdictionPlaceholder": "Select jurisdiction",
+        "description": "Description *",
+        "descriptionPlaceholder": "Short description of the template",
+        "language": "Language *",
+        "languagePlaceholder": "Select language",
+        "content": "NDA content (HTML) *",
+        "contentPlaceholder": "<h1>CONFIDENTIALITY AGREEMENT</h1>...",
+        "placeholdersHint": "Available fields:",
+        "cancel": "Cancel"
+      },
+      "create": {
+        "title": "Create new template",
+        "description": "Create an NDA template for a specific jurisdiction",
+        "submit": "Create template",
+        "submitting": "Creating..."
+      },
+      "edit": {
+        "title": "Edit template",
+        "submit": "Save changes",
+        "submitting": "Saving..."
+      },
+      "editDescription": "Edit the selected NDA template",
+      "view": {
+        "title": "Preview: {name}",
+        "close": "Close",
+        "edit": "Edit"
+      },
+      "delete": {
+        "title": "Delete template",
+        "description": "Are you sure you want to delete the template <strong>{name}</strong>? This action cannot be undone.",
+        "confirm": "Delete",
+        "deleting": "Deleting..."
+      },
+      "toasts": {
+        "requiredFields": "Complete all required fields",
+        "createSuccess": "Template created successfully",
+        "createError": "The template could not be created",
+        "updateSuccess": "Template updated successfully",
+        "updateError": "The template could not be updated",
+        "deleteSuccess": "Template deleted successfully",
+        "deleteError": "The template could not be deleted",
+        "seedSuccess": "Default templates loaded for Mexico and Panama",
+        "seedAlreadyDone": "Templates already exist; none were loaded",
+        "seedError": "The default templates could not be loaded"
+      }
+    },
+    "ndaMonitoring": {
+      "metadata": {
+        "title": "NDA | Admin",
+        "description": "Monitor and manage signed NDAs"
+      },
+      "title": "NDA",
+      "subtitle": "Monitor signed NDAs and manage the templates they are generated from.",
+      "stats": {
+        "active": "Active NDAs",
+        "activeTotal": "of {count} in total",
+        "activeRecent": "of the {count} most recent",
+        "expiringSoon": "Expiring soon (30 days)",
+        "expired": "Expired",
+        "revoked": "Revoked",
+        "signedLast7Days": "signed in the last 7 days",
+        "requireAttention": "need attention",
+        "noLongerValid": "no longer valid",
+        "cappedTooltip": "Figure based on the {count} most recent signatures scanned; the actual total may be higher than shown."
+      },
+      "filters": {
+        "title": "Filters",
+        "description": "Filter NDAs by status",
+        "all": "All statuses",
+        "active": "Active",
+        "expired": "Expired",
+        "revoked": "Revoked",
+        "statusPlaceholder": "Status"
+      },
+      "table": {
+        "title": "Signed NDAs",
+        "count": "{count, plural, one {# NDA found} other {# NDAs found}}",
+        "company": "Company",
+        "counterparty": "Counterparty",
+        "signedAt": "Signed",
+        "expiresAt": "Expires",
+        "status": "Status",
+        "actions": "Actions",
+        "daysRemaining": "days remaining",
+        "noExpiration": "No expiration",
+        "revokedAt": "Revoked on"
+      },
+      "revoke": {
+        "button": "Revoke",
+        "title": "Revoke NDA",
+        "description": "Are you sure you want to revoke the NDA between {company} and {counterparty}? This action will prevent the counterparty from accessing protected documents.",
+        "reasonPlaceholder": "Reason for revocation (optional)",
+        "cancel": "Cancel",
+        "confirm": "Revoke NDA",
+        "success": "NDA revoked successfully",
+        "error": "Error revoking NDA"
+      },
+      "status": {
+        "active": "Active",
+        "expired": "Expired",
+        "revoked": "Revoked"
+      },
+      "empty": "No NDAs to show",
+      "tabs": {
+        "signed": "Signed",
+        "templates": "Templates"
+      }
+    },
+    "auditLogs": {
+      "demoSnapshot": "Local audit sample for dev-auth",
+      "stats": {
+        "total": "Total actions",
+        "recent": "Last 7 days",
+        "user": "User actions",
+        "kyc": "KYC actions",
+        "cappedTooltip": "Figure based on a scan limited to {count} actions; the actual total may be higher than shown."
+      },
+      "filters": {
+        "title": "Filters",
+        "description": "Filter the history of administrative actions",
+        "allActions": "All actions",
+        "actionPlaceholder": "Action type",
+        "targetPlaceholder": "Target type"
+      },
+      "filterOptions": {
+        "USER_ROLE_CHANGE": "Role change",
+        "KYC_APPROVE": "KYC approved",
+        "KYC_REJECT": "KYC rejected",
+        "NDA_REVOKE": "NDA revoked"
+      },
+      "targetTypes": {
+        "all": "All types",
+        "USER": "User",
+        "PROFILE": "Profile",
+        "COMPANY": "Company",
+        "NDA": "NDA"
+      },
+      "table": {
+        "title": "Action history",
+        "loading": "Loading actions…",
+        "count": "{count, plural, one {# action recorded} other {# actions recorded}}",
+        "date": "Date",
+        "admin": "Admin",
+        "action": "Action",
+        "target": "Target",
+        "notes": "Notes"
+      },
+      "actions": {
+        "USER_ROLE_CHANGE": "Role changed",
+        "USER_VERIFICATION_CHANGE": "Verification updated",
+        "USER_STATUS_CHANGE": "User status updated",
+        "USER_DELETE": "User deleted",
+        "KYC_APPROVE": "KYC approved",
+        "KYC_REJECT": "KYC rejected",
+        "KYC_REQUEST_REVISION": "KYC review requested",
+        "NDA_REVOKE": "NDA revoked",
+        "NDA_TEMPLATE_CREATE": "NDA template created",
+        "NDA_TEMPLATE_UPDATE": "NDA template updated",
+        "NDA_TEMPLATE_DELETE": "NDA template deleted",
+        "DOCUMENT_ACCESS_OVERRIDE": "Document access (override)",
+        "COMPANY_VERIFY": "Company verified",
+        "COMPANY_UNVERIFY": "Company unverified",
+        "COMPANY_VISIBILITY_CHANGE": "Company visibility",
+        "DOCUMENT_UPLOAD": "Document uploaded",
+        "DOCUMENT_METADATA_UPDATE": "Document metadata updated",
+        "DOCUMENT_ARCHIVE": "Document archived",
+        "SEED_DATA": "Demo data seeded",
+        "SYSTEM_CONFIG_CHANGE": "System settings",
+        "ADMIN_LOGIN": "Admin sign-in",
+        "SETTINGS_CHANGE": "Settings updated"
+      },
+      "demoNotes": {
+        "companyVerified": "Demo company verified for the controlled teaser review",
+        "kycApproved": "Demo KYC approved for local dashboard QA"
+      },
+      "empty": "No actions recorded",
+      "loadMore": "Load more",
+      "loadingMore": "Loading..."
+    },
+    "aria": {
+      "sidebar": "Admin sidebar",
+      "navigation": "Admin navigation"
+    },
+    "viewAs": {
+      "mode": "View as mode",
+      "viewingAs": "Viewing as {role}",
+      "adminAuthority": "Your changes still use your administrator authority",
+      "exit": "Exit view-as mode",
+      "roles": {
+        "company": "Company"
+      }
+    },
+    "gdpr": {
+      "metadata": {
+        "title": "Account deletion | Admin",
+        "description": "Account deletion request queue"
+      },
+      "title": "Account deletion",
+      "subtitle": "Process deletion requests and keep the required audit trail.",
+      "pending": "Pending requests",
+      "pendingCount": "Pending requests ({count})",
+      "emptyPending": "There are no pending deletion requests.",
+      "requestedAt": "Requested on {date}",
+      "reason": "Reason: {reason}",
+      "process": "Process deletion",
+      "history": "History",
+      "emptyHistory": "There are no processed requests yet.",
+      "processedAt": "Processed on {date}",
+      "statuses": {
+        "PENDING": "Pending",
+        "PROCESSING": "Processing",
+        "COMPLETED": "Completed",
+        "CANCELLED": "Canceled"
+      },
+      "dialog": {
+        "title": "Process the deletion of this account?",
+        "description": "This action deletes the account and its data in cascade (profile, company, Data Rooms, and documents). It is irreversible. Audit records and NDA signatures are kept with personal information redacted, according to the retention policy.",
+        "cancel": "Cancel",
+        "processing": "Processing...",
+        "confirm": "Delete permanently"
+      },
+      "toasts": {
+        "success": "Deletion processed. The request was recorded in the audit log.",
+        "error": "The deletion could not be processed. Check the status of the request."
+      }
+    },
+    "security": {
+      "metadata": {
+        "title": "Security events | Admin",
+        "description": "Security event monitoring"
+      },
+      "title": "Security",
+      "subtitle": "Monitor security events and the log of team actions.",
+      "filters": {
+        "title": "Filters",
+        "severityPlaceholder": "Severity",
+        "typePlaceholder": "Event type",
+        "allSeverities": "All",
+        "allTypes": "All types"
+      },
+      "snapshot": {
+        "description": "Local demo data is shown because Convex's protected security queries require a real WorkOS-backed identity outside dev-auth."
+      },
+      "stats": {
+        "unresolved": "Total unresolved",
+        "critical": "Critical",
+        "alert": "Alerts",
+        "warning": "Warnings",
+        "info": "Informational"
+      },
+      "reviewQueue": {
+        "title": "Document review queue",
+        "description": "Documents flagged as sensitive for KYC that require manual review.",
+        "empty": "There are no documents pending review",
+        "count": "{count, plural, one {# document in queue} other {# documents in queue}}",
+        "company": "Company: {company}",
+        "noCompany": "No company",
+        "lastAttempt": "Last attempt: {date}"
+      },
+      "classifications": {
+        "PUBLIC_TEASER": "Public teaser",
+        "CONFIDENTIAL": "Confidential",
+        "RESTRICTED": "Restricted",
+        "LEGAL": "Legal",
+        "KYC_SENSITIVE": "Sensitive for KYC"
+      },
+      "eventTypes": {
+        "FAILED_LOGIN": "Failed sign-in",
+        "RATE_LIMIT_EXCEEDED": "Rate limit exceeded",
+        "DATA_ROOM_BULK_DOWNLOAD": "Bulk Data Room download",
+        "DATA_ROOM_BULK_ACCESS": "Bulk Data Room extraction",
+        "NDA_ACCESS_DENIED": "NDA access denied",
+        "PASSWORD_RESET_ABUSE": "Password reset abuse",
+        "ACCOUNT_ENUMERATION": "Account enumeration",
+        "REAUTH_LOCKOUT": "Reauthentication lockout",
+        "UNAUTHORIZED_API_ACCESS": "Unauthorized API access",
+        "SUSPICIOUS_PROFILE_CHANGE": "Suspicious profile change",
+        "ACCOUNT_SELF_DEACTIVATION": "Account paused by its owner"
+      },
+      "showResolved": "Show resolved",
+      "showingResolved": "Showing resolved",
+      "events": {
+        "title": "Security events",
+        "count": "{count, plural, one {Showing # event} other {Showing # events}}",
+        "unresolvedSuffix": " (unresolved)",
+        "emptyAll": "No events recorded",
+        "emptyUnresolved": "No events pending resolution",
+        "resolved": "Resolved",
+        "resolution": "Resolution: {notes}",
+        "resolve": "Resolve",
+        "columns": {
+          "date": "Date",
+          "severity": "Severity",
+          "type": "Type",
+          "detail": "Detail",
+          "action": "Action"
+        }
+      },
+      "dialog": {
+        "title": "Resolve security event",
+        "description": "Mark this event as investigated and resolved. You can also add notes about the resolution.",
+        "notesLabel": "Resolution notes (optional)",
+        "cancel": "Cancel",
+        "confirm": "Mark as resolved"
+      },
+      "resolutionNotesPlaceholder": "Describe the actions taken or the reason this event requires no action...",
+      "toasts": {
+        "demoResolved": "Demo event marked as reviewed",
+        "resolved": "Event marked as resolved",
+        "error": "Error resolving the event"
+      },
+      "demo": {
+        "documentName": "Manual review pending: SAMPLE_HYDRO debt schedule",
+        "resolutionNotes": "Demo event already resolved for local QA.",
+        "reviewReason": "The KYC-sensitive classification requires manual review by the team."
+      },
+      "tabs": {
+        "events": "Events",
+        "audit": "Audit"
+      }
+    },
+    "workos": {
+      "metadata": {
+        "title": "Access | Admin",
+        "description": "Team access: AuthKit, Enterprise SSO, and admin role."
+      },
+      "title": "Access",
+      "subtitle": "AuthKit, webhooks, and Enterprise SSO for the Sherlock team.",
+      "enterpriseDescription": "Server configuration for AuthKit, webhooks, and the admin portal.",
+      "configured": "Configured",
+      "pending": "Pending",
+      "portalTitle": "Admin portal",
+      "portalDescription": "SSO and domain verification per WorkOS organization.",
+      "pendingTitle": "Configuration pending",
+      "pendingDescription": "Complete the required WorkOS variables before opening the portal.",
+      "organizationId": "WorkOS organization ID",
+      "openSso": "Open SSO",
+      "verifyDomain": "Verify domain",
+      "errors": {
+        "generate": "The WorkOS admin portal could not be generated.",
+        "contact": "The WorkOS admin portal could not be reached."
+      },
+      "success": "WorkOS portal generated.",
+      "alertError": "WorkOS error",
+      "alertReady": "WorkOS ready",
+      "makeAdmin": {
+        "title": "Make admin",
+        "help": "Enter the email of an account that already exists.",
+        "emailLabel": "Email",
+        "emailPlaceholder": "fixture-67706a88@example.com",
+        "action": "Make admin",
+        "confirm": "Give {email} full access to the dashboard?",
+        "success": "{email} is now an admin.",
+        "error": "That account could not be made an admin.",
+        "httpError": "That account could not be made an admin (error {status}).",
+        "supportCode": "Support code: {requestId}"
+      },
+      "bindingRollout": {
+        "title": "Company-to-organization link",
+        "description": "Review and enable the control that requires each owner to belong to the WorkOS organization linked to their company.",
+        "phase": {
+          "UNENFORCED": "Not applied",
+          "PREPARING": "In preparation",
+          "ENFORCED": "Active"
+        },
+        "notice": {
+          "successTitle": "Change saved",
+          "errorTitle": "The action could not be completed"
+        },
+        "controls": {
+          "title": "Inventory and activation",
+          "description": "Each click reviews up to 25 companies and keeps your progress. The inventory does not assign organizations: you confirm each link when you resolve the company."
+        },
+        "backfill": {
+          "start": "Start inventory",
+          "continue": "Process next page",
+          "pageCompleted": "Page reviewed. {unresolved} companies on this page are still pending resolution.",
+          "completed": "Inventory complete. {unresolved} companies on the last page are still pending resolution.",
+          "error": "This inventory page could not be processed. Check the status before trying again."
+        },
+        "inventory": {
+          "title": "Inventoried companies",
+          "description": "The list shows one page of the current inventory. WorkOS identifiers appear only when you resolve a company.",
+          "loading": "Loading the inventory…",
+          "empty": "There are no WorkOS companies on this page.",
+          "driftTitle": "The inventory changed",
+          "driftDescription": "A company on this page changed after the review. Pause the control and restart the inventory before enabling it.",
+          "tableLabel": "Inventory of links between companies and WorkOS organizations",
+          "company": "Company",
+          "status": "Status",
+          "candidates": "Candidates",
+          "bindings": "Links",
+          "action": "Action",
+          "ready": "Ready",
+          "notApplicable": "Not applicable",
+          "resolve": "Resolve",
+          "createdAfterStart": "Created after the inventory started",
+          "changedAfterReview": "Changed after inventory",
+          "pageSummary": "This page: {workosOwned} on WorkOS, {bound} ready, and {pending} pending",
+          "previous": "Previous",
+          "next": "Next",
+          "page": "Page {page}"
+        },
+        "status": {
+          "LEGACY": "Outside WorkOS",
+          "BOUND": "Linked",
+          "UNRESOLVED": "No organization",
+          "AMBIGUOUS": "Ambiguous",
+          "INVALID_BINDING": "Invalid link"
+        },
+        "resolution": {
+          "title": "Resolve a company",
+          "description": "Company {companyId}. Select the organization backed by the owner's memberships and document the decision.",
+          "loading": "Loading candidate organizations…",
+          "organization": "WorkOS organization",
+          "selectOrganization": "Select an organization",
+          "candidateHint": "You can only select an organization found in the owner's current memberships.",
+          "noCandidates": "There is no valid organization to select.",
+          "reconcileHint": "First fix the owner's membership in WorkOS and reload this list.",
+          "reason": "Reason for the resolution",
+          "reasonPlaceholder": "Describe the evidence that supports this link.",
+          "action": "Save link",
+          "success": "The company is now linked to the selected organization.",
+          "savedPending": "The decision was recorded, but the company stays pending until the owner has a single current membership in that organization.",
+          "error": "The link could not be saved. Check the company, the organization, and the evidence before trying again."
+        },
+        "activate": {
+          "action": "Enable control",
+          "blockedHint": "Enabling requires a complete inventory and is blocked if any WorkOS owner is left without a valid link.",
+          "confirmTitle": "Enable the per-organization control?",
+          "confirmDescription": "From this moment on, each owner must have a current membership in the exact organization linked to their company. The server will reject the activation if any company is still pending.",
+          "confirmAction": "Enable",
+          "success": "The per-organization control is active.",
+          "error": "The control could not be enabled. Confirm that the inventory is finished and that all WorkOS companies are resolved."
+        },
+        "pause": {
+          "title": "Pause and restart inventory",
+          "description": "Pausing restarts the inventory and disables the global cutover. Each link and its exact-organization check are kept.",
+          "reason": "Reason for the pause",
+          "reasonPlaceholder": "Explain why the control is being paused.",
+          "action": "Pause and restart",
+          "confirmTitle": "Pause and restart the per-organization inventory?",
+          "confirmDescription": "Sherlock will restart the inventory and disable the global cutover. Existing links and their exact-organization checks will stay active.",
+          "confirmAction": "Pause",
+          "success": "The control is paused. Existing links were kept.",
+          "error": "The control could not be paused. Check the status again before retrying."
+        },
+        "reasonLength": "Enter between {min} and {max} characters.",
+        "cancel": "Cancel"
+      }
+    },
+    "vdrRequests": {
+      "metadata": {
+        "title": "Data Room requests | Admin",
+        "description": "Manage Data Room document requests"
+      }
+    }
+  },
+  "notFound": {
+    "title404": "404",
+    "heading": "Page not found",
+    "message": "Sorry, the page you are looking for does not exist or was moved. Check the URL or go to another section.",
+    "goHome": "Go to start",
+    "popularPages": "Popular pages",
+    "access": "Access",
+    "askHelp": "Need help?",
+    "contactUs": "Contact us"
+  },
+  "devLogin": {
+    "metadata": {
+      "title": "Development login",
+      "description": "Development login page for testing and debugging."
+    },
+    "enabled": {
+      "badge": "Development mode",
+      "title": "Development login",
+      "subtitle": "Select a demo user to continue",
+      "manualDivider": "Or enter an email manually",
+      "seedHint": "If the user does not exist in the local backend, create it with bun run seed:company --name \"Your company\" --email your-email@dev.local.",
+      "signIn": "Sign in",
+      "footerLine1": "This login only works in development.",
+      "footerLine2": "In production, WorkOS AuthKit is used as usual."
+    },
+    "errors": {
+      "connectionFailed": "We could not prepare local access. Check that the server is available and try again.",
+      "userNotFound": "User not found",
+      "emailNotRecognized": "@dev.local accounts only."
+    }
+  },
+  "notifications": {
+    "pageTitle": "Notifications",
+    "pageDescription": "Manage your notifications",
+    "unread": "{count, plural, one {# unread} other {# unread}}",
+    "unreadBeyondList": "{count, plural, one {You have 1 more unread notification that does not appear here.} other {You have # more unread notifications that do not appear here.}}",
+    "allRead": "All notifications read",
+    "readTabScope": "Here you only see the ones you have already read.",
+    "markAllAsRead": "Mark all as read",
+    "tabs": {
+      "all": "All",
+      "unread": "Unread",
+      "read": "Read"
+    },
+    "empty": {
+      "unreadTitle": "You have no unread notifications",
+      "readTitle": "You have no read notifications",
+      "description": "Switch tabs to see other notifications."
+    },
+    "time": {
+      "invalid": "Invalid date",
+      "justNow": "Just now",
+      "minutesAgo": "{count, plural, one {# minute ago} other {# minutes ago}}",
+      "hoursAgo": "{count, plural, one {# hour ago} other {# hours ago}}",
+      "yesterday": "Yesterday",
+      "daysAgo": "{count, plural, one {# day ago} other {# days ago}}",
+      "weeksAgo": "{count, plural, one {# week ago} other {# weeks ago}}"
+    },
+    "bell": {
+      "title": "Notifications",
+      "ariaLabelUnread": "Notifications ({count} unread)",
+      "markAll": "Mark all",
+      "empty": "You have no notifications",
+      "viewAll": "View all"
+    },
+    "toast": {
+      "view": "View",
+      "markAllRead": "{count, plural, one {# notification marked as read} other {# notifications marked as read}}",
+      "markError": "We could not mark the notification. Try again.",
+      "preferencesUpdated": "Preferences updated",
+      "preferencesError": "We could not update the preferences"
+    }
+  },
+  "onboarding": {
+    "provisioning": {
+      "status": "Preparing your space…",
+      "error": {
+        "title": "We could not prepare your space",
+        "description": "Something failed while creating your workspace. You can try again.",
+        "retry": "Try again"
+      }
+    },
+    "metaTitle": "Preparing your space",
+    "metaDescription": "We are creating your Sherlock workspace and taking you straight to it."
+  },
+  "emptyState": {
+    "notifications": {
+      "title": "No notifications",
+      "description": "You have no pending notifications. We will let you know when there is news."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your account",
+    "security": "Security",
+    "securityDescription": "Manage your password and account security",
+    "accountEmail": "Account email",
+    "verified": "Verified",
+    "adminStepUpTitle": "Sign in with your passkey to open the team dashboard",
+    "adminStepUpDescription": "The team dashboard asks for a passkey (or SSO) sign-in once per session. Signing in with an email code does not unlock it.",
+    "adminStepUpCta": "Sign in with passkey",
+    "privacyData": "Privacy and data",
+    "privacyDataDescription": "Manage your personal data under GDPR",
+    "privacySettings": "Privacy settings",
+    "privacySettingsDescription": "Export data, manage consents, delete account",
+    "dangerZone": "Danger zone",
+    "dangerZoneDescription": "Irreversible actions for your account",
+    "deleteAccount": "Delete account and data",
+    "pauseAccount": "Pause my account",
+    "pauseAccountDescription": "Deactivates your access and hides your profile. It does not delete data and the team can reverse it",
+    "deleteAccountDescription": "Request the erasure of your personal data, subject to the retention periods and exceptions that apply",
+    "deleteAccountButton": "Go to deletion request",
+    "deleteConfirmTitle": "Pause your account?",
+    "deleteConfirmDescription": "Your account will be deactivated immediately and you will lose access to:",
+    "deleteConfirmProfile": "Your profile and personal information",
+    "deleteConfirmDeals": "Your deliverables and their versions",
+    "deleteConfirmAnalyses": "Your Data Room documents and requests",
+    "deleteConfirmMessages": "Your messages and access requests",
+    "deleteConfirmRetention": "This does NOT delete your data. It is reversible. If you want us to erase your personal data, use \"Delete account and data\".",
+    "deleteCancel": "Cancel",
+    "deleteConfirmButton": "Pause my account",
+    "deleting": "Pausing...",
+    "deleteSuccess": "Account paused. You will be redirected...",
+    "deleteConfirmReasonPlaceholder": "Tell us why you are leaving...",
+    "privacy": {
+      "back": "Back to settings",
+      "title": "Privacy and data",
+      "subtitle": "Manage your personal data and privacy preferences under GDPR",
+      "signInRequired": "Please sign in to access this page.",
+      "rights": {
+        "title": "Your GDPR rights",
+        "description": "As a user, you have the following rights over your personal data",
+        "accessTitle": "Right of access",
+        "accessDescription": "You can request a copy of all your data",
+        "portabilityTitle": "Right to data portability",
+        "portabilityDescription": "Export your data in JSON format",
+        "rectificationTitle": "Right to rectification",
+        "rectificationDescription": "Correct incorrect data in your profile",
+        "erasureTitle": "Right to erasure",
+        "erasureDescription": "Request the deletion of your account"
+      },
+      "consents": {
+        "title": "Consent management",
+        "description": "Review what you accepted and decide whether we email you",
+        "required": "Required",
+        "accepted": "Consent accepted",
+        "revoked": "Consent revoked",
+        "error": "We could not update the consent",
+        "termsTitle": "Terms of Service",
+        "termsDescription": "Acceptance of the terms and conditions of use",
+        "privacyPolicyTitle": "Privacy Policy",
+        "privacyPolicyDescription": "Acceptance of our privacy policy and data handling",
+        "marketingTitle": "Marketing emails",
+        "marketingDescription": "Receive product news and team notifications by email"
+      },
+      "export": {
+        "title": "Export data",
+        "description": "Download a copy of all your personal data in JSON format",
+        "itemTitle": "Full export",
+        "itemDescription": "Includes your profile, your company, your notifications, and your consents",
+        "button": "Export JSON",
+        "loading": "Exporting...",
+        "success": "Data exported successfully",
+        "empty": "No data found to export",
+        "error": "We could not export your data"
+      },
+      "deletion": {
+        "title": "Delete account",
+        "description": "Request the permanent deletion of your account and all your data",
+        "warningTitle": "This action is irreversible",
+        "warningIntro": "Once your request is processed, the following will be permanently deleted:",
+        "itemProfile": "Your profile and personal information",
+        "itemDeals": "Your company and its preparation",
+        "itemDocuments": "Your Data Room documents and requests",
+        "itemMessages": "Your notifications",
+        "itemActivity": "Your activity history",
+        "legalRetention": "Deletion does not apply to records we are legally required to keep —signed NDAs, Data Room access logs, billing records, and KYC/KYB data— for the periods in section 5 of the Privacy Policy. Those records are kept with your personal data anonymized, and we will tell you which ones apply to your case.",
+        "timeline": "We will process your request within a maximum of 30 days.",
+        "trigger": "Request account deletion",
+        "confirmTitle": "Are you sure?",
+        "confirmDescription": "This action cannot be undone. Your account and associated data will be deleted, except for records the law requires us to keep, which will be retained with your personal data anonymized.",
+        "reasonLabel": "Why do you want to delete your account? (optional)",
+        "cancel": "Cancel",
+        "confirm": "Confirm deletion",
+        "processing": "Processing...",
+        "success": "Request recorded. We left the confirmation in your in-app notifications and will process it within a maximum of 30 days.",
+        "error": "We could not record your deletion request",
+        "pendingBadge": "Pending",
+        "pendingTitle": "You already have a deletion request in progress",
+        "pendingDescription": "We recorded it on {date} and will process it within a maximum of 30 days. You have the confirmation in your in-app notifications.",
+        "pendingReason": "Reason you gave us: {reason}",
+        "pendingContact": "If you changed your mind, write to us and we will cancel the request."
+      },
+      "retention": {
+        "title": "Data Retention Policy",
+        "intro": "We retain your data while your account is active or as needed to provide you with services. If you request the deletion of your account, we will delete your personal data within 30 days, except:",
+        "itemTransactions": "Transaction records (required by law for 7 years)",
+        "itemAnonymized": "Anonymized data for statistical analysis",
+        "itemCompliance": "Regulatory compliance records",
+        "moreInfo": "For more information, see our",
+        "policyLink": "Privacy Policy"
+      },
+      "meta": {
+        "title": "Privacy",
+        "description": "Your consents, data export, and data deletion."
+      }
+    },
+    "accessHelp": "If you need to recover your password, open the sign-in page and choose the recovery option. If you sign in with Google, manage access from your Google account.",
+    "signInLink": "Open sign-in"
+  },
+  "vdr": {
+    "viewer": {
+      "rows": "{count} rows",
+      "rowsTruncated": "Showing the first {shown} of {count} rows; download the file to see it in full.",
+      "open": "Open viewer",
+      "loading": "Preparing access to the document...",
+      "loadingPages": "Loading the protected pages...",
+      "documentArea": "Document area",
+      "iframeTitle": "Viewer for document {name}",
+      "viewMode": "View inside Sherlock",
+      "downloadMode": "Download required",
+      "downloadDescription": "This format is not previewed or converted. Opening it requires downloading the original file.",
+      "noPreviewTitle": "This format has no preview",
+      "noPreview": "Download the file to open it with a compatible application on your device.",
+      "download": "Download file",
+      "close": "Close",
+      "retry": "Try again",
+      "deniedTitle": "You do not have access to this document",
+      "deniedDescription": "Your current access does not meet this Data Room's permissions. Review the transaction requirements before trying again.",
+      "expiredTitle": "This access has expired",
+      "expiredDescription": "The document or one of the access requirements is no longer valid. Check the transaction status to renew it.",
+      "errorTitle": "We could not prepare the document",
+      "errorDescription": "The file was not delivered. Try again; the retry will request a new permit.",
+      "partialError": "That part of the workbook could not be opened. The sheet on screen is still available.",
+      "protectionTitle": "Identified and auditable delivery",
+      "downloadProtection": "The permit expires, works only once, and the delivery is recorded as a download.",
+      "loadingSheets": "Loading the model sheets...",
+      "phaseBoot": "Starting the model viewer...",
+      "phaseBytesReceived": "Receiving the workbook...",
+      "phaseWasmReady": "Calculation engine ready...",
+      "phaseParsing": "Reading the workbook sheets...",
+      "phaseFirstSheet": "Preparing the first sheet...",
+      "elapsedSeconds": "{seconds} s",
+      "loadingRendition": "Preparing the document view...",
+      "pageOf": "Page {page} of {total}",
+      "previousPage": "Previous page",
+      "nextPage": "Next page",
+      "zoom": "Zoom",
+      "rotateLeft": "Rotate left",
+      "rotateRight": "Rotate right",
+      "zoomFit": "Fit",
+      "sheet": "Sheet {name}",
+      "pageOfTotal": "of {total}",
+      "pages": "{count, plural, one {# page} other {# pages}}",
+      "tableRegion": "Table of document {name}",
+      "viewDescriptionFile": "The file opens inside the Data Room through a one-time view permit.",
+      "viewProtectionFile": "Who opened the document and when is recorded.",
+      "renditionDescription": "The presentation opens as an audited PDF inside the Data Room.",
+      "renditionProtection": "The PDF uses a one-time view permit and the opening is recorded. No document carries a watermark.",
+      "passwordTitle": "This PDF is password-protected",
+      "passwordBody": "We cannot open it here. Remove the password and upload it again.",
+      "enterFullscreen": "Full screen",
+      "exitFullscreen": "Exit full screen"
+    },
+    "versions": {
+      "title": "Version history",
+      "description": "{name}. Each version keeps its integrity evidence and publication status.",
+      "emptyTitle": "Document predating versioning",
+      "emptyDescription": "The next upload saves the current file as v1.",
+      "current": "Current",
+      "signatureVerified": "Signature verified",
+      "legacyEvidence": "Legacy evidence",
+      "teamNote": "Team note:",
+      "restoreAsNew": "Restore as new version",
+      "restoreTitle": "Restore this version?",
+      "restoreDescription": "The bytes of v{version} will be published as a new version. The current history is not overwritten, and active download grants are revoked.",
+      "restoreConfirm": "Restore version",
+      "restoreCancel": "Cancel",
+      "restoreError": "This version could not be restored.",
+      "restoreSuccess": "v{version} was restored as a new version.",
+      "scan": {
+        "clean": "Antivirus: clean",
+        "pending": "Antivirus: pending",
+        "infected": "Antivirus: threat detected",
+        "failed": "Antivirus: failed",
+        "unknown": "Antivirus: no data"
+      },
+      "status": {
+        "draft": "In review",
+        "published": "Published",
+        "superseded": "Superseded",
+        "archived": "Archived"
+      }
+    },
+    "upload": {
+      "newVersionTitle": "Upload new version",
+      "replaceDescription": "Replace {name} without losing the history.",
+      "stop": "Stop uploads",
+      "reconciliation": "We could not confirm the result. Do not retry this file; Sherlock must reconcile it."
+    },
+    "toasts": {
+      "batchLimit": "{count} files exceed the maximum of 20 per batch.",
+      "selectionLimit": "You can select up to 50 documents per operation.",
+      "selectionCapped": "We selected the first 50 visible documents.",
+      "documentDeleted": "{count, plural, one {Document deleted} other {# documents deleted}}",
+      "uploadStopped": "Upload stopped. The file is still ready to retry."
+    },
+    "meta": {
+      "documents": {
+        "title": "Data Room",
+        "description": "Your documents, folders, and versions in one place."
+      },
+      "activity": {
+        "title": "Data Room activity",
+        "description": "Who opened, uploaded, or downloaded what, and when."
+      },
+      "company": {
+        "title": "Your company",
+        "description": "What the team uses in the teaser, the CIM, and the model."
+      },
+      "preparation": {
+        "title": "Preparation",
+        "description": "What is missing and what the team prepares with your documents."
+      },
+      "team": {
+        "title": "Team",
+        "description": "Any question about your Data Room or the process."
+      },
+      "guests": {
+        "title": "Guests",
+        "description": "Who can enter your Data Room and what they see."
+      }
+    },
+    "activity": {
+      "loadFailed": "We could not load the activity."
+    },
+    "folders": {
+      "unassigned": "No folder"
+    },
+    "loadFailed": "We could not load this section."
+  },
+  "company": {
+    "loading": "Loading company workspace"
+  },
+  "designSystem": {
+    "meta": {
+      "title": "Design system",
+      "description": "Non-production showcase of Sherlock's primitives and states."
+    },
+    "eyebrow": "Internal design contract",
+    "title": "Design system",
+    "description": "Synthetic, bilingual reference for Sherlock's primitives, responsive shells, and product states.",
+    "nonProduction": "Available only in development and test environments",
+    "families": {
+      "foundations": "Foundations",
+      "controls": "Controls",
+      "feedback": "System feedback",
+      "content": "Content",
+      "data": "Data",
+      "shell": "Structure"
+    },
+    "descriptions": {
+      "foundations": "Semantic color, typography, spacing, radii, elevation, and light and dark surfaces.",
+      "controls": "Shared controls with real keyboard, pointer, disabled, and loading behavior.",
+      "feedback": "Persistent, understandable results for every asynchronous or access state.",
+      "content": "Editorial, company, teaser, and legal patterns with synthetic information.",
+      "data": "Localized figures, decision context, semantic tables, and a full alternative to the chart.",
+      "shell": "Responsive patterns for navigation, administration, and single-pane messaging."
+    },
+    "examples": {
+      "palette": "Semantic palette",
+      "typography": "Typography",
+      "spacing": "Spacing scale",
+      "surfaces": "Radii and elevation",
+      "buttons": "Buttons and states",
+      "inputs": "Fields and validation",
+      "tabs": "Tabs",
+      "preferences": "Theme and link",
+      "selectMenu": "Selector and menu",
+      "stateMatrix": "State matrix",
+      "editorial": "Editorial title",
+      "teaser": "Company teaser",
+      "companyCard": "Company card",
+      "legal": "Legal and help text",
+      "kpi": "Key figure",
+      "chart": "Chart summary",
+      "table": "Semantic table"
+    },
+    "tokens": {
+      "primary": "Primary",
+      "accent": "Accent",
+      "success": "Success",
+      "warning": "Warning",
+      "destructive": "Error",
+      "muted": "Muted",
+      "light": "Light surface",
+      "dark": "Dark surface"
+    },
+    "states": {
+      "default": "Default",
+      "hover": "On hover",
+      "focus": "Focus",
+      "active": "Active",
+      "disabled": "Disabled",
+      "loading": "Loading",
+      "empty": "Empty",
+      "error": "Error",
+      "denied": "Denied",
+      "pending": "Pending",
+      "success": "Success"
+    },
+    "actions": {
+      "request": "Request access",
+      "review": "Review disclosure",
+      "viewStates": "View response states",
+      "openMenu": "Open actions menu",
+      "showToast": "Show success notification"
+    },
+    "feedback": {
+      "loading": "Loading synthetic records",
+      "emptyTitle": "There are no approved access requests yet",
+      "emptyDescription": "Approved access requests will appear here after human review.",
+      "errorTitle": "The records could not be loaded",
+      "errorDescription": "No provider details are exposed. Retry from this safe state.",
+      "deniedTitle": "The disclosure is not available",
+      "deniedDescription": "This information requires company approval and an active NDA.",
+      "pendingTitle": "Human review pending",
+      "pendingDescription": "The Sherlock team is reviewing the requested disclosure scope.",
+      "successTitle": "Identity disclosure approved",
+      "successDescription": "The approval applies only to the company and the person indicated.",
+      "inputError": "Enter the full synthetic reference.",
+      "toast": "Synthetic preference saved"
+    },
+    "content": {
+      "editorialTitle": "Capital discovery with controlled disclosure",
+      "body": "Sherlock helps people understand a company while it keeps control of sensitive information.",
+      "eyebrow": "Progressive access",
+      "company": "Company",
+      "companyExample": "Norte Circular",
+      "overview": "Overview",
+      "documents": "Documents",
+      "stage": "Company stage",
+      "growth": "Growth",
+      "mature": "Mature",
+      "synthetic": "Synthetic",
+      "teaserBody": "Illustrative growth capital teaser with generalized facts and no information from a real company.",
+      "location": "Panama · Circular logistics",
+      "legalTitle": "Reference disclosure",
+      "legalBody": "This synthetic example is not an offer, recommendation, commitment, or representation of a real company.",
+      "mandateTitle": "Regional fleet expansion"
+    },
+    "data": {
+      "target": "Illustrative capital target",
+      "asOf": "Synthetic data · as of July 2026",
+      "mixTitle": "Illustrative capital mix",
+      "takeaway": "Debt represents 63% and equity 37%. The values are synthetic.",
+      "tableRegion": "Synthetic capital table",
+      "caption": "Illustrative sources by instrument; USD, synthetic data.",
+      "instrument": "Instrument",
+      "status": "Status",
+      "amount": "Amount",
+      "seniorFacility": "Senior facility",
+      "sponsorEquity": "Sponsor equity",
+      "pending": "Review pending",
+      "confirmed": "Confirmed"
+    },
+    "shell": {
+      "publicNav": "Public navigation",
+      "authNav": "Authenticated navigation",
+      "adminNav": "Mobile admin navigation",
+      "messaging": "Single-pane messaging",
+      "home": "Home",
+      "signIn": "Sign in",
+      "overview": "Overview",
+      "messages": "Messages",
+      "adminMenu": "Admin menu specimen",
+      "humanReview": "Consequential actions require human review",
+      "conversation": "Access approved",
+      "messageBody": "Messages stay within the approved access and the selected disclosure scope.",
+      "documents": "Documents"
+    },
+    "routeStates": {
+      "title": "Existing route states",
+      "description": "Deterministic renderings of the current loading structures and the shared safe error boundary.",
+      "company": "Company workspace",
+      "portfolio": "Portfolio",
+      "admin": "Administration",
+      "loadingLabel": "{family} loading",
+      "errorLabel": "{family} error"
+    }
+  },
+  "mycroft": {
+    "meta": {
+      "title": "Financial model, teaser, CIM, and presentations",
+      "description": "Upload your company's documents and receive your financial model, teaser, CIM, and presentations in a private Data Room."
+    },
+    "hero": {
+      "title": "Upload your documents.\nGet your financial model."
+    },
+    "intake": {
+      "companyLabel": "Your company name",
+      "companyPlaceholder": "Enter your company name",
+      "drop": "Drag your documents here or select them",
+      "select": "Select documents",
+      "mcp": {
+        "eyebrow": "If you use an agent",
+        "title": "Connect your agent via MCP",
+        "body": "Use Claude, Cursor, or another agent with your Data Room.",
+        "copy": "Copy",
+        "copied": "Copied",
+        "copyFailed": "We could not copy. Select the URL and copy it manually.",
+        "how": "How to connect it"
+      },
+      "selected": "{count, plural, one {# document} other {# documents}}",
+      "fileList": "Selected documents",
+      "duplicate": "Already on the list",
+      "clear": "Remove all",
+      "remove": "Remove {name}",
+      "total": "Total: {size}",
+      "continue": "Next",
+      "preparing": "Preparing your documents…",
+      "destination": {
+        "notice": "The Data Room of {company} will receive your documents. If it is a different company, sign out and start over.",
+        "upload": "Upload documents",
+        "signOut": "Sign out"
+      },
+      "errors": {
+        "name": "Enter your company name to continue.",
+        "type": "One of the files is not supported. Use PDF, Excel, Word, PowerPoint, or CSV.",
+        "size": "A CSV exceeds 20 MB or any other file exceeds 50 MB.",
+        "handoff": "Your browser could not keep the files in order to continue. The selection is still here; try again.",
+        "destination": "We could not verify the destination Data Room. The selection is still here; try again."
+      },
+      "progress": {
+        "states": {
+          "queued": "Queued",
+          "hashing": "Calculating fingerprint",
+          "uploading": "Uploading {loaded} of {total}",
+          "received": "Received",
+          "failed": "Could not upload",
+          "cancelled": "Canceled"
+        },
+        "cancel": "Cancel upload",
+        "cancelledSummary": "{received} of {total} saved. You can continue whenever you like.",
+        "partialSummary": "We received {received} of {total}. Try the missing ones again."
+      },
+      "formatListLabel": "Document formats",
+      "formatNames": {
+        "pdf": "PDF",
+        "excel": "Excel",
+        "word": "Word",
+        "powerpoint": "PowerPoint",
+        "csv": "CSV"
+      }
+    },
+    "receive": {
+      "title": "What you get",
+      "model": {
+        "title": "Model",
+        "body": "Open assumptions and versions that we refine with you."
+      },
+      "materials": {
+        "title": "Materials",
+        "body": "Management presentation and debt or equity decks."
+      },
+      "process": {
+        "title": "Process",
+        "body": "Questions, information requests, and organized documents."
+      }
+    },
+    "stack": {
+      "cim": "CIM.pdf",
+      "teaser": "Teaser.pdf",
+      "model": "Model_v1.xlsx",
+      "example": "Illustrative example",
+      "unit": "USD thousands",
+      "years": ["2024A", "2025E", "2026E"],
+      "rows": {
+        "revenue": "Revenue",
+        "margin": "Gross margin",
+        "ebitda": "EBITDA",
+        "cash": "Free cash flow"
+      },
+      "company": "Example company",
+      "cimTitle": "Investment information",
+      "teaserTitle": "Company overview",
+      "summary": "Overview",
+      "pl": "P&L",
+      "assumptions": "Assumptions",
+      "scenarios": "Scenarios",
+      "growth": "Revenue in USD thousands, 2024A to 2026E",
+      "teaserBody": "Business profile, key figures, and financing opportunity."
+    },
+    "team": {
+      "compact": "Maintainer and Reviewer prepare and review every deliverable with our software."
+    }
+  },
+  "intakeWorkspace": {
+    "eyebrow": "Temporary Data Room",
+    "title": "Prepare your documents before you sign up",
+    "intro": "This private Data Room lasts for a limited time. You can enter a name or continue without identifying yourself.",
+    "expiresAt": "Temporary access until {date}",
+    "identityName": "Saved name: {name}",
+    "nameLabel": "Company or person name (optional)",
+    "namePlaceholder": "E.g. Acme Panama",
+    "continue": "Continue",
+    "skip": "Continue without a name",
+    "starting": "Opening Data Room…",
+    "uploadLabel": "Add PDF, Excel, Word, PowerPoint, or CSV",
+    "uploadLimits": "CSV: 20 MB. PDF and Office: 50 MB.",
+    "uploadErrors": {
+      "size": "A CSV exceeds 20 MB or any other file exceeds 50 MB.",
+      "type": "This file type is not supported. Use PDF, Excel, Word, PowerPoint, or CSV."
+    },
+    "upload": "Upload documents",
+    "uploading": "Verifying documents…",
+    "empty": "There are no documents in this Data Room yet.",
+    "clean": "Verified",
+    "notConfigured": "Verification unavailable",
+    "uninspected": "Pending verification",
+    "suspicious": "Quarantined",
+    "genericError": "We could not complete the request. Try again.",
+    "ended": "Temporary access has ended. Your documents are still saved. You can delete them with the Delete my temporary data button.",
+    "endAccess": "End access",
+    "deleteData": "Delete my temporary data",
+    "deleted": "Your temporary data was deleted.",
+    "handoff": {
+      "title": "Pending files",
+      "description": "We could not complete these files. Retry them or remove them; documents already verified stay in the Data Room.",
+      "retry": "Retry {name}",
+      "retryAction": "Retry",
+      "remove": "Remove {name}",
+      "removeAction": "Remove"
+    },
+    "progress": {
+      "states": {
+        "queued": "Queued",
+        "hashing": "Calculating fingerprint",
+        "uploading": "Uploading {loaded} of {total}",
+        "received": "Received",
+        "failed": "Could not upload",
+        "cancelled": "Canceled"
+      },
+      "cancel": "Cancel upload",
+      "cancelledSummary": "{received} of {total} saved. You can continue whenever you like.",
+      "partialSummary": "We received {received} of {total}. Try the missing ones again."
+    },
+    "assessment": {
+      "pendingTitle": "Preparation status",
+      "pendingDescription": "The analysis of your documents is pending.",
+      "title": "Readiness assessment",
+      "inventoryTitle": "Evidence inventory",
+      "inventoryPending": "The evidence inventory is not available yet.",
+      "states": {
+        "PENDING": "The analysis of your documents is pending.",
+        "NEEDS_REVIEW": "The assessment has findings pending human review.",
+        "READY": "The assessment is ready for review."
+      },
+      "evidence": "{count, plural, one {# document with evidence} other {# documents with evidence}}",
+      "confidence": "{percentage}% confidence",
+      "review": {
+        "PENDING": "Pending review",
+        "CONFIRMED": "Confirmed by review",
+        "REJECTED": "Rejected by review"
+      },
+      "categories": {
+        "financialStatements": "Financial statements",
+        "notes": "Notes to the financial statements",
+        "businessExplanation": "Business explanation",
+        "language": "Language",
+        "businessModel": "Business model",
+        "pitch": "Pitch or presentation",
+        "teaserCim": "Teaser or CIM",
+        "loanPaymentTape": "Loan or payment tape",
+        "financialModel": "Financial model",
+        "portfolioDetail": "Portfolio detail",
+        "legalDetail": "Legal documentation",
+        "country": "Country"
+      },
+      "nextAction": {
+        "upload": "Add documents",
+        "support": "Talk to the team"
+      }
+    },
+    "claim": {
+      "title": "Keep this workspace",
+      "description": "Create your account to turn this temporary Data Room into your company's permanent Data Room.",
+      "action": "Create account and keep the Data Room"
+    },
+    "support": {
+      "title": "Talk to the team",
+      "description": "Write here if you need to clarify something or share missing context.",
+      "empty": "There are no messages yet.",
+      "messageLabel": "Message for the team",
+      "placeholder": "Tell us what you need.",
+      "send": "Send",
+      "sending": "Sending…",
+      "sendError": "We could not send the message. Try again.",
+      "author": {
+        "team": "Sherlock team",
+        "client": "You"
+      }
+    },
+    "disclaimer": "This is not investment advice."
+  },
+  "roadmap": {
+    "board": {
+      "sort": {
+        "top": "Top",
+        "new": "New"
+      },
+      "filters": {
+        "all": "All",
+        "feature": "Requests",
+        "bug": "Bug reports"
+      },
+      "groups": {
+        "sort": "Sort requests",
+        "filter": "Filter by board"
+      },
+      "status": {
+        "shipped": "Built",
+        "inProgress": "In progress",
+        "planned": "Planned",
+        "gatheringInterest": "Gathering interest"
+      },
+      "votesCount": "{count, plural, one {# vote} other {# votes}}",
+      "voteAria": "Vote for {title}",
+      "unvoteAria": "Remove your vote from {title}",
+      "votesCapReached": "You have used all 3 of your votes. Remove one to vote for another.",
+      "votedHint": "You already voted for this one. Press again to remove your vote.",
+      "doingColumn": "In progress",
+      "doneColumn": "Built",
+      "empty": {
+        "bug": "There are no reports yet. Tell us if something is not working."
+      },
+      "items": {
+        "deliverables": {
+          "title": "Deliverables",
+          "body": "Financial model, teaser, CIM, and management presentation, each with human review."
+        },
+        "mcp": {
+          "title": "AI assistant inside your Data Room",
+          "body": "Collapsible chatbot in your Data Room for questions and answers about your documents, with your own subscription and your own agent. MCP underneath."
+        },
+        "support": {
+          "title": "Embedded support chat",
+          "body": "Support chat inside the site to talk to the team without leaving your workspace."
+        },
+        "voting": {
+          "title": "Live voting",
+          "body": "Vote on roadmap requests and see their status in real time."
+        },
+        "guestRooms": {
+          "title": "Share your Data Room",
+          "body": "Share your Data Room with whoever you decide, showing exactly what you decide. With or without an NDA: the parties agree on that. Today the team issues that access for you; with this feature, you issue it yourself."
+        },
+        "marketplace": {
+          "title": "Future vision",
+          "body": "A private markets network in Latin America. It is not in the product today."
+        },
+        "vdr": {
+          "title": "Data Room per company",
+          "body": "Secure Data Room with document versions and controlled access."
+        },
+        "intake": {
+          "title": "Document upload",
+          "body": "You upload documents and they go straight to your company's Data Room."
+        },
+        "bilingual": {
+          "title": "Site in Spanish",
+          "body": "The product lives entirely in Panamanian Spanish. English is no longer in the plan."
+        },
+        "theme": {
+          "title": "Light and dark theme",
+          "body": "The product adapts to the theme you prefer."
+        }
+      },
+      "voteError": "We could not save your vote. Try again."
+    }
+  },
+  "support": {
+    "title": "Talk to the team",
+    "description": "Any question about your Data Room or the process, write to us here.",
+    "demoNotice": "Local demo: the messages in this view are not sent or saved.",
+    "loading": "Loading the conversation…",
+    "loadMore": "Load earlier messages",
+    "loadingMore": "Loading…",
+    "messageLabel": "Message for the team",
+    "placeholder": "Write here.",
+    "send": "Send",
+    "sending": "Sending…",
+    "sendError": "We could not send the message. Try again.",
+    "composerHint": "Your message reaches the Sherlock team and we reply right here.",
+    "readOnly": "You can read this conversation, but not send messages.",
+    "author": {
+      "team": "Sherlock team",
+      "company": "Your company"
+    },
+    "admin": {
+      "metadata": {
+        "title": "Support and Data Room queue | Admin",
+        "description": "Review real conversations and signals that need the team's attention."
+      },
+      "pageTitle": "Support and Data Rooms to review",
+      "pageDescription": "Reply to companies and review preparation signals without exposing document contents in the list.",
+      "inboxTitle": "Support conversations",
+      "inboxDescription": "One direct conversation per company.",
+      "loading": "Loading…",
+      "emptyInbox": "There are no conversations yet.",
+      "selectThread": "Select a conversation",
+      "selectThreadDescription": "Choose a company from the list or open a signal from the queue.",
+      "temporaryRoom": "Temporary Data Room",
+      "unknownRoom": "Client Data Room",
+      "companyRoom": "Company Data Room",
+      "noMessages": "There are no messages in this conversation yet.",
+      "loadMoreThreads": "Load more conversations",
+      "loadMoreMessages": "Load earlier messages",
+      "loadingMore": "Loading…",
+      "cannotReply": "Support for this temporary Data Room is not enabled yet.",
+      "replyLabel": "Team reply",
+      "replyPlaceholder": "Write a clear reply without unnecessary sensitive data.",
+      "characterCount": "{count}/{max} characters",
+      "send": "Send reply",
+      "sending": "Sending…",
+      "sendError": "We could not send the reply. Try again.",
+      "author": {
+        "team": "Sherlock team",
+        "client": "Client"
+      }
+    },
+    "sent": "Sent. The team replies to you here."
+  },
+  "adminPreparation": {
+    "eyebrow": "Team operations",
+    "title": "Manual preparation",
+    "description": "Request the missing files, attach the custodied versions, and move each deliverable through human review. Nothing is approved automatically.",
+    "loading": "Loading preparation…",
+    "request": "Request",
+    "pending": "Saving…",
+    "downloadZip": "Download all (.zip)",
+    "downloadZipPending": "Preparing the zip…",
+    "downloadZipStarted": "Your download has started.",
+    "downloadZipError": "We could not prepare the zip. Try again.",
+    "downloadZipTooLarge": "The Data Room exceeds the 250 MB limit. Download the documents separately.",
+    "downloadZipEmpty": "There are no published documents to download.",
+    "downloadFolderLabel": "Folder to download",
+    "downloadFolderZip": "Download folder (.zip)",
+    "downloadFolderZipEmpty": "This folder has no published documents to download.",
+    "notStarted": "Not requested",
+    "statusLabel": "Status",
+    "deliverables": {
+      "MODEL": "Financial model",
+      "TEASER": "Teaser",
+      "CIM": "CIM",
+      "MGMT_PRESENTATION": "Management presentation",
+      "DEBT_DECK": "Debt deck",
+      "EQUITY_DECK": "Equity deck",
+      "QA": "Q&A",
+      "IRL": "Information request list (IRL)"
+    },
+    "status": {
+      "REQUESTED": "Requested",
+      "IN_PROGRESS": "In preparation",
+      "NEEDS_INPUT": "Information missing",
+      "DRAFT_READY": "Draft ready",
+      "IN_REVIEW": "In review",
+      "APPROVED": "Approved",
+      "DELIVERED": "Delivered"
+    },
+    "transition": {
+      "IN_PROGRESS": "Start preparation",
+      "NEEDS_INPUT": "Request information",
+      "DRAFT_READY": "Mark draft ready",
+      "IN_REVIEW": "Move to review",
+      "APPROVED": "Approve",
+      "DELIVERED": "Deliver"
+    },
+    "categories": {
+      "financialStatements": "Financial statements",
+      "notes": "Notes",
+      "businessExplanation": "Business explanation",
+      "language": "Language",
+      "businessModel": "Business model",
+      "pitch": "Pitch",
+      "teaserCim": "Teaser or CIM",
+      "loanPaymentTape": "Loan/payment tape",
+      "financialModel": "Financial model",
+      "portfolioDetail": "Portfolio detail",
+      "legalDetail": "Legal detail",
+      "country": "Country"
+    },
+    "review": {
+      "PENDING": "Pending",
+      "CONFIRMED": "Confirmed",
+      "REJECTED": "Rejected"
+    },
+    "errors": {
+      "request": "The deliverable could not be requested. Try again.",
+      "transition": "The deliverable could not be moved. Check the status and try again.",
+      "attach": "The rendition could not be attached. Try again.",
+      "delivery": "The delivery could not be marked. Check that the document has a published version and try again.",
+      "assessment": "The assessment could not be recorded. Try again."
+    },
+    "assessment": {
+      "title": "Intake assessment",
+      "description": "Record what the team confirmed about the temporary Data Room. Each finding keeps its evidence, confidence, and human review.",
+      "documentsTitle": "Temporary Data Room documents",
+      "noDocuments": "There are no documents available in the Data Room.",
+      "latestTitle": "Last recorded assessment",
+      "statusLabel": "Assessment status",
+      "evidence": "Document evidence",
+      "noEvidence": "No linked evidence",
+      "category": "Category",
+      "confidence": "Confidence (0 to 1)",
+      "reviewState": "Review",
+      "save": "Record assessment",
+      "saved": "Assessment recorded",
+      "evidenceRequired": "Select at least one evidence document per finding.",
+      "unavailable": "The temporary assessment is not available.",
+      "status": {
+        "PENDING": "Pending",
+        "NEEDS_REVIEW": "Requires review",
+        "READY": "Ready"
+      }
+    },
+    "rendition": {
+      "title": "Attach version",
+      "format": "Format",
+      "document": "Document in the Data Room",
+      "chooseDocument": "Select a document",
+      "sources": "Source versions",
+      "noVersions": "There are no source versions available to select.",
+      "attach": "Attach",
+      "attached": "{count, plural, one {# version attached} other {# versions attached}}"
+    },
+    "delivery": {
+      "title": "Mark as delivery",
+      "description": "Take a document you already uploaded to the room and deliver it in this slot. The client receives the bell notification and an email.",
+      "document": "Document already uploaded",
+      "chooseDocument": "Select a document",
+      "note": "Note for the client",
+      "notePlaceholder": "What you are delivering and what they should review",
+      "submit": "Mark as delivery",
+      "confirm": "Confirm delivery",
+      "cancel": "Cancel",
+      "confirmHint": "When you confirm, the client receives the notification in their room and by email.",
+      "delivered": "Delivered. The client has received the notification.",
+      "alreadyDelivered": "This version was already delivered; no new notice was sent."
+    }
+  },
+  "adminRoomActivation": {
+    "title": "Data Room activation",
+    "loading": "Loading the checklist",
+    "available": "Room activated",
+    "availableHint": "The team has already started the work",
+    "notActivated": "Room not activated",
+    "notActivatedHint": "The client can already upload and chat; activating marks that the team starts",
+    "preparationTitle": "Team review",
+    "preparationSummary": "Team review: {ready} of {total} ready",
+    "preparationMissing": "Missing: {item}",
+    "clientViewEyebrow": "What the client sees",
+    "teamOnly": "Team only",
+    "noteLabel": "Activation note",
+    "notePlaceholder": "Why we are starting",
+    "activate": "Activate Data Room",
+    "mark": "Mark",
+    "unmark": "Unmark",
+    "done": "Ready",
+    "pending": "Pending",
+    "error": "Could not save. Try again.",
+    "items": {
+      "nameConfirmed": "Name confirmed",
+      "phone": "Phone",
+      "financials": "Financials",
+      "legal": "Legal",
+      "corporate": "Corporate",
+      "financialsDepth": "Financial statements suffice",
+      "kickoffCall": "Kickoff call"
+    }
+  },
+  "adminCompanyNda": {
+    "title": "Guest NDA",
+    "loading": "Loading the guest NDA…",
+    "missing": "There is no active Spanish NDA for this company. Without that text, invitations cannot be sent.",
+    "present": "There is an active Spanish NDA. If you confirm a different text, it replaces the active one.",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Title the guest sees",
+    "versionLabel": "Version",
+    "versionPlaceholder": "Text version",
+    "contentLabel": "NDA text",
+    "contentPlaceholder": "Paste the NDA the team approved.",
+    "confirm": "Confirm NDA",
+    "working": "Saving…",
+    "saved": "NDA saved.",
+    "error": "We could not save the NDA. Check the text and try again."
+  },
+  "adminIntakeQueue": {
+    "title": "Data Room review queue",
+    "description": "Real preparation, support, assessment, and draft signals that require human attention.",
+    "loading": "Loading the queue…",
+    "empty": "There are no Data Rooms with pending actions in the available sources.",
+    "temporaryRoom": "Temporary Data Room",
+    "companyScope": "Company",
+    "intakeScope": "Temporary intake",
+    "readinessProgress": {
+      "one": "Team review: {ready} of {total} ready · {missing} pending",
+      "many": "Team review: {ready} of {total} ready · {missing} pending"
+    },
+    "signals": {
+      "missingEvidence": {
+        "one": "{count} deliverable needs information",
+        "many": "{count} deliverables need information"
+      },
+      "unreadSupport": {
+        "one": "{count} unread message",
+        "many": "{count} unread messages"
+      },
+      "assessmentReview": {
+        "one": "{count} assessment to review",
+        "many": "{count} assessments to review"
+      },
+      "draftReview": {
+        "one": "{count} draft to review",
+        "many": "{count} drafts to review"
+      }
+    },
+    "openSupport": "Open support",
+    "openRoom": "Open Data Room",
+    "openQueueSignal": "View signal",
+    "reviewAssessment": "Review assessment",
+    "truncated": "We show the most recent actionable signals within the operating limit.",
+    "temporarySupportUnavailable": "Temporary Data Rooms show pending assessments, but their support channel is not enabled yet."
+  },
+  "roomProgress": {
+    "title": "Your preparation",
+    "readyCount": "{ready} of {total} ready",
+    "missingTitle": "You still need",
+    "loading": "Loading your preparation",
+    "activated": "Data Room activated. {date}",
+    "items": {
+      "nameConfirmed": "Confirm your company name",
+      "phone": "Leave a contact phone number",
+      "financials": "Upload the financial statements for the last 3 to 5 years",
+      "legal": "Upload the relevant contracts: customers, suppliers, and credit",
+      "corporate": "Upload the articles of incorporation, the public registry certificate, and the relevant board minutes",
+      "financialsDepth": "Have the team confirm that the financial statements suffice",
+      "kickoffCall": "Have the kickoff call"
+    },
+    "actions": {
+      "confirmName": "Rename",
+      "addPhone": "Add",
+      "upload": "Upload",
+      "writeTeam": "Write to the team",
+      "openSupport": "View support"
+    },
+    "phoneForm": {
+      "label": "Contact phone number",
+      "hint": "Include the country code. You can use spaces, hyphens, and parentheses.",
+      "invalid": "Enter a phone number of 7 to 15 digits. You can include the country code with +.",
+      "error": "We could not save the phone number. Try again.",
+      "save": "Save phone number",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "saved": "Phone number saved.",
+      "demo": "The phone number is not saved in the demo Data Room."
+    },
+    "stages": {
+      "MODEL_V1": "Model v1",
+      "MODEL_V2": "Model v2",
+      "TEASER": "Teaser",
+      "CIM": "CIM",
+      "MGMT_PRESENTATION": "Management presentation",
+      "DECKS": "Debt and equity decks",
+      "QA": "Questions and answers",
+      "IRL": "Information request list (IRL)"
+    },
+    "status": {
+      "PENDING": "",
+      "REQUESTED": "Pending",
+      "NEEDS_INPUT": "Information missing",
+      "IN_PREP": "In preparation",
+      "DELIVERED": "Delivered"
+    },
+    "deliveryNote": "Team note",
+    "stagesTitle": "Deliverables",
+    "stagesDescription": "What the team prepares with your documents.",
+    "showNote": "View team note",
+    "kickoffQuestion": "Want a kickoff call?",
+    "kickoffLink": "Write to us",
+    "kickoffTail": "and we will arrange it.",
+    "stagesUpcoming": "Then come {stages}."
+  },
+  "companyProfile": {
+    "title": "Your company",
+    "subtitle": "What the team uses in the teaser, the CIM, and the model. Save whenever you like.",
+    "requiredNote": "Fields with an asterisk are required.",
+    "required": "required",
+    "groups": {
+      "identity": "Identity",
+      "description": "Description",
+      "seeking": "What you are looking for",
+      "team": "Management team"
+    },
+    "fields": {
+      "name": "Name",
+      "legalName": "Legal name",
+      "country": "Country",
+      "city": "City",
+      "website": "Website",
+      "foundedYear": "Year founded",
+      "employees": "Employees",
+      "sector": "Sector",
+      "industry": "Industry",
+      "tagline": "Short description",
+      "description": "Description",
+      "seekingType": "Type",
+      "seekingAmount": "Amount",
+      "currency": "Currency",
+      "debtTermYears": "Term (years)",
+      "debtIndicativeRate": "Indicative rate (% per year)",
+      "useOfFunds": "Use of proceeds",
+      "memberName": "Name",
+      "memberTitle": "Title",
+      "memberBio": "Bio",
+      "memberLinkedin": "LinkedIn"
+    },
+    "hints": {
+      "tagline": "One line: what the company does and for whom.",
+      "description": "What the team needs to write the teaser and the CIM.",
+      "employees": "You can enter a number or a range, such as 40 or 30-50.",
+      "debtIndicativeRate": "Up to two decimals, such as 9.5.",
+      "useOfFunds": "What the money will be used for."
+    },
+    "placeholders": {
+      "country": "Choose the country",
+      "seekingType": "Choose the type",
+      "currency": "Choose the currency"
+    },
+    "seekingTypes": {
+      "DEBT": "Debt",
+      "EQUITY": "Equity",
+      "BOTH": "Both"
+    },
+    "team": {
+      "hint": "The people who appear in the teaser and the management presentation.",
+      "empty": "You have not added anyone yet.",
+      "member": "Person {index}",
+      "add": "Add person",
+      "remove": "Remove"
+    },
+    "errors": {
+      "name": "Enter your company name.",
+      "country": "Choose the country.",
+      "foundedYear": "Enter a year between 1900 and {year}.",
+      "seekingAmount": "Enter an amount greater than zero.",
+      "debtTermYears": "Enter a term between 1 and 30 years.",
+      "debtIndicativeRate": "Enter a rate between 0 and 100, with up to two decimals.",
+      "memberName": "Enter the name.",
+      "memberTitle": "Enter the title."
+    },
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "saveError": "We could not save. Check your connection and try again.",
+    "demo": "Changes are not saved in the demo Data Room."
+  },
+  "roomWorkspace": {
+    "primaryRoom": "Main",
+    "nav": {
+      "label": "Data Room sections",
+      "documents": "Documents",
+      "company": "Your company",
+      "contact": "Contact",
+      "dashboard": "Dashboard",
+      "preparation": "Preparation",
+      "deliverables": "Deliverables",
+      "guests": "Guests",
+      "help": "Help",
+      "team": "Team"
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "So the team can find you if something does not add up in the documents.",
+      "emailLabel": "Account email",
+      "emailLoading": "Loading email…",
+      "emailHint": "This is the email you signed in with.",
+      "emailUnavailable": "The email is not available in this session.",
+      "phoneLabel": "Contact phone number",
+      "phoneHint": "Include the country code. You can use spaces, hyphens, and parentheses.",
+      "invalidPhone": "Enter a phone number of 7 to 15 digits. You can include the country code with +.",
+      "saveError": "We could not save the phone number. Try again.",
+      "saving": "Saving…",
+      "savePhone": "Save phone number",
+      "saved": "Phone number saved.",
+      "demo": "The demo room does not save changes."
+    },
+    "dashboard": {
+      "title": "Financial view",
+      "open": "Open dashboard",
+      "loading": "Loading the financial view…",
+      "published": "Figures reviewed and published by the team on {date}.",
+      "trend": "Published series: {metric}",
+      "sourcesTitle": "Values and source documents",
+      "indicator": "Metric",
+      "period": "Period",
+      "value": "Value",
+      "source": "Source",
+      "page": "page {page}",
+      "metrics": {
+        "REVENUE": "Revenue",
+        "EBITDA": "EBITDA",
+        "NET_INCOME": "Net income",
+        "TOTAL_ASSETS": "Total assets",
+        "TOTAL_DEBT": "Total debt",
+        "CASH": "Cash"
+      }
+    },
+    "assistant": {
+      "title": "Data Room assistant",
+      "open": "Open assistant",
+      "close": "Close assistant",
+      "resize": "Adjust assistant width",
+      "unavailableTitle": "Not connected yet",
+      "unavailableDescription": "This space is reserved for the Data Room assistant. It does not send messages or query your documents yet.",
+      "contactTeam": "Write to the team",
+      "messageLabel": "Message",
+      "placeholder": "The assistant will be available here",
+      "send": "Send"
+    },
+    "mcp": {
+      "title": "Connect your agent",
+      "description": "Your Claude Code or Claude Cowork can read your Data Room with your same account.",
+      "command": "claude mcp add --transport http sherlock {url}",
+      "copy": "Copy",
+      "copied": "Copied",
+      "copyFailed": "We could not copy. Select the command and copy it by hand.",
+      "howItWorks": "How it works"
+    }
+  },
+  "companyGuests": {
+    "title": "Guests",
+    "description": "Share selected documents with read access. The guest verifies their email and accepts the approved NDA.",
+    "email": "Guest email",
+    "documents": "Documents you want to share",
+    "empty": "There are no documents enabled for guests. In Edit document, check Access level and select Guest/counterparty NDA only if you authorize sharing that file. The document must be published and current.",
+    "expires": "Days of access",
+    "invite": "Send invitation",
+    "working": "Saving…",
+    "invited": "Invitation sent.",
+    "revoked": "Access revoked.",
+    "error": "We could not complete the action. Check the permissions and the selected documents.",
+    "ndaMissing": "The team must set up the approved NDA for this company and language before inviting.",
+    "deliveryMissing": "Sending invitations is not available right now.",
+    "loading": "Loading guests…",
+    "noInvitations": "You have not sent any invitations yet.",
+    "revoke": "Revoke access",
+    "revokeReason": "Reason for revocation",
+    "confirmRevoke": "Confirm revocation",
+    "cancel": "Cancel",
+    "documentCount": "{count, plural, one {# document} other {# documents}}",
+    "expiry": "Expires on {date}",
+    "more": "There are more invitations. Ask the team for the full list.",
+    "status": {
+      "PENDING": "Email pending",
+      "VERIFIED": "Email verified",
+      "REVOKED": "Revoked",
+      "EXPIRED": "Expired"
+    },
+    "open": "Open document",
+    "ndaLoading": "Loading approved NDA…",
+    "ndaUnavailable": "The NDA is not available for this session. Ask the team for a current invitation.",
+    "signatory": "Signer's full name",
+    "acceptCheck": "I have read and accept this NDA.",
+    "accept": "Accept NDA and open the Data Room",
+    "accepting": "Recording acceptance…",
+    "ndaError": "We could not record your acceptance. Check the session and try again.",
+    "ndaVersion": "Version {version}"
+  },
+  "serviceUnavailable": {
+    "title": "We could not load your account.",
+    "body": "Try again in a minute.",
+    "retry": "Try again"
+  },
+  "vdrGuest": {
+    "meta": {
+      "title": "Guest room",
+      "description": "Access the documents shared with you."
+    },
+    "invitationIds": "Your invitation lets you access only the documents the team has shared with you.",
+    "logoutError": "We could not complete the action. Try again.",
+    "journey": {
+      "eyebrow": "Controlled external access",
+      "title": "Verify your invitation securely",
+      "description": "This space confirms your identity without exposing the Data Room, its participants, or documents.",
+      "protected": "Protected session",
+      "checking": "We are checking your secure session.",
+      "checkingRoom": "We are preparing the authorized view of the Data Room.",
+      "emailTitle": "Confirm the invited email",
+      "emailDescription": "Enter the same email that received the invitation. The response is deliberately generic to protect the privacy of the process.",
+      "email": "Invited email",
+      "emailPlaceholder": "fixture-1f71008a@example.com",
+      "requestCode": "Send one-time code",
+      "requesting": "Requesting code…",
+      "codeTitle": "Enter the security code",
+      "codeDescription": "If the invitation and the email match, you will receive a six-digit code. It expires in 10 minutes and works only once.",
+      "code": "Six-digit code",
+      "codePlaceholder": "000000",
+      "verify": "Verify email",
+      "verifying": "Verifying…",
+      "resend": "Request another code",
+      "resendWait": "You can request another code in {seconds, plural, one {# second} other {# seconds}}.",
+      "genericError": "We could not complete the verification. Check the details or try again.",
+      "unavailableTitle": "Access temporarily unavailable",
+      "unavailableDescription": "The session could not be checked securely. Try again in a few minutes.",
+      "retry": "Try again",
+      "invalidTitle": "Link unavailable",
+      "invalidDescription": "Open the original invitation link. For security, identifiers copied into the path or parameters are not accepted.",
+      "verifiedEyebrow": "Email verified",
+      "verifiedTitle": "Your identity was confirmed",
+      "verifiedDescription": "The session is active, but this does not open the Data Room or grant access to documents.",
+      "gateTitle": "Controls that still need to be completed",
+      "gateDescription": "Sherlock evaluates these controls separately. The company and the team keep control of access.",
+      "gates": {
+        "REAL_INTEREST": "Genuine interest confirmed",
+        "MUTUAL_OPT_IN": "Mutual interest confirmed",
+        "HUMAN_MATCH_APPROVAL": "Human review and approval",
+        "RISK_DISCLOSURE": "Risk disclosure accepted",
+        "NDA": "Valid NDA",
+        "ROOM_GRANT": "Explicit Data Room permission"
+      },
+      "noDocuments": "No documents are shown at this stage.",
+      "logout": "Sign out of secure session",
+      "loggingOut": "Signing out…",
+      "loggedOutTitle": "Signed out",
+      "loggedOutDescription": "The secure cookie was removed. Use the original link if you need to start another verification.",
+      "accessEndedTitle": "Access has ended",
+      "accessEndedDescription": "This invitation or session no longer has an active authorization. Use a current link if you need to request access again."
+    },
+    "room": {
+      "eyebrow": "Authorized room",
+      "description": "This view reflects only the published snapshot and the current permissions of your cycle.",
+      "dashboard": "Dashboard",
+      "documents": "Index",
+      "qa": "Q&A",
+      "documentLibrary": "Document library",
+      "documentCount": "{count, plural, one {# document} other {# documents}}",
+      "emptyRoom": "There are no documents published for this access at the moment.",
+      "secureDeliveryUnavailable": "Secure file delivery is not yet available for external guests. You can review the index, but not download files from this view.",
+      "reevaluated": "Access controls are re-evaluated on every read.",
+      "truncated": "The room contains more documents. This view shows only the first authorized batch.",
+      "classifications": {
+        "PUBLIC_TEASER": "Public teaser",
+        "CONFIDENTIAL": "Confidential",
+        "RESTRICTED": "Restricted",
+        "LEGAL": "Legal"
+      },
+      "unknownType": "File",
+      "unknownSize": "Size not available",
+      "published": "Published snapshot v{version}",
+      "noDashboard": "The company has not yet published a dashboard for this access.",
+      "noWidgets": "There are no blocks visible for your current permission.",
+      "source": "Source",
+      "featured": "Featured documents",
+      "qaTitle": "Safe Q&A summary",
+      "qaDescription": "Only counts for the current cycle are shown. Texts, authors, and identifiers are not exposed in this external view.",
+      "qaTotal": "Total visible",
+      "qaOpen": "Pending",
+      "qaAnswered": "Answered and approved",
+      "qaClosed": "Closed",
+      "qaEmpty": "There is no visible Q&A activity for this cycle yet.",
+      "qaTruncated": "There is more activity. The counts reflect only the current authorized batch.",
+      "logout": "Sign out of secure session",
+      "loggingOut": "Signing out…",
+      "readOnly": "You can open the version shared with you on screen. Every opening is recorded and the team can revoke your access at any time.",
+      "open": "Open document"
+    },
+    "nda": {
+      "loading": "Loading approved NDA…",
+      "unavailable": "The NDA is not available for this session. Ask the team for a current invitation.",
+      "signatory": "Signer's full name",
+      "acceptCheck": "I have read and accept this NDA.",
+      "accept": "Accept NDA and open the Data Room",
+      "accepting": "Recording acceptance…",
+      "error": "We could not record your acceptance. Check the session and try again.",
+      "version": "Version {version}"
+    },
+    "panel": {
+      "title": "Guests",
+      "description": "Share documents with read access. The guest verifies their email and accepts the NDA.",
+      "email": "Guest email",
+      "documents": "Documents you want to share",
+      "empty": "There are no documents enabled for guests. In Edit document, check Access level and select Guest/counterparty NDA only if you authorize sharing that file. The document must be published and current.",
+      "expires": "Days of access",
+      "invite": "Send invitation",
+      "working": "Saving…",
+      "invited": "Invitation sent.",
+      "revoked": "Access revoked.",
+      "error": "We could not complete the action. Check the permissions and the selected documents.",
+      "deliveryMissing": "Sending invitations is not available right now.",
+      "loading": "Loading guests…",
+      "revoke": "Revoke access",
+      "revokeReason": "Reason for revocation",
+      "confirmRevoke": "Confirm revocation",
+      "cancel": "Cancel",
+      "documentCount": "{count, plural, one {# document} other {# documents}}",
+      "expiry": "Expires on {date}",
+      "more": "There are more invitations. Ask the team for the full list.",
+      "status": {
+        "PENDING": "Email pending",
+        "VERIFIED": "Email verified",
+        "REVOKED": "Revoked",
+        "EXPIRED": "Expired"
+      }
+    }
+  },
+  "legal": {
+    "meta": {
+      "title": "Important notices",
+      "description": "Important notices about Sherlock's sell-side preparation, human review, and controlled sharing."
+    }
+  },
+  "terms": {
+    "meta": {
+      "title": "Terms and Conditions",
+      "description": "Terms for Sherlock's sell-side preparation, private workspaces, and controlled guest access."
+    }
+  }
+}

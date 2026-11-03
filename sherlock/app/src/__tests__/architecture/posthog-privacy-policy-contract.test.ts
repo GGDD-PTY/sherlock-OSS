@@ -2,10 +2,10 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
-const privacyPolicy = readFileSync(
-  resolve(process.cwd(), 'src/app/[locale]/(public)/privacy/page.tsx'),
-  'utf8'
-)
+import { spanishLegalCopy } from '../helpers/legal-copy'
+
+// La política publicada es el texto en español del diccionario.
+const privacyPolicy = spanishLegalCopy('privacy')
 const implementationGuide = readFileSync(
   resolve(process.cwd(), 'docs/CONSENT_IMPLEMENTATION.md'),
   'utf8'

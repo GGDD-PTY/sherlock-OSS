@@ -22,8 +22,7 @@ const LANGUAGE_NAMES = {
   en: 'English',
 } satisfies Record<Locale, string>
 
-const isLocale = (value: string): value is Locale =>
-  (locales as readonly string[]).includes(value)
+const isLocale = (value: string): value is Locale => (locales as readonly string[]).includes(value)
 
 type LanguageToggleProps = {
   readonly triggerId?: string

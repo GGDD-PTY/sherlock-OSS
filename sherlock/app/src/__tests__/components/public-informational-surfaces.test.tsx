@@ -3,6 +3,8 @@ import { join } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
+import { spanishLegalCopy } from '../helpers/legal-copy'
+
 const readAppFile = (relativePath: string) =>
   readFileSync(join(process.cwd(), relativePath), 'utf8')
 
@@ -16,8 +18,15 @@ describe('public informational launch surfaces', () => {
       readAppFile('src/components/ayuda/AyudaFeedback.tsx'),
     ].join('\n')
     const notFound = readAppFile('src/app/[locale]/not-found.tsx')
-    const terms = readAppFile('src/app/[locale]/(public)/terms/page.tsx')
-    const privacy = readAppFile('src/app/[locale]/(public)/privacy/page.tsx')
+    // Las páginas legales piden su texto al diccionario: el contrato lee ambos.
+    const terms = [
+      readAppFile('src/app/[locale]/(public)/terms/page.tsx'),
+      spanishLegalCopy('terms'),
+    ].join('\n')
+    const privacy = [
+      readAppFile('src/app/[locale]/(public)/privacy/page.tsx'),
+      spanishLegalCopy('privacy'),
+    ].join('\n')
 
     expect(help).not.toMatch(/launch-mode|publicSiteOnly/)
     expect(help).toContain('support.sendCompanyMessage')

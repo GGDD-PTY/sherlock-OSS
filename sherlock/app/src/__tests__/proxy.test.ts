@@ -831,26 +831,25 @@ describe('proxy', () => {
     }
   )
 
-  it('builds the public sitemap from NEXT_PUBLIC_APP_URL for the only locale', async () => {
+  it('builds the public sitemap from NEXT_PUBLIC_APP_URL in both locales', async () => {
     process.env.NEXT_PUBLIC_APP_URL = 'https://metadata.example.com'
     const { default: sitemap } = await import('@/app/sitemap')
 
     const entries = sitemap()
     const urls = entries.map((entry) => entry.url)
+    const base = 'https://metadata.example.com'
+    const pages = ['', '/ayuda', '/privacy', '/terms', '/legal']
 
-    expect(entries).toHaveLength(5)
-    expect(urls).toEqual([
-      'https://metadata.example.com/es',
-      'https://metadata.example.com/es/ayuda',
-      'https://metadata.example.com/es/privacy',
-      'https://metadata.example.com/es/terms',
-      'https://metadata.example.com/es/legal',
-    ])
-    expect(urls.some((url) => url.includes('/en'))).toBe(false)
-    // Un `hreflang` alterno anuncia una cara que ya no se sirve: sin segundo
-    // locale la entrada no lleva `alternates.languages`.
+    expect(entries).toHaveLength(10)
+    expect(urls).toEqual(pages.flatMap((page) => [`${base}/es${page}`, `${base}/en${page}`]))
+    // Cada entrada anuncia sus dos caras con `hreflang`: la misma página en
+    // español y en inglés.
     for (const entry of entries) {
-      expect(entry.alternates?.languages).toBeUndefined()
+      const page = new URL(entry.url).pathname.replace(/^\/(es|en)/, '')
+      expect(entry.alternates?.languages).toEqual({
+        es: `${base}/es${page}`,
+        en: `${base}/en${page}`,
+      })
     }
   })
 

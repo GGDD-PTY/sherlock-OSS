@@ -13,7 +13,8 @@
 
 import { Array as EffectArray, Option, Schema } from 'effect'
 
-import type { Locale } from '@/i18n/config'
+// Ruta relativa: Convex compila este módulo sin el alias `@/`.
+import type { Locale } from '../../i18n/config'
 
 export type VdrLocale = Locale
 

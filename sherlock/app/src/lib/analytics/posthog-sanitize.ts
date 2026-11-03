@@ -54,13 +54,7 @@ const ELEMENT_CHAIN_LIMIT = 20
 const HEATMAP_URL_LIMIT = 20
 const HEATMAP_POINT_LIMIT = 2_000
 
-const DYNAMIC_PATH_PARENTS = new Set([
-  'companies',
-  'invitations',
-  'ndas',
-  'rooms',
-  'users',
-])
+const DYNAMIC_PATH_PARENTS = new Set(['companies', 'invitations', 'ndas', 'rooms', 'users'])
 
 const AUTOMATIC_CONTEXT_PROPERTIES = [
   'token',

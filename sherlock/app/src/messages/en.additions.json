@@ -1,0 +1,355 @@
+{
+  "legal": {
+    "terms": {
+      "title": "Terms and Conditions",
+      "imageAlt": "Sherlock sell-side preparation terms",
+      "updated": "Last updated: August 2026",
+      "versionNotice": "Preliminary version subject to legal review.",
+      "sections": [
+        {
+          "title": "1. Identification of the operator",
+          "body": [
+            "This installation of Sherlock (the “Platform”) is operated under the name Sherlock by its current operator (the “Operator”, “we”). The legal identity and jurisdiction of the Operator will be identified in the applicable contractual notice before any registration or paid service.",
+            "Contact: the team that operates this installation, through the Help section."
+          ]
+        },
+        {
+          "title": "2. Acceptance",
+          "body": [
+            "By registering, accessing, or using the Platform, you (the “User”) accept these Terms and Conditions (the “Terms”), the Privacy Policy, and the Notices and Disclaimers, which form an integral part of this contract. If you do not agree, do not use the Platform.",
+            "The Operator may modify these Terms; material changes will be notified at least 15 calendar days in advance by email or by a notice on the Platform. Continued use after the changes take effect constitutes acceptance."
+          ]
+        },
+        {
+          "title": "3. Nature of the Platform — what it is and what it is NOT",
+          "body": [
+            "Sherlock is a sell-side preparation service focused on companies. Companies engage the team to organize their sources and prepare transaction deliverables such as financial models, teasers, CIMs, management presentations, and credit or equity decks. The work is kept in a private company workspace and is reviewed by humans before it is delivered or shared.",
+            "Mycroft is a separate sister service with no connection to this application. The team downloads the authorized materials to a private environment, works there, and uploads only the reviewed deliverables to your Data Room.",
+            "The Operator does NOT:",
+            "1. Run a public offering, a catalog of opportunities, or a self-service service for capital providers.",
+            "2. Act as a broker, an exchange, an investment adviser, or a provider of financial, legal, accounting, tax, or investment advice.",
+            "3. Audit, certify, or independently verify the financial, commercial, legal, accounting, or tax information that a company provides.",
+            "4. Hold, receive, transfer, or intermediate transaction funds.",
+            "5. Guarantee financing, a sale, a buyer, a lender, a term sheet, a closing, performance, or the accuracy of the sources."
+          ]
+        },
+        {
+          "title": "4. Workspace and guest access",
+          "body": [
+            "1. The company workspace is used to organize documents, preparation work, and authorized sharing. Access is limited to the company and, where applicable, to the transaction or room approved by the team.",
+            "2. The team may request information from the company before delivering materials or issuing guest access. That review is manual and has a limited operational purpose; it is not an audit, a certification, or an opinion on the merits of a transaction.",
+            "3. The public site does not offer self-service accounts for capital providers or a public catalog of opportunities. If a private process moves forward, the team may send a teaser and issue a guest invitation for a specific room.",
+            "4. Guest access may require a one-time code and a signed NDA before confidential materials are shown. The team may pause or reject a request if the relevant review or confidentiality steps are missing."
+          ]
+        },
+        {
+          "title": "5. Preparation and delivery",
+          "body": [
+            "1. The company provides the sources and the requested context for the agreed scope. The company remains responsible for the accuracy and authorization of what it provides.",
+            "2. The team may use Mycroft to process the sources outside this application, as described above. The team reviews the work and the agreed deliverables before delivering or sharing them.",
+            "3. Deliverables are preparation support. They do not constitute an audit, a certification, a recommendation, or a guarantee of financing, a sale, a purchase, a closing, or performance.",
+            "4. Any transaction, negotiation, definitive documentation, and movement of funds takes place between the relevant parties and their own advisers. Sherlock is not a party to those arrangements unless a separate written agreement expressly says so."
+          ]
+        },
+        {
+          "title": "6. Services, scope, and billing",
+          "body": [
+            "1. Preparation work is quoted by scope. The applicable terms of service identify the deliverables, assumptions about the sources, timeline, charges, and payment terms before work begins.",
+            "2. This public site does not publish a table of recurring access fees or transaction charges. You do not have to pay anything unless the terms of service or an applicable written agreement say so.",
+            "3. A change in the deliverables or the sources may change the scope, the timeline, or the charges. The team confirms the revised terms before taking on additional work.",
+            "4. A service charge covers only the preparation work described in the applicable scope. It does not guarantee financing, a sale, a buyer, a lender, a term sheet, a closing, or performance."
+          ]
+        },
+        {
+          "title": "7. User obligations and conduct",
+          "body": [
+            "The User agrees to:",
+            "1. Use the Platform and the workspace only for the preparation, document, and access purposes described in these Terms and in the applicable terms of service.",
+            "2. Keep your credentials secure, and keep secure any confidential information received through the workspace or a guest room, in accordance with any applicable NDA or confidentiality terms.",
+            "3. Provide information and documents that you are authorized to share, and tell the team if you detect material errors or relevant changes.",
+            "4. Not share, resell, disclose, bulk-extract, or misuse another party’s documents or workspace access.",
+            "5. Not interfere with the security or operation of the Platform or use it for an unlawful purpose."
+          ]
+        },
+        {
+          "title": "8. User content and intellectual property",
+          "body": [
+            "1. The User retains ownership of the information and documents it uploads, subject to the rights and permissions needed to provide the agreed service.",
+            "2. The User authorizes the Operator and its authorized processing services, including Mycroft where applicable, to host and process the materials supplied solely for the requested preparation, review, delivery, security, and access control.",
+            "3. The User represents that it is authorized to provide the materials and to request the agreed work. You must not upload material that you are not permitted to share.",
+            "4. The Platform, its software, trademarks (including “Sherlock”), design, and proprietary content are the property of the Operator or its licensors. No license is granted to the User other than what is needed for the agreed service."
+          ]
+        },
+        {
+          "title": "9. Disclaimers",
+          "body": [
+            "1. The Platform is provided “as is” and “as available”. The Operator does not guarantee uninterrupted availability or the absence of errors.",
+            "2. Human review and Mycroft processing do not audit, certify, or independently verify the financial, commercial, legal, accounting, or tax information that a company provides.",
+            "3. Deliverables and any analytical output are preparation support, not financial, legal, accounting, tax, or investment advice, and do not constitute a recommendation.",
+            "4. Any decision on financing, a sale, a purchase, or another transaction is the sole responsibility of the parties making it and their own advisers. Sherlock does not guarantee a transaction, financing, a closing, or performance."
+          ]
+        },
+        {
+          "title": "10. Limitation of liability",
+          "body": [
+            "To the maximum extent permitted by applicable law:",
+            "1. The Operator will not be liable for indirect damages, lost profits, loss of opportunity, loss of data, or consequential damages.",
+            "2. The Operator’s total accumulated liability to a User, for any cause, is limited to the amount actually paid by that User to the Operator in the 12 months before the event giving rise to the claim.",
+            "3. Nothing in these Terms limits liability that cannot be limited by law, including liability arising from willful misconduct or gross negligence."
+          ]
+        },
+        {
+          "title": "11. Suspension and termination",
+          "body": [
+            "1. The Operator may pause or terminate the access of a User who breaches these Terms, an applicable term of service, or a confidentiality requirement, with or without prior notice depending on the circumstances.",
+            "2. The User may stop using the Platform and request the closure of their account through the available support channel. Obligations of confidentiality, intellectual property, and limitation of liability, and those that by their nature must survive, will continue after termination.",
+            "3. After termination, the Operator will handle retained data in accordance with the Privacy Policy and the applicable terms of service."
+          ]
+        },
+        {
+          "title": "12. Governing law and jurisdiction",
+          "body": [
+            "The applicable terms of service or another written agreement identify the governing law and the dispute resolution for the requested work. If a specific agreement contains terms that contradict these Terms, the specific agreement controls the work it covers.",
+            "Nothing in these Terms limits rights or protections that cannot be limited under applicable law."
+          ]
+        },
+        {
+          "title": "13. Final provisions",
+          "body": [
+            "1. Language: these Terms are available in Spanish. If a signed service or confidentiality agreement differs from this text, that agreement prevails.",
+            "2. Severability: the invalidity of one clause does not affect the rest.",
+            "3. Entire agreement: these Terms, together with the Privacy Policy, the Notices and Disclaimers, and any applicable service or confidentiality agreement, describe the agreement for using the Platform and the workspace.",
+            "4. Notices: to the User’s registered email address and, for the Operator, through the Help section of this installation."
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "updated": "Last updated: August 2026",
+      "versionNotice": "Preliminary version subject to legal review.",
+      "sections": [
+        {
+          "title": "1. Data controller",
+          "body": [
+            "The operator of this installation of Sherlock is responsible for the processing of your personal data under Law 81 of March 26, 2019 on Personal Data Protection of the Republic of Panama and its implementing regulation (Executive Decree 285 of May 28, 2021).",
+            "Contact for privacy matters: the team that operates this installation, through the Help section."
+          ]
+        },
+        {
+          "title": "2. Data we collect",
+          "intro": "We collect the following data:",
+          "list": [
+            {
+              "label": "Account and contact data:",
+              "text": "name, email address, phone number, country, language, access credentials (managed by our authentication provider)."
+            },
+            {
+              "label": "Verification data (KYC/KYB):",
+              "text": "identity document or passport, date of birth, nationality; for companies: corporate documents, registry, beneficial owners, legal representatives; checks against sanctions lists and anti-money-laundering screening. Our team performs this verification through human review — generally when your company prepares to share materials with third parties — and part of it may be performed by a specialized provider, which will be identified in the applicable notice."
+            },
+            {
+              "label": "Financial and business data:",
+              "text": "the financial and commercial information that your company uploads to your workspace and data room (financial statements, metrics, documents), and the access records of guests to that data room."
+            },
+            {
+              "label": "Transactional data for paid services:",
+              "text": "if a paid service is engaged, the selected service and the billing history. We do not store full card numbers; any enabled payment is processed by the provider identified in the applicable billing terms."
+            },
+            {
+              "label": "Technical and usage data:",
+              "text": "IP address, device and browser type, pages visited, actions within the Platform, document access records (data room log), cookies and similar identifiers (see section 8)."
+            },
+            {
+              "label": "Communications:",
+              "text": "messages exchanged within the Platform and correspondence with our team."
+            }
+          ]
+        },
+        {
+          "title": "3. Purposes and legal basis",
+          "table": {
+            "headers": ["Purpose", "Legal basis (Law 81)"],
+            "rows": [
+              [
+                "Create and manage your account; provide the Platform’s services",
+                "Performance of the contract (Terms and Conditions)"
+              ],
+              [
+                "Identity and company verification (KYC/KYB), fraud prevention, and anti-money-laundering",
+                "Legal obligation / legitimate interest / consent"
+              ],
+              [
+                "Preparation of your company’s materials and controlled sharing with the counterparties you authorize (including internal analytical tools)",
+                "Performance of the contract"
+              ],
+              [
+                "If engaged, billing and collection for services",
+                "Performance of the contract / legal obligation"
+              ],
+              [
+                "Logging and auditing of access to confidential documents (VDR)",
+                "Performance of the contract / legitimate interest"
+              ],
+              ["Platform security, abuse prevention", "Legitimate interest"],
+              ["Product analytics and service improvement", "Consent / legitimate interest"],
+              [
+                "Operational communications (account notices, changes to terms)",
+                "Performance of the contract"
+              ],
+              ["Our own commercial communications", "Consent (revocable at any time)"],
+              ["Compliance with requests from authorities", "Legal obligation"]
+            ]
+          },
+          "body": [
+            "We do not make automated decisions with legal effects on you without human intervention: approvals for publication, sharing, and verification always go through review by our team."
+          ]
+        },
+        {
+          "title": "4. Processors and transfers",
+          "intro": "We share data only with:",
+          "list": [
+            {
+              "label": "Technology providers (data processors):",
+              "text": "authentication and identity (WorkOS), database and backend (Convex), web hosting (Vercel), and product analytics and error monitoring (PostHog). Payment processing (for example, Lemon Squeezy) and KYC/KYB verification providers are used only if they are enabled for a specific offering or verification flow, and will be identified in the applicable notice or billing terms. These providers process data on our behalf, under contract and only for the stated purposes."
+            },
+            {
+              "label": "Guests you authorize, in a controlled manner:",
+              "text": "confidential documents and company information are disclosed only to the specific counterparties you decide to invite to your data room, after review by our team and, where applicable, signature of the non-disclosure agreement (NDA) and verification of the guest’s access."
+            },
+            {
+              "label": "Competent authorities,",
+              "text": "when there is a legal obligation."
+            }
+          ],
+          "body": [
+            "We do not sell personal data to third parties.",
+            "International transfers: several of our providers host data outside Panama (mainly in the United States and the European Union). These transfers rely on the grounds provided by Law 81: performance of the contract with you, your consent when accepting this Policy and, where applicable, contractual clauses with the processors that ensure a level of protection equivalent to that of Law 81 (including the standard contractual clauses of the Ibero-American Data Protection Network, adopted by ANTAI through Resolution ANTAI-DG-003-2026)."
+          ]
+        },
+        {
+          "title": "5. Retention periods",
+          "list": [
+            {
+              "text": "Account and profile data: while the account is active and for up to 12 months after it is closed."
+            },
+            {
+              "text": "KYC/KYB and anti-money-laundering data: 5 years from the end of the relationship, in accordance with applicable rules."
+            },
+            {
+              "text": "If billing is enabled, records are kept for the periods required by Panamanian tax law."
+            },
+            {
+              "text": "Document access logs (VDR) and security records: 5 years, for their evidentiary function."
+            },
+            {
+              "text": "Analytics data: aggregated or pseudonymized once it is no longer needed in identifiable form."
+            }
+          ],
+          "body": ["Once the periods expire, data is securely deleted or anonymized."]
+        },
+        {
+          "title": "6. Your rights (ARCO + portability)",
+          "body": [
+            "Under Law 81, you may exercise the rights of access, rectification, cancellation, objection, and portability over your personal data by contacting the team from the Help section of your account, or through the options in the Platform itself (including requesting account deletion from the settings).",
+            "We will handle your request free of charge within the legal deadlines: access within ten (10) business days (art. 16, Law 81) and rectification within five (5) business days (art. 17, Law 81). Cancellation will not apply to data that we are legally required to keep (section 5), and you will be informed of this.",
+            "If you believe your rights have not been met, you may go to the National Authority for Transparency and Access to Information (ANTAI), the data protection authority of the Republic of Panama."
+          ]
+        },
+        {
+          "title": "7. Security",
+          "body": [
+            "We apply appropriate technical and organizational measures: encryption in transit, role-based access control, logging of access to confidential documents, segregation of environments, security monitoring, and provider assessment, and we maintain the database registration (technical record) required by regulation. No system is infallible; in the event of a security breach that poses a risk to your data, we will notify you and ANTAI as soon as possible and no later than 72 hours after becoming aware of it (art. 37 of Executive Decree 285 of 2021), indicating the nature of the incident, the data compromised, the measures taken, and our recommendations."
+          ]
+        },
+        {
+          "title": "8. Cookies and similar technologies",
+          "intro": "We use:",
+          "list": [
+            {
+              "label": "Essential cookies —",
+              "text": "session, authentication, and security. Necessary; without them the Platform does not work."
+            },
+            {
+              "label": "Cookieless analytics tool (PostHog, own proxy) —",
+              "text": "to understand product usage, reproduce navigation problems, and improve the product. It stores technical identifiers in localStorage, without analytics cookies or personal PostHog profiles. Pages, actions, performance, errors, and replays of the interface are recorded, with fields and document content hidden."
+            }
+          ],
+          "body": [
+            "We do not use third-party advertising cookies or show an analytics cookie banner. Measurement includes the use of data rooms. Credentials, form fields, files, and private URL parameters are hidden before being sent to PostHog. We respect Do Not Track and Global Privacy Control: these signals disable analytics capture without affecting the service."
+          ]
+        },
+        {
+          "title": "9. Minors",
+          "body": [
+            "The Platform is not directed at people under 18 and we do not knowingly collect their data. If we detect an account belonging to a minor, we will delete it."
+          ]
+        },
+        {
+          "title": "10. Changes to this Policy",
+          "body": [
+            "We will publish changes on this page and, if they are material, we will notify you by email or by a notice on the Platform with reasonable advance notice. The version date appears in the header."
+          ]
+        },
+        {
+          "title": "11. Governing law",
+          "body": [
+            "This Policy is governed by the laws of the Republic of Panama. Any dispute will be resolved in accordance with the governing law and jurisdiction clause of the Terms and Conditions."
+          ]
+        }
+      ]
+    },
+    "notice": {
+      "title": "Important notices",
+      "imageAlt": "Sherlock sell-side preparation notices",
+      "updated": "Last updated: August 2026",
+      "versionNotice": "Preliminary version subject to legal review.",
+      "sections": [
+        {
+          "title": "1. What Sherlock is — and what it is not",
+          "paragraphs": [
+            "Sherlock is a sell-side preparation service focused on companies in Latin America. The team organizes your sources and prepares transaction deliverables such as financial models, teasers, CIMs, management presentations, and credit or equity decks. The work is kept in a private company workspace and is reviewed by humans before it is delivered or shared.",
+            "<b>Sherlock is NOT:</b>"
+          ],
+          "list": [
+            "<b>A public offering or a catalog of opportunities.</b> The public site does not publish opportunities or offer self-service accounts to capital providers. If a private process moves forward, the team may send you a teaser and issue a guest invitation to the corresponding room.",
+            "<b>A broker, an exchange, or an investment adviser.</b> Sherlock makes no investment recommendations, does not organize a public offering, and does not replace your own professional advisers.",
+            "<b>An audit or a certification.</b> The team’s review and any Mycroft processing are preparation tools. They do not audit, certify, or independently verify a company’s financial, commercial, legal, accounting, or tax information.",
+            "<b>A custodian of funds.</b> Sherlock never receives, holds, or transfers transaction money. Sherlock does not promise financing, a sale, a closing, or performance."
+          ]
+        },
+        {
+          "title": "2. Risk warning",
+          "paragraphs": [
+            "Preparation materials support a company’s private transaction process; they are not financial, legal, accounting, tax, or investment advice. Any decision on financing, a sale, a purchase, or another transaction is for the parties and their own advisers. <b>Sherlock does not promise or project any performance or result.</b>"
+          ]
+        },
+        {
+          "title": "3. Limited-scope verification",
+          "paragraphs": [
+            "The team may request information from the company before sharing materials or issuing guest access. That review is handled manually and has a limited operational purpose. <b>It is not an audit</b>, a certification, or an opinion on the merits of a transaction. Each party remains responsible for its own diligence."
+          ]
+        },
+        {
+          "title": "4. Role of the team and of internal tools",
+          "paragraphs": [
+            "The team reviews the intake, the processing, and the deliverables before delivering or sharing them. Mycroft is a separate sister service with no connection to this application: the team downloads the authorized materials to a private environment, works there, and uploads only the reviewed deliverables to your Data Room. Analytical and artificial intelligence tools are working instruments to speed up preparation — they <b>do not</b> generate recommendations and do not replace your judgment or that of the parties."
+          ]
+        },
+        {
+          "title": "5. Jurisdiction",
+          "paragraphs": [
+            "This public notice does not determine a jurisdiction or a regulatory matter. Any review of a company’s eligibility, of sharing materials, or of guest access is handled manually by the team and, where applicable, is described in the terms of service or another agreement for the relevant work."
+          ]
+        },
+        {
+          "title": "6. Confidentiality",
+          "paragraphs": [
+            "The company’s materials stay in the private workspace unless the company and the team authorize sharing them. When a private process moves forward, the team may issue a guest invitation for a specific room; a one-time code and an NDA may be required before confidential materials are shown. Follow the confidentiality terms that apply to each document you receive."
+          ]
+        }
+      ]
+    },
+    "translationNotice": "This is a translation provided for convenience. The Spanish version is the governing version."
+  }
+}

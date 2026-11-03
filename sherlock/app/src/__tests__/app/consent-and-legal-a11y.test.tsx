@@ -14,6 +14,7 @@
 // ============================================================================
 
 import { render, screen } from '@testing-library/react'
+import { Fragment, type ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { PrivacySettingsClient } from '@/app/[locale]/(app)/settings/privacy/PrivacySettingsClient'
@@ -22,20 +23,37 @@ import LegalNoticesPage from '@/app/[locale]/(public)/legal/page'
 import TermsPage from '@/app/[locale]/(public)/terms/page'
 import esMessages from '@/messages/es.json'
 
-// Las páginas legales resuelven sus enlaces del pie con getTranslations
-// (server); en este entorno no hay request, así que el mock lee el catálogo
-// real para que los rótulos renderizados sean los del `es.json` vigente.
-vi.mock('next-intl/server', () => ({
-  getTranslations:
-    async (arg: string | { locale?: string; namespace?: string }) => (key: string) => {
+// Las páginas legales leen su texto con getTranslations (server); en este
+// entorno no hay request, así que el mock lee el catálogo real para que lo
+// renderizado sea el del `es.json` vigente. `raw` devuelve el valor sin
+// procesar y `rich` aplica las etiquetas `<b>` como lo hace next-intl.
+vi.mock('next-intl/server', () => {
+  const lookup = (path: string[]): unknown => {
+    let value: unknown = esMessages
+    for (const part of path) value = (value as Record<string, unknown>)[part]
+    return value
+  }
+  return {
+    getTranslations: async (arg: string | { locale?: string; namespace?: string }) => {
       const namespace = typeof arg === 'string' ? arg : arg.namespace
-      const path = `${namespace}.${key}`.split('.')
-      let value: unknown = esMessages
-      for (const part of path) value = (value as Record<string, unknown>)[part]
-      return typeof value === 'string' ? value : key
+      const resolve = (key: string) => lookup(`${namespace}.${key}`.split('.'))
+      const t = (key: string) => {
+        const value = resolve(key)
+        return typeof value === 'string' ? value : key
+      }
+      t.raw = (key: string) => resolve(key)
+      t.rich = (key: string, tags: Record<string, (chunks: ReactNode) => ReactNode>) => {
+        const value = String(resolve(key))
+        return value.split(/(<b>.*?<\/b>)/).map((part, index) => {
+          const match = part.match(/^<b>(.*)<\/b>$/)
+          return match ? <Fragment key={index}>{tags.b(match[1])}</Fragment> : part
+        })
+      }
+      return t
     },
-  setRequestLocale: () => {},
-}))
+    setRequestLocale: () => {},
+  }
+})
 
 // La pantalla se rinde con un perfil cargado; sin él reutiliza el skeleton de
 // la ruta y no llega a pintar un solo interruptor.
@@ -78,7 +96,7 @@ describe('interruptores de consentimiento', () => {
 
 describe('encabezados de los documentos legales', () => {
   it('da nivel 2 a los once títulos de la Política de Privacidad', async () => {
-    render(await PrivacyPage())
+    render(await PrivacyPage({ params: Promise.resolve({ locale: 'es' }) }))
 
     const headings = screen.getAllByRole('heading', { level: 2 })
 
@@ -92,7 +110,7 @@ describe('encabezados de los documentos legales', () => {
   it('no deja ningún título de sección fuera de la jerarquía en Avisos y Términos', async () => {
     for (const page of [
       await LegalNoticesPage({ params: Promise.resolve({ locale: 'es' }) }),
-      await TermsPage(),
+      await TermsPage({ params: Promise.resolve({ locale: 'es' }) }),
     ]) {
       const { container, unmount } = render(page)
       const titles = container.querySelectorAll('[data-slot="card-title"]')
@@ -106,9 +124,9 @@ describe('encabezados de los documentos legales', () => {
 
   it('keeps legal sections readable without decorative cards', async () => {
     for (const page of [
-      await PrivacyPage(),
+      await PrivacyPage({ params: Promise.resolve({ locale: 'es' }) }),
       await LegalNoticesPage({ params: Promise.resolve({ locale: 'es' }) }),
-      await TermsPage(),
+      await TermsPage({ params: Promise.resolve({ locale: 'es' }) }),
     ]) {
       const { container, unmount } = render(page)
       const sections = Array.from(container.querySelectorAll('[data-slot="card"]'))

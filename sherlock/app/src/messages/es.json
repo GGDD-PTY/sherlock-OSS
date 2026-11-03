@@ -547,13 +547,13 @@
       "navigation": "Navegación de administración"
     },
     "viewAs": {
-      "mode": "Modo ver como",
-      "viewingAs": "Viendo como {role}",
-      "adminAuthority": "Tus cambios siguen usando tu autoridad de administrador",
-      "exit": "Salir del modo ver como",
-      "roles": {
-        "company": "Empresa"
-      }
+      "trigger": "Ver como...",
+      "activeTrigger": "Viendo como",
+      "menuLabel": "Impersonar Rol",
+      "company": "Ver como Empresa",
+      "active": "Activo",
+      "backToAdmin": "Volver a vista Admin",
+      "roleCompany": "Empresa"
     },
     "gdpr": {
       "metadata": {
@@ -1029,7 +1029,12 @@
       }
     },
     "accessHelp": "Si necesitas recuperar tu contraseña, abre el inicio de sesión y elige la opción de recuperación. Si entras con Google, gestiona el acceso desde tu cuenta de Google.",
-    "signInLink": "Abrir inicio de sesión"
+    "signInLink": "Abrir inicio de sesión",
+    "pauseErrors": {
+      "noProfile": "No autenticado",
+      "convexUnavailable": "No se pudo autenticar con Convex",
+      "mutationFailed": "Error al pausar la cuenta. Intenta de nuevo."
+    }
   },
   "vdr": {
     "viewer": {

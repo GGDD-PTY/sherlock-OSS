@@ -547,13 +547,13 @@
       "navigation": "Admin navigation"
     },
     "viewAs": {
-      "mode": "View as mode",
-      "viewingAs": "Viewing as {role}",
-      "adminAuthority": "Your changes still use your administrator authority",
-      "exit": "Exit view-as mode",
-      "roles": {
-        "company": "Company"
-      }
+      "trigger": "View as...",
+      "activeTrigger": "Viewing as",
+      "menuLabel": "Impersonate role",
+      "company": "View as company",
+      "active": "Active",
+      "backToAdmin": "Back to admin view",
+      "roleCompany": "Company"
     },
     "gdpr": {
       "metadata": {
@@ -1029,7 +1029,12 @@
       }
     },
     "accessHelp": "If you need to recover your password, open the sign-in page and choose the recovery option. If you sign in with Google, manage access from your Google account.",
-    "signInLink": "Open sign-in"
+    "signInLink": "Open sign-in",
+    "pauseErrors": {
+      "noProfile": "Not signed in",
+      "convexUnavailable": "Could not authenticate with Convex",
+      "mutationFailed": "Could not pause the account. Try again."
+    }
   },
   "vdr": {
     "viewer": {

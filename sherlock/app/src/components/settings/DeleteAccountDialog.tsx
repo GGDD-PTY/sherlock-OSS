@@ -48,6 +48,14 @@ const closeSessionAfterPause = Effect.fn('Settings.closeSessionAfterPause')(func
   )
 })
 
+// El servidor devuelve el motivo; el texto sale del diccionario del idioma de
+// la pantalla, no de la frase en español que el servidor guarda para sus logs.
+const PAUSE_ERROR_KEYS = {
+  'no-profile': 'pauseErrors.noProfile',
+  'convex-unavailable': 'pauseErrors.convexUnavailable',
+  'mutation-failed': 'pauseErrors.mutationFailed',
+} as const
+
 export function DeleteAccountDialog() {
   const [isPending, startTransition] = useTransition()
   const t = useTranslations('settings')
@@ -59,7 +67,7 @@ export function DeleteAccountDialog() {
       const result = await deleteAccount()
 
       if (!result.success) {
-        toast.error(result.message)
+        toast.error(result.reason ? t(PAUSE_ERROR_KEYS[result.reason]) : result.message)
         return
       }
       toast.success(t('deleteSuccess'))

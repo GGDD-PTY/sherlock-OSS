@@ -36,6 +36,8 @@ import { defaultLocale } from '@/i18n/config'
 export type ActionResult = {
   success: boolean
   message: string
+  /** Motivo del fallo; la pantalla lo traduce con `settings.pauseErrors`. */
+  reason?: AccountPauseReason
 }
 
 // ===== FALLOS CON NOMBRE =====
@@ -125,7 +127,11 @@ export async function deleteAccount(): Promise<ActionResult> {
   })
 
   if (!outcome.ok) {
-    return { success: false, message: ACCOUNT_PAUSE_MESSAGES[outcome.reason] }
+    return {
+      success: false,
+      message: ACCOUNT_PAUSE_MESSAGES[outcome.reason],
+      reason: outcome.reason,
+    }
   }
 
   // ===== REVOCACIÓN DE SESIÓN SERVER-SIDE =====

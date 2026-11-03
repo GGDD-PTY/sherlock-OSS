@@ -8,9 +8,14 @@ describe('public sitemap', () => {
   // [F] 2026-09-03 23:30: el sitio ships solo en español y el locale `en`
   // desapareció. El sitemap anuncia un único prefijo: una entrada `/en/` sería
   // una URL que no existe.
-  it('indexes the public informational surfaces in the only locale', () => {
-    expect(paths()).toEqual(expect.arrayContaining(['/es', '/es/ayuda']))
-    expect(paths().every((path) => path === '/es' || path.startsWith('/es/'))).toBe(true)
+  it('indexes the public informational surfaces in both locales', () => {
+    expect(paths()).toEqual(expect.arrayContaining(['/es', '/es/ayuda', '/en', '/en/ayuda']))
+    expect(
+      paths().every((path) => ['/es', '/en'].includes(path) || /^\/(es|en)\//.test(path))
+    ).toBe(true)
+    expect(paths().filter((path) => path.startsWith('/es')).length).toBe(
+      paths().filter((path) => path.startsWith('/en')).length
+    )
   })
 
   // /help y /roadmap se fundieron en /ayuda y solo redirigen: anunciar un
@@ -32,7 +37,16 @@ describe('public sitemap', () => {
   // Los tres documentos legales son públicos y sustantivos: dejar uno fuera del
   // sitemap lo esconde del indexado que sí reciben sus hermanos.
   it('indexes every public legal document', () => {
-    expect(paths()).toEqual(expect.arrayContaining(['/es/privacy', '/es/terms', '/es/legal']))
+    expect(paths()).toEqual(
+      expect.arrayContaining([
+        '/es/privacy',
+        '/es/terms',
+        '/es/legal',
+        '/en/privacy',
+        '/en/terms',
+        '/en/legal',
+      ])
+    )
   })
 
   // El catálogo del marketplace quedó despublicado en el código, sin bandera de

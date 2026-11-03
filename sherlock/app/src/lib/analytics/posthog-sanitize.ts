@@ -458,7 +458,7 @@ const sanitizeExceptionProperties = Effect.fn('PostHogSanitize.exception')(funct
       continue
     }
     if (property === 'locale') {
-      if (value === 'es') properties.locale = value
+      if (value === 'es' || value === 'en') properties.locale = value
       continue
     }
     if (property === 'route') {

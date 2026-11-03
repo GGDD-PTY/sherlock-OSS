@@ -1,20 +1,22 @@
+import { getNumberFormatLocale } from '@/i18n/routing'
+
 type MoneyFormatOptions = {
   readonly compact?: boolean
   readonly currency: string
   readonly locale: string
 }
 
-// [F] 2026-09-03 23:30: el sitio es solo en español. Toda cifra sale en es-PA
-// aunque el llamador viva en una ruta `[locale]`.
-const INTL_LOCALE = 'es-PA'
+// Las cifras siguen el idioma de la ruta (`es` → es-PA, `en` → en-US). Los dos
+// escriben `USD 1,234`: el inglés muestra el código de moneda, no `$`, para que
+// una cifra signifique lo mismo en los dos idiomas.
 
 const moneyFormatters = new Map<string, Intl.NumberFormat>()
 
 export function formatMoney(
   amount: number,
-  { compact = false, currency, locale: _locale }: MoneyFormatOptions
+  { compact = false, currency, locale }: MoneyFormatOptions
 ): string {
-  const intlLocale = INTL_LOCALE
+  const intlLocale = getNumberFormatLocale(locale)
   const cacheKey = `${intlLocale}:${currency}:${compact ? 'compact' : 'standard'}`
   let formatter = moneyFormatters.get(cacheKey)
 
@@ -22,6 +24,7 @@ export function formatMoney(
     formatter = new Intl.NumberFormat(intlLocale, {
       style: 'currency',
       currency,
+      ...(intlLocale === 'en-US' ? { currencyDisplay: 'code' as const } : {}),
       ...(compact ? { notation: 'compact', maximumFractionDigits: 1 } : {}),
       ...(compact ? {} : { maximumFractionDigits: 0 }),
     })

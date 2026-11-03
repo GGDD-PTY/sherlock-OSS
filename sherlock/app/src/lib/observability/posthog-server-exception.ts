@@ -166,7 +166,7 @@ function safeTag(tag: string | undefined): string | undefined {
 const sendServerException = Effect.fn('ServerException.send')(function* (args: {
   input: ServerExceptionInput
   ingestUrl: string
-  locale: 'es' | undefined
+  locale: 'es' | 'en' | undefined
   method: string | undefined
   projectKey: string
   route: string | undefined
@@ -230,7 +230,7 @@ const captureServerExceptionEffect = Effect.fn('ServerException.capture')(functi
   if (process.env.NODE_ENV !== 'production' || !projectKey || !ingestUrl) return false
 
   const route = safeRoute(input.route)
-  const locale = input.locale === 'es' ? input.locale : undefined
+  const locale = input.locale === 'es' || input.locale === 'en' ? input.locale : undefined
   const method = safeTag(input.method)
   const routerKind = safeTag(input.routerKind)
   const routeType = safeTag(input.routeType)

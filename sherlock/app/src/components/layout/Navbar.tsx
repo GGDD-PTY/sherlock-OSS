@@ -11,6 +11,7 @@ import { useTranslations } from 'next-intl'
 import { Link, usePathname } from '@/i18n/navigation'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { LanguageToggle } from '@/components/ui/language-toggle'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import {
   Sheet,
@@ -185,6 +186,7 @@ function LandingNavbar() {
             el atajo del header va en outline para no competir con él. */}
         <div className="hidden shrink-0 items-center gap-1 lg:flex">
           <ThemeToggle showLabel />
+          <LanguageToggle showLabel />
           {/* La sala propia, nombrada por su destino («Data Room» o «Panel»).
               El logotipo lleva al inicio y esto lleva a donde trabaja el cliente.
               El esqueleto espera a `isLoading`, no a `isAuthLoading`: el rol lo
@@ -258,6 +260,7 @@ function LandingNavbar() {
 
                 <div className="border-border grid gap-2 border-y py-4">
                   <ThemeToggle showLabel />
+                  <LanguageToggle showLabel />
                 </div>
 
                 {isAuthenticated ? (
@@ -459,6 +462,7 @@ function ProductNavbar() {
         {mobileAccountItems.map(renderMobileLink)}
         <div className="px-3 py-1">
           <ThemeToggle showLabel />
+          <LanguageToggle showLabel />
         </div>
         <Button
           variant="ghost"
@@ -607,6 +611,7 @@ function ProductNavbar() {
                         data-testid="compact-display-controls"
                       >
                         <ThemeToggle showLabel />
+                        <LanguageToggle showLabel />
                       </div>
                     )}
 
@@ -680,6 +685,7 @@ function ProductNavbar() {
                 Compact layouts still use the named menu. */}
             <div className="hidden xl:contents">
               <ThemeToggle showLabel={!isAuthenticatedForNavbar} />
+              <LanguageToggle showLabel={!isAuthenticatedForNavbar} />
             </div>
 
             {/* ===== USUARIO LOGUEADO ===== */}

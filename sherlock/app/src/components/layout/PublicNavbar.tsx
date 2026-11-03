@@ -20,6 +20,7 @@ import type { LucideIcon } from 'lucide-react'
 
 import { Link, usePathname } from '@/i18n/navigation'
 import { Button } from '@/components/ui/button'
+import { LanguageToggle } from '@/components/ui/language-toggle'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import {
   Sheet,
@@ -92,6 +93,7 @@ export function PublicNavbar() {
             </Button>
           ))}
           <ThemeToggle showLabel />
+          <LanguageToggle showLabel />
           <Button variant="ghost" size="sm" asChild>
             <SignInLink>
               <LogIn className="h-4 w-4" aria-hidden="true" />
@@ -143,6 +145,7 @@ export function PublicNavbar() {
 
                 <div className="border-border grid gap-2 border-y py-4">
                   <ThemeToggle showLabel />
+                  <LanguageToggle showLabel />
                 </div>
 
                 <div className="grid gap-2">

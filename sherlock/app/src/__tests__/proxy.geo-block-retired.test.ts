@@ -111,18 +111,20 @@ describe('proxy US geo-block retired', () => {
       }
     )
 
-    // La cara inglesa se retiró como PRODUCTO ([F] 2026-09-01), no como bloqueo
-    // territorial. Un 308 a español es la respuesta correcta; un 451 sobre esa
-    // misma ruta sería el geo-block volviendo por la puerta de atrás.
-    it.each(['/en', '/en/help'])(
-      'retires the English face at %s with a redirect and never a compliance block',
+    // El inglés se sirve otra vez en /en. Un 451 sobre esa ruta sería el
+    // geo-block volviendo por la puerta de atrás, y un 308 a /es sería el corte
+    // a un solo idioma volviendo.
+    it.each(['/en', '/en/ayuda'])(
+      'serves the English face at %s with neither a redirect nor a compliance block',
       async (path) => {
         const { proxy } = await import('@/proxy')
 
         const response = await proxy(usRequest(path))
 
-        expect(response.status).toBe(308)
+        expect(response.status).not.toBe(308)
+        expect(response.status).not.toBe(451)
         expect(response.headers.get('x-sherlock-compliance-block')).toBeNull()
+        expect(mockIntlMiddleware).toHaveBeenCalledTimes(1)
       }
     )
 

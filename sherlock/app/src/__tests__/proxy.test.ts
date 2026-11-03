@@ -199,38 +199,32 @@ describe('proxy', () => {
     expect(mockAuthkit).not.toHaveBeenCalled()
   })
 
-  // ===== UNA SOLA CARA: ESPAÑOL ([F] 2026-09-01) =====
-  // El inglés dejó de servirse como cara del sitio. Los mensajes `en` siguen en
-  // el árbol y sus contratos verdes, así que este candado fija la ÚNICA
-  // diferencia: /en/* responde 308 al mismo camino en /es, antes de AuthKit y
-  // sin pasar por el router de i18n. Un 404 o un 200 en /en son regresiones.
-  it.each([
-    ['/en', '/es'],
-    ['/en/ayuda', '/es/ayuda'],
-    ['/en/my-company/documents', '/es/my-company/documents'],
-    ['/en/design-system/components/button', '/es/design-system/components/button'],
-  ])('redirects the retired English face %s to %s', async (path, expected) => {
+  // ===== DOS IDIOMAS: ESPAÑOL E INGLÉS =====
+  // El inglés vuelve a servirse en /en/*. Este candado fija que /en ya no
+  // responde 308 a /es: la ruta llega al router de i18n como cualquier otra,
+  // y la query sobrevive porque nadie la reescribe.
+  it.each(['/en', '/en/ayuda'])(
+    'serves the English face %s without redirecting to /es',
+    async (path) => {
+      const { proxy } = await import('@/proxy')
+
+      const response = await proxy(new NextRequest(`http://localhost:3000${path}`))
+
+      expect(response.status).not.toBe(308)
+      expect(response.headers.get('location')).toBeNull()
+      expect(mockIntlMiddleware).toHaveBeenCalledTimes(1)
+    }
+  )
+
+  it('keeps an English address and its query string in English', async () => {
     const { proxy } = await import('@/proxy')
 
-    const response = await proxy(new NextRequest(`http://localhost:3000${path}`))
+    const response = await proxy(new NextRequest('http://localhost:3000/en/ayuda?tab=faq&q=2024'))
 
-    expect(response.status).toBe(308)
-    expect(new URL(response.headers.get('location') ?? '').pathname).toBe(expected)
-    expect(mockAuthkit).not.toHaveBeenCalled()
-    expect(mockIntlMiddleware).not.toHaveBeenCalled()
-  })
-
-  it('keeps the query string when retiring the English face', async () => {
-    const { proxy } = await import('@/proxy')
-
-    const response = await proxy(
-      new NextRequest('http://localhost:3000/en/my-company/documents?room=company&q=2024')
-    )
-
-    expect(response.status).toBe(308)
-    const location = new URL(response.headers.get('location') ?? '')
-    expect(location.pathname).toBe('/es/my-company/documents')
-    expect(location.search).toBe('?room=company&q=2024')
+    expect(response.status).not.toBe(308)
+    const forwarded = mockIntlMiddleware.mock.calls[0]?.[0] as NextRequest | undefined
+    expect(forwarded?.nextUrl.pathname).toBe('/en/ayuda')
+    expect(forwarded?.nextUrl.search).toBe('?tab=faq&q=2024')
   })
 
   it.each(['/es/design-system'])(
@@ -569,17 +563,20 @@ describe('proxy', () => {
     '/es/messages',
     '/es/portfolio',
     '/es/my-company/deals',
-  ])('treats the former marketplace path %s as an unknown route (404) before AuthKit', async (path) => {
-    const { proxy } = await import('@/proxy')
+  ])(
+    'treats the former marketplace path %s as an unknown route (404) before AuthKit',
+    async (path) => {
+      const { proxy } = await import('@/proxy')
 
-    const response = await proxy(new NextRequest(`http://localhost:3000${path}`))
+      const response = await proxy(new NextRequest(`http://localhost:3000${path}`))
 
-    expect(mockAuthkit).not.toHaveBeenCalled()
-    expect(mockIntlMiddleware).not.toHaveBeenCalled()
-    expect(response.status).toBe(404)
-    expect(response.headers.get('location')).toBeNull()
-    expect(response.headers.get('x-middleware-rewrite')).toMatch(/\/es\/__not-found__$/)
-  })
+      expect(mockAuthkit).not.toHaveBeenCalled()
+      expect(mockIntlMiddleware).not.toHaveBeenCalled()
+      expect(response.status).toBe(404)
+      expect(response.headers.get('location')).toBeNull()
+      expect(response.headers.get('x-middleware-rewrite')).toMatch(/\/es\/__not-found__$/)
+    }
+  )
 
   it.each(['/es/investors', '/es/deals'])(
     'treats %s as an unknown route (404) in dev-auth mode too',

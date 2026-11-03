@@ -36,9 +36,9 @@ function rawRequestId(headers: RequestErrorHeaders | undefined): string | null {
   return Array.isArray(value) && typeof value[0] === 'string' ? value[0] : null
 }
 
-function localeOf(path: string | undefined): 'es' | undefined {
+function localeOf(path: string | undefined): 'es' | 'en' | undefined {
   const segment = path?.split('?')[0]?.split('/')[1]
-  return segment === 'es' ? segment : undefined
+  return segment === 'es' || segment === 'en' ? segment : undefined
 }
 
 export async function onRequestError(

@@ -10,7 +10,7 @@ const SERVER_ANALYTICS_TIMEOUT_MS = 1_500
 const MAX_CLAIMED_DOCUMENTS = 20
 const CLAIM_EVENT_CONCURRENCY = 2
 
-type AnalyticsLocale = 'es'
+type AnalyticsLocale = 'es' | 'en'
 type IntakeClaimConversionArgs = {
   claimDigest: string
   claimedDocumentCount: number

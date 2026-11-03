@@ -25,12 +25,11 @@ function panamaReference(locale: string) {
 }
 
 describe('formatShortDate', () => {
-  // [F] 2026-09-03 23:30: el sitio es solo en español. El parámetro `locale`
-  // sobrevive porque los llamadores viven en rutas `[locale]`, pero ya no elige
-  // formato: cualquier valor sale en es-PA.
+  // El parámetro `locale` elige el formato: `es` → es-PA, `en` → en-US. La zona
+  // horaria es la de Panamá en los dos.
   it('formatea en hora de Panamá, no en la zona horaria ambiente', () => {
     expect(formatShortDate(TIMESTAMP, 'es')).toBe(panamaReference('es-PA'))
-    expect(formatShortDate(TIMESTAMP, 'en')).toBe(panamaReference('es-PA'))
+    expect(formatShortDate(TIMESTAMP, 'en')).toBe(panamaReference('en-US'))
   })
 
   it('devuelve el fallback para valores ausentes o inválidos', () => {
@@ -63,7 +62,7 @@ describe('formatDateTime', () => {
 
   it('formatea en hora de Panamá e incluye hora, minuto y segundo', () => {
     expect(formatDateTime(TIMESTAMP, 'es')).toBe(panamaDateTimeReference('es-PA'))
-    expect(formatDateTime(TIMESTAMP, 'en')).toBe(panamaDateTimeReference('es-PA'))
+    expect(formatDateTime(TIMESTAMP, 'en')).toBe(panamaDateTimeReference('en-US'))
     expect(formatDateTime(TIMESTAMP, 'es')).toMatch(/\d{2}:\d{2}:\d{2}/)
   })
 

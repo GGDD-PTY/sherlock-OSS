@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { Schema } from 'effect'
 
-import { defaultLocale } from '@/i18n/config'
+import { locales, type Locale } from '@/i18n/config'
 import {
   PUBLIC_CONTENT_PATHS,
   PublicRouteSchema,
@@ -21,9 +21,10 @@ const BASE_URL = Schema.decodeUnknownSync(Schema.URLFromString)(getPublicAppUrl(
 // La home es el prefijo de locale pelado: `/es`, no `/es/`.
 const HOME_PATH = Schema.decodeSync(PublicRouteSchema)('/')
 
-// El sitio ships en un solo idioma ([F] 2026-09-03) pero el prefijo se queda en
-// la URL. Sale del catálogo de i18n, no de un `'/es'` escrito al lado.
-const LOCALE_PREFIX = `/${defaultLocale}`
+// Cada página se anuncia en cada idioma del catálogo de i18n, con sus
+// alternativas `hreflang` para que el buscador sepa que son la misma página.
+const urlFor = (locale: Locale, path: PublicContentPath) =>
+  `${BASE_URL}/${locale}${path === HOME_PATH ? '' : path}`
 
 // Las superficies que se anuncian salen del catálogo de rutas públicas, en su
 // orden. La tabla de abajo se ata a esa lista con `satisfies`: una ruta pública
@@ -50,10 +51,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // daban cinco instantes distintos para la misma corrida.
   const lastModified = new Date()
 
-  return PUBLIC_CONTENT_PATHS.map((path) => ({
-    url: `${BASE_URL}${LOCALE_PREFIX}${path === HOME_PATH ? '' : path}`,
-    lastModified,
-    changeFrequency: PAGES[path].changeFrequency,
-    priority: PAGES[path].priority,
-  }))
+  return PUBLIC_CONTENT_PATHS.flatMap((path) => {
+    const languages = Object.fromEntries(locales.map((locale) => [locale, urlFor(locale, path)]))
+    return locales.map((locale) => ({
+      url: urlFor(locale, path),
+      lastModified,
+      changeFrequency: PAGES[path].changeFrequency,
+      priority: PAGES[path].priority,
+      alternates: { languages },
+    }))
+  })
 }

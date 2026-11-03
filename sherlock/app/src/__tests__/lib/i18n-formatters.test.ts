@@ -7,11 +7,12 @@ import { formatMoney, nameAtSentenceEnd } from '@/lib/i18n/formatters'
 // se lea como una diferencia invisible.
 const NBSP = '\u00a0'
 
-// [F] 2026-09-03 23:30: el sitio es solo en español. El adaptador conserva el
-// parámetro `locale` porque sus llamadores viven en rutas `[locale]`, pero ya
-// no elige formato: toda cifra sale en es-PA.
+// Las cifras siguen el idioma de la ruta: `es` → es-PA, `en` → en-US. Los dos
+// escriben coma de miles, punto decimal y el código `USD` (nunca `$`), para que
+// la misma cifra se lea igual en los dos idiomas. Un locale desconocido cae al
+// español.
 describe('localized money formatting', () => {
-  it('formats in Panamanian Spanish whatever locale the caller passes', () => {
+  it('formats with the route locale and keeps the currency code', () => {
     expect(formatMoney(2_400_000, { currency: 'USD', locale: 'es' })).toBe(`USD${NBSP}2,400,000`)
     expect(formatMoney(2_400_000, { currency: 'USD', locale: 'en' })).toBe(`USD${NBSP}2,400,000`)
     expect(formatMoney(2_400_000, { currency: 'USD', locale: 'pt' })).toBe(`USD${NBSP}2,400,000`)
@@ -22,7 +23,7 @@ describe('localized money formatting', () => {
       `USD${NBSP}2.4${NBSP}M`
     )
     expect(formatMoney(2_400_000, { compact: true, currency: 'USD', locale: 'en' })).toBe(
-      `USD${NBSP}2.4${NBSP}M`
+      `USD${NBSP}2.4M`
     )
   })
 })

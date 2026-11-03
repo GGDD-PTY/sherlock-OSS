@@ -13,6 +13,9 @@
         "light": "Claro",
         "dark": "Oscuro",
         "system": "Sistema"
+      },
+      "language": {
+        "toggle": "Cambiar idioma"
       }
     },
     "navbar": {

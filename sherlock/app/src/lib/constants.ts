@@ -61,6 +61,25 @@ export const countryNames = {
   DO: 'República Dominicana',
 } satisfies Record<CountryCode, string>
 
+// English names, beside the Spanish ones: this table is plain data with no
+// React around it, so the locale picks the column at the render site.
+export const countryNamesEn = {
+  PA: 'Panama',
+  CO: 'Colombia',
+  MX: 'Mexico',
+  PE: 'Peru',
+  CL: 'Chile',
+  AR: 'Argentina',
+  BR: 'Brazil',
+  EC: 'Ecuador',
+  CR: 'Costa Rica',
+  GT: 'Guatemala',
+  US: 'United States',
+  ES: 'Spain',
+  UY: 'Uruguay',
+  DO: 'Dominican Republic',
+} satisfies Record<CountryCode, string>
+
 // Recorre el catálogo en runtime: si `countryNames` alguna vez pierde una fila
 // sin que `LegacyCountryCodeSchema` se actualice a la par, esto revienta al
 // importar el módulo, no en el primer render que busque ese código.

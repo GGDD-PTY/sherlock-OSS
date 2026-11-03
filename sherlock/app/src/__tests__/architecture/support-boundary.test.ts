@@ -128,7 +128,8 @@ describe('fresh support architecture boundary', () => {
     const es = JSON.parse(read('src/messages/es.json')) as Record<string, unknown>
 
     expect(catalog.match(/'\/admin\/support'/g)).toHaveLength(1)
-    expect(catalog).toContain("nav: { label: 'Soporte'")
+    expect(catalog).toContain("nav: { labelKey: 'support'")
+    expect(JSON.stringify(es.admin)).toContain('"support":"Soporte"')
     expect(nav).not.toContain('/admin/support')
     // El sitio ships un solo catálogo, así que lo que se pinnea ya no es la
     // paridad es/en sino que las dos namespaces existen y traen su copy.

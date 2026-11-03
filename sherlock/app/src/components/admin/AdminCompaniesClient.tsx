@@ -15,6 +15,7 @@
 
 import { Link } from '@/i18n/navigation'
 import { useEffect, useState } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import { useMutation, usePaginatedQuery } from 'convex/react'
 import { Effect, Schema } from 'effect'
 import { toast } from 'sonner'
@@ -22,7 +23,8 @@ import { api } from '@/../convex/_generated/api'
 import type { Id } from '@/../convex/_generated/dataModel'
 import { adminStep, type AdminActionError } from '@/components/admin/adminAction'
 import { formatShortDate, getInitials } from '@/lib/utils'
-import { countryNames, type CountryCode } from '@/lib/constants'
+import { countryNames, countryNamesEn, type CountryCode } from '@/lib/constants'
+import type { Locale } from '@/i18n/config'
 import { getCountryLabel } from '@/lib/constants/countries'
 import { DEV_AUTH_ENABLED } from '@/lib/dev-auth'
 import { DEMO_PUBLIC_COMPANIES } from '@/lib/dev-auth/demo-data'
@@ -62,11 +64,13 @@ const CountryCodeSchema = Schema.Literals(
 )
 const decodeCountryCode = Schema.decodeUnknownOption(CountryCodeSchema)
 
-function countryLabel(code: string): string {
-  const labeled = getCountryLabel(code)
+function countryLabel(code: string, locale: string): string {
+  const language: Locale = locale === 'en' ? 'en' : 'es'
+  const labeled = getCountryLabel(code, language)
   if (labeled !== code) return labeled
   const decoded = decodeCountryCode(code)
-  return decoded._tag === 'Some' ? countryNames[decoded.value] : code
+  if (decoded._tag !== 'Some') return code
+  return (language === 'en' ? countryNamesEn : countryNames)[decoded.value]
 }
 
 type AdminCompany = {
@@ -96,39 +100,7 @@ const DEMO_ADMIN_COMPANIES: AdminCompany[] = DEMO_PUBLIC_COMPANIES.map((company,
   onboardingStep: index === 0 ? 4 : company.onboardingStep,
 }))
 
-const copy = {
-  total: 'Total empresas',
-  inReview: 'Revisión del equipo',
-  live: 'Materiales aprobados',
-  search: 'Buscar por nombre, razón social, industria, país o email...',
-  tableTitle: 'Pipeline de empresas',
-  tableDescription:
-    'Cola completa de empresas beta, incluyendo registros pendientes de revisión del equipo.',
-  empty: 'No se encontraron empresas',
-  company: 'Empresa',
-  industry: 'Industria',
-  country: 'País',
-  status: 'Estado',
-  registered: 'Registrada',
-  actions: 'Acciones',
-  review: 'Revisión',
-  liveTeaser: 'Material aprobado para compartir',
-  verified: 'Verificada',
-  openDataRoom: 'Abrir sala (VDR)',
-  actionsLabel: 'Acciones de empresa',
-  demoQueueDescription:
-    'En modo dev-auth se muestran empresas de ejemplo. Los registros privados reales siguen requiriendo auth admin de WorkOS/Convex.',
-  sessionRequiredTitle: 'Se requiere sesión admin de Convex',
-  sessionRequiredDescription:
-    'La cola de revisión de empresas es solo para admin. Inicia sesión con WorkOS/Convex admin o sincroniza el entorno dev de Convex antes de cargar registros privados.',
-  publishTeaser: 'Aprobar material para compartir',
-  unpublishTeaser: 'Retirar aprobación para compartir',
-  publishConfirm: (name: string) => `¿Aprobar el material revisado de "${name}" para compartir?`,
-  unpublishConfirm: (name: string) => `¿Retirar la aprobación para compartir de "${name}"?`,
-  visibilityUpdated: 'Visibilidad actualizada',
-  visibilityError: 'No se pudo actualizar la visibilidad',
-  visibilityDemo: 'Modo demo: los cambios de visibilidad no se persisten',
-}
+type CompaniesTranslator = ReturnType<typeof useTranslations>
 
 // ============================================================================
 // CIFRAS
@@ -151,14 +123,14 @@ function Figure({ label, value }: { label: string; value: string }) {
 // columna «Empresa» lleva la razón social en su valor y la celda pinta solo el
 // nombre comercial.
 function companyColumns(
-  t: typeof copy,
-  dateLocale: string,
+  t: CompaniesTranslator,
+  locale: string,
   onToggleVisibility: (company: AdminCompany) => void
 ): DataTableColumn<AdminCompany>[] {
   return [
     {
       id: 'company',
-      header: t.company,
+      header: t('table.company'),
       accessorFn: (company) =>
         [company.name, company.legalName, company.ownerEmail].filter(Boolean).join(' '),
       cell: ({ row }) => (
@@ -178,7 +150,7 @@ function companyColumns(
     },
     {
       id: 'industry',
-      header: t.industry,
+      header: t('table.industry'),
       // La industria es texto libre ([F] 2026-09-17): la celda pinta lo que la
       // empresa escribió, y el valor de la columna es ese mismo texto, así el
       // orden y la búsqueda coinciden con lo que el equipo lee.
@@ -187,36 +159,36 @@ function companyColumns(
     },
     {
       id: 'country',
-      header: t.country,
-      accessorFn: (company) => countryLabel(company.country),
+      header: t('table.country'),
+      accessorFn: (company) => countryLabel(company.country, locale),
       cell: ({ row }) => (
         <div className="flex items-center gap-1">
           <MapPin aria-hidden="true" className="text-muted-foreground h-3 w-3" />
-          {countryLabel(row.original.country)}
+          {countryLabel(row.original.country, locale)}
         </div>
       ),
     },
     {
       id: 'status',
-      header: t.status,
+      header: t('table.status'),
       enableSorting: false,
       cell: ({ row }) => (
         <div className="flex gap-2">
           {row.original.isPublic ? (
             <Badge variant="outline" className="text-primary">
               <Eye className="mr-1 h-3 w-3" />
-              {t.liveTeaser}
+              {t('status.liveTeaser')}
             </Badge>
           ) : (
             <Badge variant="outline" className="text-warning">
               <Clock3 className="mr-1 h-3 w-3" />
-              {t.review}
+              {t('status.review')}
             </Badge>
           )}
           {row.original.isVerified && (
             <Badge variant="outline" className="text-primary">
               <CheckCircle2 className="mr-1 h-3 w-3" />
-              {t.verified}
+              {t('status.verified')}
             </Badge>
           )}
         </div>
@@ -224,26 +196,26 @@ function companyColumns(
     },
     {
       id: 'registered',
-      header: t.registered,
+      header: t('table.registered'),
       // Fuera del filtro de texto: el sello de tiempo es un número y
       // cualquier dígito buscado lo haría coincidir.
       enableGlobalFilter: false,
       accessorFn: (company) => company._creationTime,
       cell: ({ row }) => (
         <span className="text-muted-foreground">
-          {formatShortDate(row.original._creationTime, dateLocale)}
+          {formatShortDate(row.original._creationTime, locale)}
         </span>
       ),
     },
     {
       id: 'actions',
-      header: t.actions,
+      header: t('table.actions'),
       enableSorting: false,
       meta: { headClassName: 'text-right', cellClassName: 'text-right' },
       cell: ({ row }) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" aria-label={t.actionsLabel}>
+            <Button variant="ghost" size="sm" aria-label={t('table.actionsLabel')}>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -254,19 +226,19 @@ function companyColumns(
             <DropdownMenuItem asChild>
               <Link href={`/admin/companies/${row.original._id}/documents`}>
                 <FolderOpen className="mr-2 h-4 w-4" />
-                {t.openDataRoom}
+                {t('menu.openDataRoom')}
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem onSelect={() => onToggleVisibility(row.original)}>
               {row.original.isPublic ? (
                 <>
                   <EyeOff className="mr-2 h-4 w-4" />
-                  {t.unpublishTeaser}
+                  {t('menu.unpublishTeaser')}
                 </>
               ) : (
                 <>
                   <Eye className="mr-2 h-4 w-4" />
-                  {t.publishTeaser}
+                  {t('menu.publishTeaser')}
                 </>
               )}
             </DropdownMenuItem>
@@ -282,7 +254,8 @@ function companyColumns(
 // ============================================================================
 
 export function AdminCompaniesClient() {
-  const t = copy
+  const t = useTranslations('admin.companies')
+  const locale = useLocale()
   const [searchTerm, setSearchTerm] = useState('')
   const adminQueryDisabled = useDevAuthFixtures(undefined, DEV_AUTH_ENABLED)
   const isUsingDemoQueue = adminQueryDisabled
@@ -316,12 +289,14 @@ export function AdminCompaniesClient() {
   const handleToggleVisibility = (company: AdminCompany) => {
     const nextIsPublic = !company.isPublic
     const confirmed = window.confirm(
-      nextIsPublic ? t.publishConfirm(company.name) : t.unpublishConfirm(company.name)
+      nextIsPublic
+        ? t('confirm.publish', { name: company.name })
+        : t('confirm.unpublish', { name: company.name })
     )
     if (!confirmed) return
 
     if (isUsingDemoQueue) {
-      toast.info(t.visibilityDemo)
+      toast.info(t('toasts.visibilityDemo'))
       return
     }
 
@@ -330,10 +305,10 @@ export function AdminCompaniesClient() {
       adminStep(
         'AdminCompanies.setVisibility',
         'companies.setCompanyVisibility',
-        t.visibilityError,
+        t('toasts.visibilityError'),
         () => setCompanyVisibility({ companyId, isPublic: nextIsPublic })
       ).pipe(
-        Effect.tap(() => Effect.sync(() => toast.success(t.visibilityUpdated))),
+        Effect.tap(() => Effect.sync(() => toast.success(t('toasts.visibilityUpdated')))),
         Effect.catch((failure: AdminActionError) =>
           Effect.logError(`[AdminCompaniesClient] ${failure.action} falló en ${failure.step}`).pipe(
             Effect.andThen(Effect.sync(() => toast.error(failure.message)))
@@ -354,9 +329,8 @@ export function AdminCompaniesClient() {
   }
 
   const companyRows: AdminCompany[] = isUsingDemoQueue ? DEMO_ADMIN_COMPANIES : companies
-  const dateLocale = 'es-PA'
 
-  const columns = companyColumns(t, dateLocale, handleToggleVisibility)
+  const columns = companyColumns(t, locale, handleToggleVisibility)
 
   // ===== STATS =====
   // Las cifras cuentan lo cargado, no la tabla entera: con el cursor abierto se
@@ -374,21 +348,21 @@ export function AdminCompaniesClient() {
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-4">
       {isUsingDemoQueue && (
-        <p className="text-muted-foreground text-sm">{t.demoQueueDescription}</p>
+        <p className="text-muted-foreground text-sm">{t('demoQueueDescription')}</p>
       )}
 
       {/* ===== FIGURES ===== */}
       <dl className="border-border-hairline grid grid-cols-2 gap-6 border-t pt-4 sm:grid-cols-3">
-        <Figure label={t.total} value={stats.total} />
-        <Figure label={t.inReview} value={stats.inReview} />
-        <Figure label={t.live} value={stats.live} />
+        <Figure label={t('stats.total')} value={stats.total} />
+        <Figure label={t('stats.inReview')} value={stats.inReview} />
+        <Figure label={t('stats.live')} value={stats.live} />
       </dl>
 
       {/* ===== SEARCH ===== */}
       <div className="relative max-w-md">
         <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
         <Input
-          placeholder={t.search}
+          placeholder={t('search')}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="pl-10"
@@ -399,15 +373,15 @@ export function AdminCompaniesClient() {
       <section className="border-border-hairline flex min-h-0 flex-1 flex-col gap-3 border-t pt-4">
         <div>
           <h2 className="font-sans text-lg font-semibold tracking-normal">
-            {t.tableTitle} ({loadedCount(companyRows.length)})
+            {t('table.title')} ({loadedCount(companyRows.length)})
           </h2>
-          <p className="text-muted-foreground mt-1 text-sm">{t.tableDescription}</p>
+          <p className="text-muted-foreground mt-1 text-sm">{t('table.description')}</p>
         </div>
         <DataTable
-          ariaLabel={t.tableTitle}
+          ariaLabel={t('table.title')}
           columns={columns}
           data={companyRows}
-          emptyMessage={t.empty}
+          emptyMessage={t('table.empty')}
           fillHeight
           filterText={searchTerm}
           rowId={(company) => `company-${company._id}`}

@@ -1,0 +1,66 @@
+{
+  "admin": {
+    "sidebar": {
+      "sections": {
+        "main": "Main",
+        "monitoring": "Monitoring",
+        "settings": "Settings"
+      },
+      "items": {
+        "home": "Dashboard",
+        "companies": "Companies",
+        "support": "Support",
+        "security": "Security",
+        "gdpr": "GDPR",
+        "access": "Access"
+      }
+    },
+    "companies": {
+      "stats": {
+        "total": "Total companies",
+        "inReview": "Team review",
+        "live": "Approved materials"
+      },
+      "search": "Search by name, legal name, industry, country or email...",
+      "demoQueueDescription": "In dev-auth mode, sample companies are shown. Real private records still require WorkOS/Convex admin auth.",
+      "table": {
+        "title": "Company pipeline",
+        "description": "Full queue of beta companies, including records awaiting team review.",
+        "empty": "No companies found",
+        "company": "Company",
+        "industry": "Industry",
+        "country": "Country",
+        "status": "Status",
+        "registered": "Registered",
+        "actions": "Actions",
+        "actionsLabel": "Company actions"
+      },
+      "status": {
+        "review": "In review",
+        "liveTeaser": "Material approved for sharing",
+        "verified": "Verified"
+      },
+      "menu": {
+        "openDataRoom": "Open room (VDR)",
+        "publishTeaser": "Approve material for sharing",
+        "unpublishTeaser": "Withdraw approval for sharing"
+      },
+      "confirm": {
+        "publish": "Approve the reviewed material of \"{name}\" for sharing?",
+        "unpublish": "Withdraw the sharing approval of \"{name}\"?"
+      },
+      "toasts": {
+        "visibilityUpdated": "Visibility updated",
+        "visibilityError": "Could not update visibility",
+        "visibilityDemo": "Demo mode: visibility changes are not saved"
+      },
+      "room": {
+        "metaTitle": "Client room | Admin",
+        "metaDescription": "Operate a company's data room from the team panel.",
+        "back": "Back to companies",
+        "title": "{name}'s room · team view",
+        "body": "Whatever you upload here goes into {name}'s Data Room."
+      }
+    }
+  }
+}

@@ -25,7 +25,7 @@
 import { useState } from 'react'
 import { useMutation, useQuery } from 'convex/react'
 import { Effect } from 'effect'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
 import { api } from '@/../convex/_generated/api'
 import type { Id } from '@/../convex/_generated/dataModel'
@@ -45,8 +45,8 @@ const NOTE_INPUT_ID = 'admin-room-activation-note'
 
 // El día que se pinta es el de Panamá, no el del navegador de quien mira: sin
 // la zona fija, una activación de las 20:00 en Panamá se leía del día siguiente.
-function formatShortDate(at: number): string {
-  return new Intl.DateTimeFormat('es-PA', {
+function formatShortDate(at: number, locale: string): string {
+  return new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-PA', {
     day: 'numeric',
     month: 'short',
     timeZone: PANAMA_TIME_ZONE,
@@ -63,6 +63,7 @@ export function AdminRoomActivationPanel({
   isDemo?: boolean
 }) {
   const t = useTranslations('adminRoomActivation')
+  const locale = useLocale()
   const checklist = useQuery(
     api.companyChecklist.getCompanyChecklist,
     isDemo ? 'skip' : { companyId }
@@ -117,7 +118,7 @@ export function AdminRoomActivationPanel({
                 {activation.active ? t('available') : t('notActivated')}
                 {activation.active && activation.at ? (
                   <span className="text-muted-foreground font-data ml-2 text-xs font-normal">
-                    {formatShortDate(activation.at)}
+                    {formatShortDate(activation.at, locale)}
                   </span>
                 ) : null}
               </p>
@@ -181,7 +182,7 @@ export function AdminRoomActivationPanel({
                     ) : null}
                     {item.at ? (
                       <span className="text-muted-foreground text-xs">
-                        {formatShortDate(item.at)}
+                        {formatShortDate(item.at, locale)}
                       </span>
                     ) : null}
                   </span>

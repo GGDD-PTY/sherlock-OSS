@@ -131,7 +131,9 @@ describe('admin links skip prefetch', () => {
     )
 
     for (const route of ADMIN_ROUTES) {
-      const links = screen.getAllByRole('link', { name: route.nav.label })
+      const links = screen.getAllByRole('link', {
+        name: esMessages.admin.sidebar.items[route.nav.labelKey],
+      })
       expect(links.length).toBeGreaterThan(0)
       for (const link of links) {
         expect(link).toHaveAttribute('href', route.paths[0])

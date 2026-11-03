@@ -2,8 +2,8 @@ import type { LucideIcon } from 'lucide-react'
 import { Schema } from 'effect'
 import { CircleHelp, FolderLock, LayoutDashboard, Settings, UserCircle } from 'lucide-react'
 import { homePathForRole } from '@/lib/navigation/home'
-import { ADMIN_ROUTES, ADMIN_SIDEBAR_SECTION_TITLES } from '@/lib/product/admin-routes'
-import type { AdminSidebarSectionTitle } from '@/lib/product/admin-routes'
+import { ADMIN_ROUTES, ADMIN_SIDEBAR_SECTION_IDS } from '@/lib/product/admin-routes'
+import type { AdminSidebarItemKey, AdminSidebarSectionId } from '@/lib/product/admin-routes'
 import { PublicRouteSchema } from '@/lib/product/public-routes'
 import type { AppShell } from '@/lib/product/types'
 
@@ -53,13 +53,13 @@ export interface NavbarSecondaryItem {
 
 interface AdminSidebarItem {
   href: string
-  label: string
+  labelKey: AdminSidebarItemKey
   icon: LucideIcon
   exact?: boolean
 }
 
 export interface AdminSidebarSection {
-  title: AdminSidebarSectionTitle
+  id: AdminSidebarSectionId
   items: readonly AdminSidebarItem[]
 }
 
@@ -130,24 +130,25 @@ export const NAVBAR_SECONDARY_ITEMS: NavbarSecondaryItem[] = [
 // La barra del panel no declara destinos: los deriva del catálogo de
 // `product/admin-routes.ts`, que es donde una ruta del panel entra o sale
 // ([F] 2026-09-17). Cada sección toma sus filas en el orden del catálogo, y el
-// orden de las secciones es el de `ADMIN_SIDEBAR_SECTION_TITLES`.
-export const ADMIN_SIDEBAR_SECTIONS: readonly AdminSidebarSection[] =
-  ADMIN_SIDEBAR_SECTION_TITLES.map((title) => ({
-    title,
-    items: ADMIN_ROUTES.filter((route) => route.nav.section === title).map((route) => ({
+// orden de las secciones es el de `ADMIN_SIDEBAR_SECTION_IDS`.
+export const ADMIN_SIDEBAR_SECTIONS: readonly AdminSidebarSection[] = ADMIN_SIDEBAR_SECTION_IDS.map(
+  (id) => ({
+    id,
+    items: ADMIN_ROUTES.filter((route) => route.nav.section === id).map((route) => ({
       href: route.paths[0],
-      label: route.nav.label,
+      labelKey: route.nav.labelKey,
       icon: route.nav.icon,
       exact: route.nav.exact,
     })),
-  }))
+  })
+)
 
 // Recorre el resultado al importar el módulo: un título sin rutas significa que
 // el catálogo se quedó sin la última ruta de esa sección, y la barra pintaría un
 // encabezado vacío. Mejor reventar acá que dejar un grupo fantasma en pantalla.
 for (const section of ADMIN_SIDEBAR_SECTIONS) {
   if (section.items.length === 0) {
-    throw new Error(`registry: la sección "${section.title}" del panel quedó sin destinos`)
+    throw new Error(`registry: la sección "${section.id}" del panel quedó sin destinos`)
   }
 }
 

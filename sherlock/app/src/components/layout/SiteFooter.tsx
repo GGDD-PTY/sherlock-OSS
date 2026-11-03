@@ -14,7 +14,7 @@ class SiteFooterCopyError extends Schema.TaggedError<SiteFooterCopyError>()('Sit
   cause: Schema.optionalKey(Schema.Defect()),
 }) {}
 
-const loadSiteFooter = Effect.fn('SiteFooter.load')(function* (locale: (typeof locales)[number]) {
+const loadSiteFooter = Effect.fn('SiteFooter.load')(function* (locale: Locale) {
   const t = yield* Effect.tryPromise({
     try: () => getTranslations({ locale, namespace: 'landing' }),
     catch: (cause) => new SiteFooterCopyError({ cause }),

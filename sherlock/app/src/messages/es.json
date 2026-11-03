@@ -247,7 +247,20 @@
       "panelTitle": "Panel de administración",
       "menu": "Menú de administración",
       "collapse": "Contraer menú",
-      "expand": "Expandir menú"
+      "expand": "Expandir menú",
+      "sections": {
+        "main": "Principal",
+        "monitoring": "Monitoreo",
+        "settings": "Configuración"
+      },
+      "items": {
+        "home": "Panel",
+        "companies": "Empresas",
+        "support": "Soporte",
+        "security": "Seguridad",
+        "gdpr": "GDPR",
+        "access": "Accesos"
+      }
     },
     "companies": {
       "metadata": {
@@ -255,7 +268,52 @@
         "description": "Gestión de empresas de la plataforma"
       },
       "title": "Empresas",
-      "subtitle": "Gestión de empresas registradas"
+      "subtitle": "Gestión de empresas registradas",
+      "stats": {
+        "total": "Total empresas",
+        "inReview": "Revisión del equipo",
+        "live": "Materiales aprobados"
+      },
+      "search": "Buscar por nombre, razón social, industria, país o email...",
+      "demoQueueDescription": "En modo dev-auth se muestran empresas de ejemplo. Los registros privados reales siguen requiriendo auth admin de WorkOS/Convex.",
+      "table": {
+        "title": "Pipeline de empresas",
+        "description": "Cola completa de empresas beta, incluyendo registros pendientes de revisión del equipo.",
+        "empty": "No se encontraron empresas",
+        "company": "Empresa",
+        "industry": "Industria",
+        "country": "País",
+        "status": "Estado",
+        "registered": "Registrada",
+        "actions": "Acciones",
+        "actionsLabel": "Acciones de empresa"
+      },
+      "status": {
+        "review": "Revisión",
+        "liveTeaser": "Material aprobado para compartir",
+        "verified": "Verificada"
+      },
+      "menu": {
+        "openDataRoom": "Abrir sala (VDR)",
+        "publishTeaser": "Aprobar material para compartir",
+        "unpublishTeaser": "Retirar aprobación para compartir"
+      },
+      "confirm": {
+        "publish": "¿Aprobar el material revisado de \"{name}\" para compartir?",
+        "unpublish": "¿Retirar la aprobación para compartir de \"{name}\"?"
+      },
+      "toasts": {
+        "visibilityUpdated": "Visibilidad actualizada",
+        "visibilityError": "No se pudo actualizar la visibilidad",
+        "visibilityDemo": "Modo demo: los cambios de visibilidad no se persisten"
+      },
+      "room": {
+        "metaTitle": "Sala del cliente | Admin",
+        "metaDescription": "Opera el data room de una empresa desde el panel del equipo.",
+        "back": "Volver a empresas",
+        "title": "Sala de {name} · vista del equipo",
+        "body": "Lo que subas aquí entra al Data Room de {name}."
+      }
     },
     "ndaTemplates": {
       "empty": "Aún no hay plantillas de NDA",

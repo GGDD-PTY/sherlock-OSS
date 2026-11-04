@@ -3,7 +3,7 @@
 // La barra del panel sobre el bloque `sidebar-07` de shadcn (`ui/sidebar.tsx`).
 // Una sola lista para escritorio y móvil: en escritorio es la columna fija que
 // se contrae a iconos, y debajo de `md` el propio primitivo la pinta dentro de
-// un Sheet. Los destinos y los tres títulos de grupo salen de
+// un Sheet. Los destinos y las llaves de los títulos y rótulos salen de
 // `ADMIN_SIDEBAR_SECTIONS`, que los deriva del catálogo del panel
 // (`product/admin-routes.ts`); acá no se escribe ninguna ruta a mano.
 //
@@ -120,15 +120,22 @@ export function AdminSidebar() {
         {/* El landmark es el `nav`, no el contenedor: el primitivo pinta divs. */}
         <nav aria-label={ariaT('navigation')} className="flex flex-col gap-2">
           {ADMIN_SIDEBAR_SECTIONS.map((section) => (
-            <SidebarGroup key={section.title}>
+            <SidebarGroup key={section.id}>
               {/* `asChild` para que el título del grupo siga siendo un h3: el
                   lector de pantalla salta entre secciones por encabezado. */}
               <SidebarGroupLabel asChild>
-                <h3 className="eyebrow">{section.title}</h3>
+                <h3 className="eyebrow">{t(`sections.${section.id}`)}</h3>
               </SidebarGroupLabel>
               <SidebarMenu>
                 {section.items.map((item) => (
-                  <AdminNavItem key={item.href} {...item} pathname={pathname} />
+                  <AdminNavItem
+                    key={item.href}
+                    href={item.href}
+                    label={t(`items.${item.labelKey}`)}
+                    icon={item.icon}
+                    exact={item.exact}
+                    pathname={pathname}
+                  />
                 ))}
               </SidebarMenu>
             </SidebarGroup>

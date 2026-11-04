@@ -15,6 +15,7 @@
 // ============================================================================
 
 import { Schema } from 'effect'
+import { useTranslations } from 'next-intl'
 
 import { useViewAsStore } from '@/stores/useViewAsStore'
 import { useCurrentUser, type UserRole } from '@/hooks/useCurrentUser'
@@ -57,22 +58,23 @@ interface ViewAsSelectorProps {
 export function ViewAsSelector({ variant = 'dropdown', compact = false }: ViewAsSelectorProps) {
   const { isAdmin, isViewingAs, effectiveRole } = useCurrentUser()
   const { viewAsRole, setViewAs, clearViewAs } = useViewAsStore()
+  const t = useTranslations('admin.viewAs')
 
   if (!isAdmin) {
     return null
   }
 
   const roleLabels = {
-    COMPANY: 'Empresa',
+    COMPANY: t('roleCompany'),
     ADMIN: 'Admin',
   }
   const labels = {
-    trigger: 'Ver como...',
-    activeTrigger: 'Viendo como',
-    menuLabel: 'Impersonar Rol',
-    company: 'Ver como Empresa',
-    active: 'Activo',
-    backToAdmin: 'Volver a vista Admin',
+    trigger: t('trigger'),
+    activeTrigger: t('activeTrigger'),
+    menuLabel: t('menuLabel'),
+    company: t('company'),
+    active: t('active'),
+    backToAdmin: t('backToAdmin'),
   }
   const triggerLabel =
     isViewingAs && effectiveRole === 'COMPANY'

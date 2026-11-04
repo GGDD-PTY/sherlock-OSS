@@ -13,12 +13,12 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
+import { spanishLegalCopy } from '../helpers/legal-copy'
+
 const appRoot = process.cwd()
 const cronHandlersSource = readFileSync(join(appRoot, 'convex/cronHandlers.ts'), 'utf8')
-const privacySource = readFileSync(
-  join(appRoot, 'src/app/[locale]/(public)/privacy/page.tsx'),
-  'utf8'
-)
+// La política publicada es el texto en español del diccionario.
+const privacySource = spanishLegalCopy('privacy')
 
 const FIVE_YEARS_MS = 5 * 365 * 24 * 60 * 60 * 1000
 

@@ -48,6 +48,10 @@ vi.mock('@/i18n/navigation', () => ({
   usePathname: () => mockPathname,
 }))
 
+vi.mock('@/components/ui/language-toggle', () => ({
+  LanguageToggle: () => <button data-testid="language-toggle">Español</button>,
+}))
+
 vi.mock('@/components/ui/theme-toggle', () => ({
   ThemeToggle: ({ showLabel = false }: { showLabel?: boolean }) => (
     <button data-testid="theme-toggle">{showLabel ? 'Tema' : 'Theme'}</button>

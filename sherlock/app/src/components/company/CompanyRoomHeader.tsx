@@ -2,7 +2,9 @@
 
 import type { ReactNode } from 'react'
 import { Schema } from 'effect'
+import { useLocale } from 'next-intl'
 
+import { locales, type Locale } from '@/i18n/config'
 import { CompanyRoomSectionNav } from './CompanyRoomSections'
 import type { RoomScreen } from './roomScreens'
 
@@ -13,12 +15,16 @@ export const PAGE_IDENTITY_CLASS =
 
 export const ROOM_SCREEN_CONTAINER_CLASS = 'mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8'
 
-const IdentityLocaleSchema = Schema.Literals(['es'])
-const IDENTITY_LOCALE = IdentityLocaleSchema.literals[0]
-const pageIdentityCopy = { es: { title: 'Data Room' } } as const satisfies Record<
-  typeof IdentityLocaleSchema.Type,
-  { title: string }
->
+const pageIdentityCopy = {
+  es: { title: 'Data Room' },
+  en: { title: 'Data Room' },
+} as const satisfies Record<Locale, { title: string }>
+
+const isIdentityLocale = Schema.is(Schema.Literals(locales))
+
+function identityLocale(value: string): Locale {
+  return isIdentityLocale(value) ? value : 'es'
+}
 
 /** Cabecera común de las pantallas de la sala: identidad, controles y barra. */
 export function CompanyRoomHeader({
@@ -29,11 +35,13 @@ export function CompanyRoomHeader({
   /** Controles contextuales (selector de sala, aviso de demo). */
   children?: ReactNode
 }) {
+  const locale = identityLocale(useLocale())
+
   return (
     <header className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-1 pb-2">
       <div className="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
         <h1 data-page-identity data-replay-ui="true" className={PAGE_IDENTITY_CLASS}>
-          {pageIdentityCopy[IDENTITY_LOCALE].title}
+          {pageIdentityCopy[locale].title}
         </h1>
         {children}
       </div>

@@ -41,6 +41,14 @@ const labels = {
     error: 'Requiere atención',
     remove: 'Quitar',
   },
+  en: {
+    selected: (count: number) => `${count} ${count === 1 ? 'file selected' : 'files selected'}`,
+    pending: 'Pending',
+    uploading: 'Uploading',
+    done: 'Uploaded',
+    error: 'Needs attention',
+    remove: 'Remove',
+  },
 } as const
 
 const VdrQueuedUploadStatusSchema = Schema.Literals(['PENDING', 'UPLOADING', 'DONE', 'ERROR'])

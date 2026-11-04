@@ -34,6 +34,14 @@ const recoveryCopy = {
     retry: 'Intentar de nuevo',
     returnToLibrary: 'Volver a la biblioteca',
   },
+  en: {
+    eyebrow: 'Secure Data Room',
+    title: 'We could not load this workspace',
+    description:
+      'Your documents were not changed. Try loading the workspace again or go back to the company library.',
+    retry: 'Try again',
+    returnToLibrary: 'Back to the library',
+  },
 } as const
 
 type FailureProps = {

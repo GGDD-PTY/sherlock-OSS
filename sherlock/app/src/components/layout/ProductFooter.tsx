@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 
 import { FOOTER_LEGAL_LINKS } from '@/components/layout/footer-legal-links'
 import { Link } from '@/i18n/navigation'
-import { defaultLocale, locales } from '@/i18n/config'
+import { defaultLocale, locales, type Locale } from '@/i18n/config'
 import { runServerEffect } from '@/lib/effect/runtime'
 
 const LINK_CLASS =
@@ -17,9 +17,7 @@ class ProductFooterCopyError extends Schema.TaggedError<ProductFooterCopyError>(
   { cause: Schema.optionalKey(Schema.Defect()) }
 ) {}
 
-const loadProductFooter = Effect.fn('ProductFooter.load')(function* (
-  locale: (typeof locales)[number]
-) {
+const loadProductFooter = Effect.fn('ProductFooter.load')(function* (locale: Locale) {
   const t = yield* Effect.tryPromise({
     try: () => getTranslations({ locale, namespace: 'landing' }),
     catch: (cause) => new ProductFooterCopyError({ cause }),
@@ -33,7 +31,7 @@ const loadProductFooter = Effect.fn('ProductFooter.load')(function* (
 
 // Footer de producto: una línea legal bajo un hairline. Sin tagline, sin
 // columnas, sin "Sube tus documentos" dentro de la sala.
-export async function ProductFooter({ locale }: { locale: 'es' }) {
+export async function ProductFooter({ locale }: { locale: Locale }) {
   const safeLocale = isProductFooterLocale(locale) ? locale : defaultLocale
   const { t, links, year } = await runServerEffect(loadProductFooter(safeLocale))
 

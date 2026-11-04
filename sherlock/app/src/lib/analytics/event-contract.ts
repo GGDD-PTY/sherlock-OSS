@@ -15,7 +15,7 @@
 
 import { Schema } from 'effect'
 
-const LocaleSchema = Schema.Literals(['es'])
+const LocaleSchema = Schema.Literals(['es', 'en'])
 type Locale = typeof LocaleSchema.Type
 
 const RoleSchema = Schema.Literals(['COMPANY'])

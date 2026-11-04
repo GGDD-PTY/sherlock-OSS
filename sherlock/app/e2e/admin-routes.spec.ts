@@ -17,6 +17,7 @@
 import { expect, test, type Page } from '@playwright/test'
 
 import { ADMIN_ROUTES } from '@/lib/product/admin-routes'
+import esMessages from '@/messages/es.json'
 import { IS_DEMO_AUTH, loginAsDemoUser } from './helpers/auth'
 
 // Las URLs conservan el prefijo de locale; el sitio ships solo en español.
@@ -24,7 +25,7 @@ const LOCALE_PREFIX = '/es'
 
 const LIVE_ROUTES = ADMIN_ROUTES.map((route) => ({
   path: `${LOCALE_PREFIX}${route.paths[0]}`,
-  label: route.nav.label,
+  label: esMessages.admin.sidebar.items[route.nav.labelKey],
 }))
 
 const RETIRED_NOT_FOUND = [

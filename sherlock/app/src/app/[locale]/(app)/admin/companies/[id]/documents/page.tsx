@@ -48,22 +48,6 @@ const HAS_LOCAL_CONVEX_IDENTITY = hasLocalConvexIdentity()
 // Misma regla que useDevAuthFixtures; un use* no puede llamarse a nivel de módulo.
 const USE_DEV_AUTH_FIXTURES = DEV_AUTH_ENABLED && !HAS_LOCAL_CONVEX_IDENTITY
 
-// ===== COPY =====
-// Las claves de `admin.*` viven en los catálogos compartidos; esta pantalla es
-// nueva y trae su copy local, el mismo patrón que ya usan AdminCompaniesClient
-// y las demás superficies admin. Español de Panamá, tuteo.
-const copy = {
-  metaTitle: 'Sala del cliente | Admin',
-  metaDescription: 'Opera el data room de una empresa desde el panel del equipo.',
-  back: 'Volver a empresas',
-  roomTitle: (name: string) => `Sala de ${name} · vista del equipo`,
-  roomBody: (name: string) => `Lo que subas aquí entra al Data Room de ${nameAtSentenceEnd(name)}.`,
-} as const
-
-function resolveCopy(_locale: string) {
-  return copy
-}
-
 // ===== CARGA DE LA SALA =====
 // Cada forma de quedarse sin sala tiene nombre. Las tres terminan en el mismo
 // destino, pero el log ya no dice solo "algo falló": dice cuál de las tres.
@@ -110,11 +94,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string; id: string }>
 }): Promise<Metadata> {
   const { locale } = await params
-  const t = resolveCopy(locale)
+  const t = await getTranslations({ locale, namespace: 'admin.companies.room' })
 
   return {
-    title: t.metaTitle,
-    description: t.metaDescription,
+    title: t('metaTitle'),
+    description: t('metaDescription'),
   }
 }
 
@@ -144,7 +128,7 @@ export default async function AdminCompanyDocumentsPage({
     return
   }
 
-  const t = resolveCopy(locale)
+  const t = await getTranslations('admin.companies.room')
   const tActivation = await getTranslations('adminRoomActivation')
 
   // ===== OBTENER EL WORKSPACE DE LA EMPRESA DEL [id] =====
@@ -188,7 +172,7 @@ export default async function AdminCompanyDocumentsPage({
         <Link href="/admin/companies">
           <Button variant="ghost" size="sm">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            {t.back}
+            {t('back')}
           </Button>
         </Link>
 
@@ -197,8 +181,10 @@ export default async function AdminCompanyDocumentsPage({
             sistema —canvas y 1px de borde—, sin color de alerta ni icono de
             escudo, igual que los paneles de preparación de al lado. */}
         <div role="status" className="border-border mt-4 rounded-md border px-4 py-3">
-          <p className="text-sm font-medium">{t.roomTitle(companyName)}</p>
-          <p className="text-muted-foreground mt-1 text-sm">{t.roomBody(companyName)}</p>
+          <p className="text-sm font-medium">{t('title', { name: companyName })}</p>
+          <p className="text-muted-foreground mt-1 text-sm">
+            {t('body', { name: nameAtSentenceEnd(companyName) })}
+          </p>
         </div>
       </div>
 

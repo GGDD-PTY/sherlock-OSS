@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 
 import { SherlockLockup } from '@/components/shared/SherlockLockup'
 import { Link } from '@/i18n/navigation'
-import { defaultLocale, locales } from '@/i18n/config'
+import { defaultLocale, locales, type Locale } from '@/i18n/config'
 import { runServerEffect } from '@/lib/effect/runtime'
 import { SITE_BRAND_NAME } from '@/lib/site/brand'
 
@@ -14,7 +14,7 @@ class SiteFooterCopyError extends Schema.TaggedError<SiteFooterCopyError>()('Sit
   cause: Schema.optionalKey(Schema.Defect()),
 }) {}
 
-const loadSiteFooter = Effect.fn('SiteFooter.load')(function* (locale: (typeof locales)[number]) {
+const loadSiteFooter = Effect.fn('SiteFooter.load')(function* (locale: Locale) {
   const t = yield* Effect.tryPromise({
     try: () => getTranslations({ locale, namespace: 'landing' }),
     catch: (cause) => new SiteFooterCopyError({ cause }),
@@ -22,7 +22,7 @@ const loadSiteFooter = Effect.fn('SiteFooter.load')(function* (locale: (typeof l
   return { t, year: new Date().getFullYear() }
 })
 
-export async function SiteFooter({ locale }: { locale: 'es' }) {
+export async function SiteFooter({ locale }: { locale: Locale }) {
   const safeLocale = isSiteFooterLocale(locale) ? locale : defaultLocale
   const { t, year } = await runServerEffect(loadSiteFooter(safeLocale))
 

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { formatFileSize } from '@/lib/utils'
 import type { GuestRoom, GuestRoomDocument } from './guestRoomContract'
 
-type Locale = 'es'
+import type { Locale } from '@/i18n/config'
 
 const SECTION_HEADING = 'font-sans text-lg leading-tight font-semibold'
 

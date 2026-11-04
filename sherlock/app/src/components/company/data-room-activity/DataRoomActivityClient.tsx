@@ -27,6 +27,7 @@ import {
   normalizeLocale,
   windowDaysOr,
   WINDOW_OPTIONS,
+  type Locale,
   type WindowDays,
 } from './copy'
 import { ActivitySkeleton } from './ActivitySkeleton'
@@ -86,7 +87,7 @@ interface DataRoomActivityClientProps {
 
 type Selection = { type: 'document' | 'counterparty'; key: string }
 
-type ActivityCopy = (typeof activityCopy)['es']
+type ActivityCopy = (typeof activityCopy)[Locale]
 
 const KIND_META = {
   VIEW: { icon: Eye, className: 'border-line text-foreground', copyKey: 'kindView' },

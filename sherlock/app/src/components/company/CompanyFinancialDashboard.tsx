@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useQuery } from 'convex/react'
 import type { FunctionReturnType } from 'convex/server'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { Schema } from 'effect'
 
 import { api } from '@/../convex/_generated/api'
@@ -13,6 +13,7 @@ import { prefetchXlsxSidecar } from '@/components/documents/viewers/xlsxSidecarP
 import { ConvexLoadFailure } from './vdr/ConvexLoadFailure'
 import { useConvexLoadTimeout } from './vdr/useConvexLoadTimeout'
 import { trackRoomJourney } from '@/lib/analytics/room-journey'
+import { intlLocaleFor } from '@/lib/documents/room-shell'
 import { formatShortDate } from '@/lib/utils'
 
 type Snapshot = FunctionReturnType<typeof api.financialSnapshots.getForCompany>
@@ -20,10 +21,12 @@ type ReadySnapshot = Extract<Snapshot, { status: 'READY' }>
 type Metric = ReadySnapshot['metrics'][number]
 export type FinancialSource = Metric['source']
 
-const numberFormat = new Intl.NumberFormat('es-PA', {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-})
+function createNumberFormat(locale: string): Intl.NumberFormat {
+  return new Intl.NumberFormat(intlLocaleFor(locale), {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+}
 
 // El catálogo de indicadores. Es el mismo vocabulario que declara
 // `metricNameValidator` en `convex/financialSnapshots.ts` con `v.literal`:
@@ -125,6 +128,8 @@ function CompanyFinancialDashboardLive({
 }) {
   const t = useTranslations('roomWorkspace.dashboard')
   const vdr = useTranslations('vdr')
+  const locale = useLocale()
+  const numberFormat = useMemo(() => createNumberFormat(locale), [locale])
   const result = useQuery(api.financialSnapshots.getForCompany, isDemo ? 'skip' : { companyId })
   const snapshot = isDemo ? null : result
   const loadTimeout = useConvexLoadTimeout(snapshot === undefined, 12_000, companyId)

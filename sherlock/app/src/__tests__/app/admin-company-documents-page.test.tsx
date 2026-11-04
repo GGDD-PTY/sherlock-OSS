@@ -28,12 +28,15 @@ vi.mock('next-intl/server', async () => {
     setRequestLocale: vi.fn(),
     getTranslations: async (ns?: string | { namespace: string }) => {
       const namespace = typeof ns === 'string' ? ns : (ns?.namespace ?? '')
-      return (key: string) => {
+      return (key: string, values?: Record<string, unknown>) => {
         let node: unknown = messages
         for (const part of [...namespace.split('.').filter(Boolean), ...key.split('.')]) {
           node = (node as Record<string, unknown> | undefined)?.[part]
         }
-        return typeof node === 'string' ? node : key
+        if (typeof node !== 'string') return key
+        return node.replace(/\{(\w+)\}/g, (whole, name: string) =>
+          values && name in values ? String(values[name]) : whole
+        )
       }
     },
   }
@@ -281,7 +284,10 @@ describe('admin data room de una empresa cliente', () => {
     })
     render(page)
 
-    expect(screen.getByTestId('company-guest-screen')).toHaveAttribute('data-admin-operator', 'true')
+    expect(screen.getByTestId('company-guest-screen')).toHaveAttribute(
+      'data-admin-operator',
+      'true'
+    )
   })
 
   it('muestra el NDA de invitados de esa empresa dentro de la misma capacidad', async () => {

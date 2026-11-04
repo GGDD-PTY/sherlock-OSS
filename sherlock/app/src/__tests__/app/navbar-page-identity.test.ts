@@ -31,9 +31,8 @@ describe('navbar destination page identity', () => {
 
     expect(source.indexOf('data-page-identity')).toBeLessThan(source.indexOf('<VdrUploadDialog'))
     expect(source).not.toContain('<Link href="/dashboard">')
-    // [F] 2026-09-03 23:30: el sitio ships solo en español; la copia de
-    // identidad dejó de venir en pares es/en y queda una sola entrada.
-    expect(source.match(/title: 'Data Room'/g)).toHaveLength(1)
+    // La copia de identidad trae una entrada por idioma (`es` y `en`).
+    expect(source.match(/title: 'Data Room'/g)).toHaveLength(2)
   })
 
   it('NotificationsPageClient keeps its page identity visible while data loads', () => {

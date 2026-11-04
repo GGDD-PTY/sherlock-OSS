@@ -15,7 +15,7 @@ import { GuestCompanyNda } from './GuestCompanyNda'
 import { GuestAuthorizedRoom } from './GuestAuthorizedRoom'
 import { parseGuestAuthorizedRoom, type GuestRoom } from './guestRoomContract'
 
-type Locale = 'es'
+import type { Locale } from '@/i18n/config'
 
 // ===== LA COSTURA CON EFFECT =====
 // Éste es el camino del invitado: alguien sin cuenta que llega con un enlace,

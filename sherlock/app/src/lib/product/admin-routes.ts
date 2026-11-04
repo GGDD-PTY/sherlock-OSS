@@ -35,19 +35,23 @@ import type { LucideIcon } from 'lucide-react'
 
 import type { ProductRouteDefinition } from '@/lib/product/types'
 
-// Los tres grupos de la barra, en el orden en que se pintan. Sin
-// `Schema.Literals`: no hay frontera que decodificar —los títulos salen de esta
+// Los tres grupos de la barra, en el orden en que se pintan. Son ids: el título
+// sale del diccionario (`admin.sidebar.sections.<id>`). Sin
+// `Schema.Literals`: no hay frontera que decodificar —los ids salen de esta
 // misma lista, no de la red ni de una URL— y el tipo se deriva del valor, así
 // que no quedan dos catálogos que alguien tenga que mantener iguales.
-export const ADMIN_SIDEBAR_SECTION_TITLES = ['Principal', 'Monitoreo', 'Configuración'] as const
-export type AdminSidebarSectionTitle = (typeof ADMIN_SIDEBAR_SECTION_TITLES)[number]
+export const ADMIN_SIDEBAR_SECTION_IDS = ['main', 'monitoring', 'settings'] as const
+export type AdminSidebarSectionId = (typeof ADMIN_SIDEBAR_SECTION_IDS)[number]
+
+/** Las filas de la barra: cada una es una llave de `admin.sidebar.items`. */
+export type AdminSidebarItemKey = 'home' | 'companies' | 'support' | 'security' | 'gdpr' | 'access'
 
 /** Cómo se pinta la ruta en la barra del panel. */
 interface AdminRouteNav {
-  /** El rótulo de la fila; el sitio ships solo en español ([F] 2026-09-03). */
-  label: string
+  /** Llave del rótulo de la fila en `admin.sidebar.items`. */
+  labelKey: AdminSidebarItemKey
   icon: LucideIcon
-  section: AdminSidebarSectionTitle
+  section: AdminSidebarSectionId
   /** `/admin` es prefijo de las demás: solo él marca activo por igualdad. */
   exact?: true
 }
@@ -78,7 +82,7 @@ export const ADMIN_ROUTES: readonly AdminRouteDefinition[] = [
     dataOwner: 'ADMIN',
     analyticsEvent: 'admin_dashboard_viewed',
     entrypoints: ['/sign-in'],
-    nav: { label: 'Panel', icon: LayoutDashboard, section: 'Principal', exact: true },
+    nav: { labelKey: 'home', icon: LayoutDashboard, section: 'main', exact: true },
   },
   {
     id: 'admin-companies',
@@ -91,7 +95,7 @@ export const ADMIN_ROUTES: readonly AdminRouteDefinition[] = [
     gating: ['AUTH', 'ROLE_ADMIN', 'AUDIT_LOG_REQUIRED'],
     dataOwner: 'ADMIN',
     entrypoints: ['/admin'],
-    nav: { label: 'Empresas', icon: Building2, section: 'Principal' },
+    nav: { labelKey: 'companies', icon: Building2, section: 'main' },
   },
   {
     id: 'admin-support',
@@ -104,7 +108,7 @@ export const ADMIN_ROUTES: readonly AdminRouteDefinition[] = [
     gating: ['AUTH', 'ROLE_ADMIN', 'AUDIT_LOG_REQUIRED'],
     dataOwner: 'ADMIN',
     entrypoints: ['/admin'],
-    nav: { label: 'Soporte', icon: MessageSquareText, section: 'Principal' },
+    nav: { labelKey: 'support', icon: MessageSquareText, section: 'main' },
   },
   {
     id: 'admin-monitoring',
@@ -117,7 +121,7 @@ export const ADMIN_ROUTES: readonly AdminRouteDefinition[] = [
     gating: ['AUTH', 'ROLE_ADMIN', 'AUDIT_LOG_REQUIRED'],
     dataOwner: 'ADMIN',
     entrypoints: ['/admin'],
-    nav: { label: 'Seguridad', icon: Shield, section: 'Monitoreo' },
+    nav: { labelKey: 'security', icon: Shield, section: 'monitoring' },
   },
   {
     id: 'admin-gdpr',
@@ -131,7 +135,7 @@ export const ADMIN_ROUTES: readonly AdminRouteDefinition[] = [
     gating: ['AUTH', 'ROLE_ADMIN', 'AUDIT_LOG_REQUIRED'],
     dataOwner: 'ADMIN',
     entrypoints: ['/admin'],
-    nav: { label: 'GDPR', icon: UserX, section: 'Monitoreo' },
+    nav: { labelKey: 'gdpr', icon: UserX, section: 'monitoring' },
   },
   {
     id: 'admin-workos',
@@ -144,6 +148,6 @@ export const ADMIN_ROUTES: readonly AdminRouteDefinition[] = [
     gating: ['AUTH', 'ROLE_ADMIN', 'AUDIT_LOG_REQUIRED'],
     dataOwner: 'ADMIN',
     entrypoints: ['/admin'],
-    nav: { label: 'Accesos', icon: KeyRound, section: 'Configuración' },
+    nav: { labelKey: 'access', icon: KeyRound, section: 'settings' },
   },
 ]

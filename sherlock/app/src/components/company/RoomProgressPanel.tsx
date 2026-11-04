@@ -35,6 +35,7 @@ import {
   type ChecklistStageKey,
 } from '@/lib/vdr/room-progress'
 import { Link } from '@/i18n/navigation'
+import { intlLocaleFor } from '@/lib/documents/room-shell'
 import { ROOM_SCREEN_PATH } from './roomScreens'
 import { normalizeSubmittedPhone, saveContactPhone } from './contactPhone'
 
@@ -42,7 +43,9 @@ import { normalizeSubmittedPhone, saveContactPhone } from './contactPhone'
 // `Link` de i18n antepone el locale, así que los hrefs van sin `/es`.
 const SUPPORT_HREF: string = ROOM_SCREEN_PATH.team
 const ROOM_SHELL_HREF: string = ROOM_SCREEN_PATH.documents
-const UPCOMING_STAGES_FORMAT = new Intl.ListFormat('es-PA', { type: 'conjunction' })
+function formatUpcomingStages(stages: string[], locale: string): string {
+  return new Intl.ListFormat(intlLocaleFor(locale), { type: 'conjunction' }).format(stages)
+}
 
 // ===== LA COSTURA CON EFFECT =====
 // Este panel lee dos queries de Convex y las casteaba: `as ChecklistView` y
@@ -126,8 +129,8 @@ function clientStatusKey(
 
 // Igual que el panel admin: el día es el de Panamá, fijo para servidor y
 // navegador.
-function formatShortDate(at: number, _locale: string): string {
-  return new Intl.DateTimeFormat('es-PA', {
+function formatShortDate(at: number, locale: string): string {
+  return new Intl.DateTimeFormat(intlLocaleFor(locale), {
     day: 'numeric',
     month: 'short',
     timeZone: PANAMA_TIME_ZONE,
@@ -561,8 +564,9 @@ function RoomProgressPanelLive({
         {pendingStages.length > 0 ? (
           <p className="text-muted-foreground mt-3 text-sm">
             {t('stagesUpcoming', {
-              stages: UPCOMING_STAGES_FORMAT.format(
-                pendingStages.map((stage) => t(`stages.${stage.key}`))
+              stages: formatUpcomingStages(
+                pendingStages.map((stage) => t(`stages.${stage.key}`)),
+                locale
               ),
             })}
           </p>

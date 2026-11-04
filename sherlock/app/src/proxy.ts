@@ -36,6 +36,10 @@ const intlMiddleware = createMiddleware({
   locales,
   defaultLocale,
   localePrefix: 'always',
+  // El español es el idioma por defecto para todos; el inglés se elige con el
+  // selector de idioma y vive en `/en/...`. Sin detección por navegador: un
+  // visitante panameño con Chrome en inglés sigue entrando en español.
+  localeDetection: false,
 })
 
 const ROOT_AUTHKIT_ROUTES = ['/callback', '/login', '/logout', '/signup']
@@ -676,25 +680,8 @@ type ProxyHandler = (request: NextRequest) => NextResponse | Promise<NextRespons
 
 // Un solo envoltorio compartido: el check no puede vivir duplicado dentro de
 // devProxy y workosProxy o una rama se queda atrás.
-// ===== UNA SOLA CARA: ESPAÑOL =====
-// [F] 2026-09-03: el sitio sirve únicamente español y el catálogo `en` ya no
-// existe. El redirect conserva enlaces históricos sin mantener una segunda
-// superficie de producto.
-const ENGLISH_FACE_PREFIX = '/en'
-
-function englishFaceRedirect(request: NextRequest): NextResponse | null {
-  const { pathname } = request.nextUrl
-  if (pathname !== ENGLISH_FACE_PREFIX && !pathname.startsWith(`${ENGLISH_FACE_PREFIX}/`)) {
-    return null
-  }
-  const url = request.nextUrl.clone()
-  url.pathname = `/${defaultLocale}${pathname.slice(ENGLISH_FACE_PREFIX.length)}`
-  return NextResponse.redirect(url, 308)
-}
-
 function withCanonicalHost(handler: ProxyHandler): ProxyHandler {
-  return (request) =>
-    canonicalHostRedirect(request) ?? englishFaceRedirect(request) ?? handler(request)
+  return (request) => canonicalHostRedirect(request) ?? handler(request)
 }
 
 // ===== PROXY PRINCIPAL =====

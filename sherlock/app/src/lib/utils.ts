@@ -2,6 +2,8 @@ import { clsx, type ClassValue } from 'clsx'
 import { Schema } from 'effect'
 import { twMerge } from 'tailwind-merge'
 
+import { getNumberFormatLocale } from '@/i18n/routing'
+
 // ===== LAS DOS PREGUNTAS QUE ESTE MÓDULO REPITE =====
 // «¿esto es un tamaño?» y «¿esto es una fecha?». Las dos se hacían con una
 // conjunción distinta en cada función; escritas una vez, las tres superficies
@@ -86,8 +88,8 @@ export const PANAMA_TIME_ZONE = 'America/Panama'
 // mandaba al día siguiente todo lo ocurrido después de las 19:00 locales.
 const shortDateFormatterCache = new Map<string, Intl.DateTimeFormat>()
 
-function getShortDateFormatter(_locale: string): Intl.DateTimeFormat {
-  const resolvedLocale = 'es-PA'
+function getShortDateFormatter(locale: string): Intl.DateTimeFormat {
+  const resolvedLocale = getNumberFormatLocale(locale)
   let formatter = shortDateFormatterCache.get(resolvedLocale)
 
   if (!formatter) {
@@ -125,8 +127,8 @@ export function formatShortDate(
 // "a. m./p. m.".
 const dateTimeFormatterCache = new Map<string, Intl.DateTimeFormat>()
 
-function getDateTimeFormatter(_locale: string): Intl.DateTimeFormat {
-  const resolvedLocale = 'es-PA'
+function getDateTimeFormatter(locale: string): Intl.DateTimeFormat {
+  const resolvedLocale = getNumberFormatLocale(locale)
   let formatter = dateTimeFormatterCache.get(resolvedLocale)
 
   if (!formatter) {
@@ -163,7 +165,7 @@ export function formatDateTime(
 // Formatea fechas recientes para superficies compactas como notificaciones y mensajes.
 export function formatShortRelativeTime(
   value: string | number | Date,
-  _locale: string = 'es'
+  locale: string = 'es'
 ): string {
   const date = new Date(value)
   const now = new Date()
@@ -171,14 +173,15 @@ export function formatShortRelativeTime(
   const diffMins = Math.floor(diffMs / 60000)
   const diffHours = Math.floor(diffMs / 3600000)
   const diffDays = Math.floor(diffMs / 86400000)
+  const english = locale === 'en'
 
-  if (diffMins < 1) return 'ahora'
-  if (diffMins < 60) return `hace ${diffMins}m`
-  if (diffHours < 24) return `hace ${diffHours}h`
-  if (diffDays < 7) return `hace ${diffDays}d`
+  if (diffMins < 1) return english ? 'now' : 'ahora'
+  if (diffMins < 60) return english ? `${diffMins}m ago` : `hace ${diffMins}m`
+  if (diffHours < 24) return english ? `${diffHours}h ago` : `hace ${diffHours}h`
+  if (diffDays < 7) return english ? `${diffDays}d ago` : `hace ${diffDays}d`
   // Mismo criterio que los formateadores de arriba: la fecha de respaldo va en
   // hora de Panamá, no en la del navegador.
-  return new Intl.DateTimeFormat('es-PA', {
+  return new Intl.DateTimeFormat(getNumberFormatLocale(locale), {
     month: 'short',
     day: 'numeric',
     timeZone: PANAMA_TIME_ZONE,

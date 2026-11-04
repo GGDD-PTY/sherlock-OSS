@@ -13,9 +13,9 @@
 
 import { Schema } from 'effect'
 
-// El sitio ships solo en `es` ([F] 2026-09-03). El segmento de la ruta se
-// compara contra este catálogo, no contra un literal suelto en el `if`.
-const ClientExceptionLocaleSchema = Schema.Literals(['es'])
+// Los idiomas servidos (`es`, `en`). El segmento de la ruta se compara contra
+// este catálogo, no contra un literal suelto en el `if`.
+const ClientExceptionLocaleSchema = Schema.Literals(['es', 'en'])
 const isClientExceptionLocale = Schema.is(ClientExceptionLocaleSchema)
 
 type ClientExceptionProperties = {

@@ -108,9 +108,9 @@ describe('captureClientException', () => {
     registerExceptionSink(sink)
     await Promise.resolve()
 
-    // `/en/*` es una ruta histórica que responde 308: su segmento ya no nombra
-    // un locale servido, así que la propiedad `locale` no viaja.
+    // `/en/*` es el inglés servido: su segmento nombra un locale y viaja.
     expect(sink.captureException).toHaveBeenCalledWith(expect.any(Error), {
+      locale: 'en',
       route: '/en/ayuda',
     })
   })

@@ -22,6 +22,7 @@ import {
   getVisibleNavbarSecondaryItems,
 } from '@/lib/navigation/registry'
 import { ADMIN_ROUTES } from '@/lib/product/admin-routes'
+import esMessages from '@/messages/es.json'
 
 const visibleHrefs = (options: Parameters<typeof getVisibleNavbarSecondaryItems>[0]) =>
   getVisibleNavbarSecondaryItems(options).map((item) => item.href)
@@ -150,8 +151,8 @@ describe('ADMIN_SIDEBAR_SECTIONS', () => {
   it('pinta las tres secciones con sus destinos, en orden', () => {
     expect(
       ADMIN_SIDEBAR_SECTIONS.map((section) => [
-        section.title,
-        section.items.map((item) => [item.href, item.label]),
+        esMessages.admin.sidebar.sections[section.id],
+        section.items.map((item) => [item.href, esMessages.admin.sidebar.items[item.labelKey]]),
       ])
     ).toEqual([
       [
@@ -185,7 +186,7 @@ describe('ADMIN_SIDEBAR_SECTIONS', () => {
       ADMIN_ROUTES.map((route) => [
         {
           href: route.paths[0],
-          label: route.nav.label,
+          labelKey: route.nav.labelKey,
           icon: route.nav.icon,
           exact: route.nav.exact,
         },

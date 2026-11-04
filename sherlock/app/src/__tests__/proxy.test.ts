@@ -199,38 +199,32 @@ describe('proxy', () => {
     expect(mockAuthkit).not.toHaveBeenCalled()
   })
 
-  // ===== UNA SOLA CARA: ESPAÑOL ([F] 2026-09-01) =====
-  // El inglés dejó de servirse como cara del sitio. Los mensajes `en` siguen en
-  // el árbol y sus contratos verdes, así que este candado fija la ÚNICA
-  // diferencia: /en/* responde 308 al mismo camino en /es, antes de AuthKit y
-  // sin pasar por el router de i18n. Un 404 o un 200 en /en son regresiones.
-  it.each([
-    ['/en', '/es'],
-    ['/en/ayuda', '/es/ayuda'],
-    ['/en/my-company/documents', '/es/my-company/documents'],
-    ['/en/design-system/components/button', '/es/design-system/components/button'],
-  ])('redirects the retired English face %s to %s', async (path, expected) => {
+  // ===== DOS IDIOMAS: ESPAÑOL E INGLÉS =====
+  // El inglés vuelve a servirse en /en/*. Este candado fija que /en ya no
+  // responde 308 a /es: la ruta llega al router de i18n como cualquier otra,
+  // y la query sobrevive porque nadie la reescribe.
+  it.each(['/en', '/en/ayuda'])(
+    'serves the English face %s without redirecting to /es',
+    async (path) => {
+      const { proxy } = await import('@/proxy')
+
+      const response = await proxy(new NextRequest(`http://localhost:3000${path}`))
+
+      expect(response.status).not.toBe(308)
+      expect(response.headers.get('location')).toBeNull()
+      expect(mockIntlMiddleware).toHaveBeenCalledTimes(1)
+    }
+  )
+
+  it('keeps an English address and its query string in English', async () => {
     const { proxy } = await import('@/proxy')
 
-    const response = await proxy(new NextRequest(`http://localhost:3000${path}`))
+    const response = await proxy(new NextRequest('http://localhost:3000/en/ayuda?tab=faq&q=2024'))
 
-    expect(response.status).toBe(308)
-    expect(new URL(response.headers.get('location') ?? '').pathname).toBe(expected)
-    expect(mockAuthkit).not.toHaveBeenCalled()
-    expect(mockIntlMiddleware).not.toHaveBeenCalled()
-  })
-
-  it('keeps the query string when retiring the English face', async () => {
-    const { proxy } = await import('@/proxy')
-
-    const response = await proxy(
-      new NextRequest('http://localhost:3000/en/my-company/documents?room=company&q=2024')
-    )
-
-    expect(response.status).toBe(308)
-    const location = new URL(response.headers.get('location') ?? '')
-    expect(location.pathname).toBe('/es/my-company/documents')
-    expect(location.search).toBe('?room=company&q=2024')
+    expect(response.status).not.toBe(308)
+    const forwarded = mockIntlMiddleware.mock.calls[0]?.[0] as NextRequest | undefined
+    expect(forwarded?.nextUrl.pathname).toBe('/en/ayuda')
+    expect(forwarded?.nextUrl.search).toBe('?tab=faq&q=2024')
   })
 
   it.each(['/es/design-system'])(
@@ -569,17 +563,20 @@ describe('proxy', () => {
     '/es/messages',
     '/es/portfolio',
     '/es/my-company/deals',
-  ])('treats the former marketplace path %s as an unknown route (404) before AuthKit', async (path) => {
-    const { proxy } = await import('@/proxy')
+  ])(
+    'treats the former marketplace path %s as an unknown route (404) before AuthKit',
+    async (path) => {
+      const { proxy } = await import('@/proxy')
 
-    const response = await proxy(new NextRequest(`http://localhost:3000${path}`))
+      const response = await proxy(new NextRequest(`http://localhost:3000${path}`))
 
-    expect(mockAuthkit).not.toHaveBeenCalled()
-    expect(mockIntlMiddleware).not.toHaveBeenCalled()
-    expect(response.status).toBe(404)
-    expect(response.headers.get('location')).toBeNull()
-    expect(response.headers.get('x-middleware-rewrite')).toMatch(/\/es\/__not-found__$/)
-  })
+      expect(mockAuthkit).not.toHaveBeenCalled()
+      expect(mockIntlMiddleware).not.toHaveBeenCalled()
+      expect(response.status).toBe(404)
+      expect(response.headers.get('location')).toBeNull()
+      expect(response.headers.get('x-middleware-rewrite')).toMatch(/\/es\/__not-found__$/)
+    }
+  )
 
   it.each(['/es/investors', '/es/deals'])(
     'treats %s as an unknown route (404) in dev-auth mode too',
@@ -834,26 +831,25 @@ describe('proxy', () => {
     }
   )
 
-  it('builds the public sitemap from NEXT_PUBLIC_APP_URL for the only locale', async () => {
+  it('builds the public sitemap from NEXT_PUBLIC_APP_URL in both locales', async () => {
     process.env.NEXT_PUBLIC_APP_URL = 'https://metadata.example.com'
     const { default: sitemap } = await import('@/app/sitemap')
 
     const entries = sitemap()
     const urls = entries.map((entry) => entry.url)
+    const base = 'https://metadata.example.com'
+    const pages = ['', '/ayuda', '/privacy', '/terms', '/legal']
 
-    expect(entries).toHaveLength(5)
-    expect(urls).toEqual([
-      'https://metadata.example.com/es',
-      'https://metadata.example.com/es/ayuda',
-      'https://metadata.example.com/es/privacy',
-      'https://metadata.example.com/es/terms',
-      'https://metadata.example.com/es/legal',
-    ])
-    expect(urls.some((url) => url.includes('/en'))).toBe(false)
-    // Un `hreflang` alterno anuncia una cara que ya no se sirve: sin segundo
-    // locale la entrada no lleva `alternates.languages`.
+    expect(entries).toHaveLength(10)
+    expect(urls).toEqual(pages.flatMap((page) => [`${base}/es${page}`, `${base}/en${page}`]))
+    // Cada entrada anuncia sus dos caras con `hreflang`: la misma página en
+    // español y en inglés.
     for (const entry of entries) {
-      expect(entry.alternates?.languages).toBeUndefined()
+      const page = new URL(entry.url).pathname.replace(/^\/(es|en)/, '')
+      expect(entry.alternates?.languages).toEqual({
+        es: `${base}/es${page}`,
+        en: `${base}/en${page}`,
+      })
     }
   })
 

@@ -14,8 +14,10 @@
 
 import { Option, Schema } from 'effect'
 
-const LocaleSchema = Schema.Literals(['es'])
-export type Locale = typeof LocaleSchema.Type
+import { locales, type Locale } from '@/i18n/config'
+
+const LocaleSchema = Schema.Literals(locales)
+export type { Locale }
 
 const decodeLocale = Schema.decodeUnknownOption(LocaleSchema)
 
@@ -91,5 +93,58 @@ export const activityCopy = {
     emptyNoActivityTitle: 'Sin actividad en este período',
     emptyNoActivityBody: 'Nadie abrió tus documentos en el rango seleccionado.',
     emptyNoActivityAction: 'Ampliar a un año',
+  },
+  en: {
+    backToDataRoom: 'Back to Data Room',
+    title: 'Data Room activity',
+    subtitle: (companyName: string) =>
+      `Who opened and who downloaded the documents of ${companyName}`,
+    window: 'Period',
+    window7: 'Last 7 days',
+    window30: 'Last 30 days',
+    window90: 'Last 90 days',
+    window365: 'Last year',
+    statViews: 'Views',
+    statDownloads: 'Downloads',
+    statCounterparties: 'Counterparties',
+    statDocuments: 'Documents with activity',
+    tabDocuments: 'By document',
+    tabCounterparties: 'By counterparty',
+    colDocument: 'Document',
+    colAccess: 'Access',
+    colCounterparty: 'Counterparty',
+    colCounterparties: 'Counterparties',
+    colDocuments: 'Documents',
+    colViews: 'Views',
+    colDownloads: 'Downloads',
+    colBlocked: 'Blocked',
+    colLastAccess: 'Last access',
+    accessPublic: 'Teaser',
+    accessNda: 'NDA',
+    accessPrivate: 'Private',
+    counterpartyPrefix: 'Counterparty',
+    teamLabel: 'Sherlock team',
+    unknownLabel: 'Profile unavailable',
+    unknownDocument: 'Untitled document',
+    unknownDate: 'Date unavailable',
+    identityHidden: 'Identity not disclosed',
+    identityHiddenHint:
+      'You can see the activity, not the identity. The name appears once access is approved.',
+    kindView: 'View',
+    kindDownload: 'Download',
+    kindLink: 'Link generated',
+    kindBlocked: 'Blocked',
+    kindOther: 'Other',
+    linkNote: 'A generated link that did not end in a delivery does not count as a download.',
+    drawerTitle: 'Events',
+    drawerColWhen: 'Date and time',
+    drawerColAction: 'Action',
+    drawerColDocument: 'Document',
+    drawerColCounterparty: 'Counterparty',
+    truncatedNotice: (count: number) => `Showing the ${count} most recent events in the period.`,
+    emptyActionDataRoom: 'Go to Data Room',
+    emptyNoActivityTitle: 'No activity in this period',
+    emptyNoActivityBody: 'Nobody opened your documents in the selected range.',
+    emptyNoActivityAction: 'Widen to one year',
   },
 } satisfies Record<Locale, Record<string, unknown>>

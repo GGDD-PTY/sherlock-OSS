@@ -7,6 +7,8 @@
 
 import { Schema } from 'effect'
 
+import type { Locale } from '@/i18n/config'
+
 // ===== PAÍSES DISPONIBLES =====
 // Cada país tiene: value (código), label (nombre ES), labelEn (nombre EN), currency (moneda default)
 export const COUNTRIES = [
@@ -63,11 +65,14 @@ function findCountry(codeOrLabel: string) {
 }
 
 // ===== HELPER: Obtener label de un país =====
-export function getCountryLabel(codeOrLabel: string): string {
+export function getCountryLabel(codeOrLabel: string, locale: Locale = 'es'): string {
   const country = findCountry(codeOrLabel)
   const displayAlias = COUNTRY_DISPLAY_ALIASES[codeOrLabel]
-  if (!country) return displayAlias?.label ?? codeOrLabel
-  return country.label
+  if (!country) {
+    if (!displayAlias) return codeOrLabel
+    return locale === 'en' ? displayAlias.labelEn : displayAlias.label
+  }
+  return locale === 'en' ? country.labelEn : country.label
 }
 
 // ===== HELPER: Validar si es un país válido =====

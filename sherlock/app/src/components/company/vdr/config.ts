@@ -226,6 +226,62 @@ const ES_MUTATION_ERRORS: Record<string, string> = {
   INTERNAL_ERROR: 'Algo falló de nuestro lado. Intenta de nuevo en un momento.',
 }
 
+const EN_DENIAL_REASONS: Record<string, string> = {
+  DENIED_DOCUMENT_QUARANTINED: 'This file stays in quarantine until its verification is complete.',
+  DENIED_DOCUMENT_ARCHIVED: 'This document is archived and can no longer be delivered.',
+  DENIED_DOCUMENT_EXPIRED: 'Access to this document has expired.',
+  DENIED_PRIVATE_OWNER_ONLY:
+    'This document is private: only the Data Room owner or the Sherlock team can open it.',
+  DENIED_NO_ROOM_ACCESS:
+    'You need an invitation from the team as a guest or counterparty to open this document.',
+  REVIEW_REQUIRED_KYC_SENSITIVE: 'This document requires manual compliance review before it opens.',
+  REQUIRE_ACCEPTED_CONNECTION:
+    'The team must confirm your access as a guest or counterparty before you can open this document.',
+  REQUIRE_SIGNED_NDA: 'You must sign an active NDA to open this document.',
+  REQUIRE_NDA_RENEWAL: 'The NDA has expired. Renew it to open this document.',
+  REQUIRE_VERIFIED_KYC: 'This document requires verified KYC.',
+  REQUIRE_CURRENT_ROOM_GRANT: 'The company must enable your access to this Data Room.',
+  REQUIRE_DOWNLOAD_GRANT: 'You need explicit permission to download this document.',
+  REQUIRE_REAL_INTEREST: 'A current request from this counterparty is required.',
+  REQUIRE_MUTUAL_OPT_IN:
+    'The team must confirm this counterparty’s access before the Data Room opens.',
+  REQUIRE_HUMAN_MATCH_APPROVAL: 'The Sherlock team must first approve this counterparty’s access.',
+  REQUIRE_AUTHENTICATED_PRINCIPAL: 'Sign in or verify your invitation to continue.',
+  REQUIRE_PREVIEW_STEP_UP: 'Confirm your identity before previewing as another person.',
+  DENIED_ISSUER_INTERNAL: 'This document remains internal to the company.',
+  DENIED_ROOM_INACTIVE: 'This Data Room is not active for counterparties.',
+  DENIED_RELATIONSHIP_BLOCKED: 'The relationship with this counterparty is blocked.',
+  DENIED_ACTION_NOT_PERMITTED: 'This identity cannot perform that action in the Data Room.',
+  DENIED_PRINCIPAL_INACTIVE: 'This identity is no longer active.',
+  DENIED_RESOURCE_EXPIRED: 'This resource has expired.',
+  DENIED_POLICY_STATE_MISMATCH: 'The authorization state of this Data Room could not be verified.',
+  DENIED_INVALID_POLICY_STATE: 'The authorization state of this Data Room could not be verified.',
+  DENIED_INVALID_TIME: 'The validity period of this access could not be verified.',
+  DENIED_COMPANY_NOT_FOUND: 'The company behind this Data Room could not be resolved.',
+  DENIED_COMPANY_AUTHORIZATION_REVOKED: 'The company revoked the authorization for this Data Room.',
+}
+
+const EN_MUTATION_ERRORS: Record<string, string> = {
+  ADMIN_VDR_CAPABILITY_UNAVAILABLE:
+    'The admin capability for this Data Room is not available. Authorize again and try again.',
+  AUTH_NOT_AUTHENTICATED: 'Your session expired. Sign in again to continue.',
+  AUTH_SESSION_EXPIRED: 'Your session expired. Sign in again to continue.',
+  AUTHZ_UNAUTHORIZED: 'You do not have permission to perform this action.',
+  AUTHZ_NOT_OWNER: 'You do not have permission over this resource.',
+  AUTHZ_ADMIN_REQUIRED: 'Only administrators can perform this action.',
+  AUTHZ_ROLE_REQUIRED: 'Your role cannot perform this action.',
+  NOT_FOUND: 'The record no longer exists. Refresh and try again.',
+  DOCUMENT_NOT_FOUND: 'This document no longer exists in the Data Room.',
+  RATE_LIMIT_EXCEEDED: 'Too many requests in a short time. Try again in a few minutes.',
+  VALIDATION_FAILED: 'Check the values you entered and try again.',
+  VALIDATION_INVALID_INPUT: 'Check the values you entered and try again.',
+  BUSINESS_INVALID_STATE: 'This action is not available in the document’s current state.',
+  BUSINESS_INVALID_OPERATION: 'This operation is not allowed for this document.',
+  BUSINESS_NDA_REQUIRED: 'A signed NDA is required for this document.',
+  BUSINESS_MISSING_PROFILE: 'Complete your profile before performing this action.',
+  INTERNAL_ERROR: 'Something went wrong on our side. Try again in a moment.',
+}
+
 export const ALLOWED_VDR_EXTENSIONS = [
   '.pdf',
   '.xlsx',
@@ -244,26 +300,33 @@ export const ACCESS_LEVEL_REACH: Record<VdrAccessLevel, number> = {
   PRIVATE: 2,
 }
 
-export const VDR_ACCESS_LEVELS = [
+export const VDR_ACCESS_LEVELS: Array<{
+  value: VdrAccessLevel
+  label: Record<VdrLocale, string>
+  description: Record<VdrLocale, string>
+}> = [
   {
     value: 'PUBLIC' as const,
-    label: { es: 'Teaser' },
+    label: { es: 'Teaser', en: 'Teaser' },
     description: {
       es: 'Publicación limitada de un teaser de baja sensibilidad, revisada y auditada por el equipo',
+      en: 'Limited release of a low-sensitivity teaser, reviewed and audited by the team',
     },
   },
   {
     value: 'NDA_REQUIRED' as const,
-    label: { es: 'NDA de invitado/contraparte' },
+    label: { es: 'NDA de invitado/contraparte', en: 'Guest/counterparty NDA' },
     description: {
       es: 'Acceso de invitado o contraparte emitido por el equipo con NDA firmado y vigente',
+      en: 'Guest or counterparty access issued by the team with a signed, current NDA',
     },
   },
   {
     value: 'PRIVATE' as const,
-    label: { es: 'Privado' },
+    label: { es: 'Privado', en: 'Private' },
     description: {
       es: 'Solo la empresa y el equipo de Sherlock pueden verlo',
+      en: 'Only the company and the Sherlock team can view it',
     },
   },
 ]
@@ -276,41 +339,46 @@ export const VDR_CLASSIFICATIONS: Array<{
 }> = [
   {
     value: 'PUBLIC_TEASER',
-    label: { es: 'Teaser público' },
+    label: { es: 'Teaser público', en: 'Public teaser' },
     description: {
       es: 'Material de baja sensibilidad para una publicación limitada, revisada y auditada por el equipo.',
+      en: 'Low-sensitivity material for a limited release, reviewed and audited by the team.',
     },
     badgeClassName: 'border-primary/30 text-primary',
   },
   {
     value: 'CONFIDENTIAL',
-    label: { es: 'Confidencial' },
+    label: { es: 'Confidencial', en: 'Confidential' },
     description: {
       es: 'Información estándar del Data Room; requiere acceso emitido por el equipo y un NDA.',
+      en: 'Standard Data Room information; requires team-issued access and an NDA.',
     },
     badgeClassName: 'border-border text-foreground',
   },
   {
     value: 'RESTRICTED',
-    label: { es: 'Restringido' },
+    label: { es: 'Restringido', en: 'Restricted' },
     description: {
       es: 'Información sensible que además requiere KYC verificado.',
+      en: 'Sensitive information that also requires verified KYC.',
     },
     badgeClassName: 'border-accent/50 text-foreground',
   },
   {
     value: 'LEGAL',
-    label: { es: 'Legal' },
+    label: { es: 'Legal', en: 'Legal' },
     description: {
       es: 'Material legal sensible que exige KYC verificado.',
+      en: 'Sensitive legal material that requires verified KYC.',
     },
     badgeClassName: 'border-primary/30 text-primary',
   },
   {
     value: 'KYC_SENSITIVE',
-    label: { es: 'Sensible para KYC' },
+    label: { es: 'Sensible para KYC', en: 'KYC-sensitive' },
     description: {
       es: 'Reservado para revisión manual de compliance.',
+      en: 'Reserved for manual compliance review.',
     },
     badgeClassName: 'border-destructive/30 text-destructive',
   },
@@ -404,7 +472,106 @@ export const VDR_COPY: Record<VdrLocale, VdrSummaryCopy> = {
     editError: 'Error al actualizar el documento',
     declassifyWarning:
       'Estás ampliando el acceso. Al guardar, este archivo quedará al alcance de más personas.',
+    bulkUpdateError:
+      'No pudimos actualizar la selección. Revisa que todos los documentos sigan en esta sala.',
+    bulkUpdated: (count) =>
+      count === 1 ? '1 documento actualizado.' : `${count} documentos actualizados.`,
+    batchUploaded: (successful) =>
+      `${successful} ${successful === 1 ? 'documento subido' : 'documentos subidos'}.`,
+    batchStopped: (successful, pending, failed) =>
+      `${successful} ${successful === 1 ? 'subido' : 'subidos'}; ` +
+      `${pending} ${pending === 1 ? 'pendiente' : 'pendientes'}; ` +
+      `${failed} ${failed === 1 ? 'requiere' : 'requieren'} atención.`,
+    batchPartial: (successful, failed) =>
+      `${successful} ${successful === 1 ? 'subido' : 'subidos'}; ` +
+      `${failed} ${failed === 1 ? 'requiere' : 'requieren'} atención.`,
     denialReasons: ES_DENIAL_REASONS,
     mutationErrors: ES_MUTATION_ERRORS,
+  },
+  en: {
+    title: 'Data Room',
+    subtitle: (name) => `Organize the sources and deliverables for ${name}`,
+    companyLibrary: 'Corporate library',
+    roomLabel: 'Room',
+    uploadDocument: 'Upload document',
+    viewActivity: 'View activity',
+    uploadTitle: 'Upload document',
+    uploadDescription: 'Add one or more controlled files to the active Data Room.',
+    file: 'File',
+    chooseFile: 'Choose file',
+    chooseFiles: 'Choose files',
+    noFileChosen: 'No file chosen',
+    fileHint: `Formats: PDF, Excel, Word, PowerPoint, CSV. Max ${MAX_DIRECT_UPLOAD_MB}MB`,
+    documentName: 'Document name',
+    documentNamePlaceholder: 'E.g.: 2024 Financial Statements',
+    category: 'Category',
+    folderDestination: 'Folder',
+    folderAuto: 'Automatic routing',
+    folderAutoHint: 'If you do not choose a folder, Sherlock places each file in the right one.',
+    companyUploadDescription:
+      'Drop one or more files. The name comes from the file; you can rename it later.',
+    accessLevel: 'Access level',
+    classification: 'Confidentiality',
+    cancel: 'Cancel',
+    upload: 'Upload',
+    teasers: 'Teasers',
+    ndaRequired: 'With NDA',
+    private: 'Private',
+    documents: 'Document index',
+    emptyRoom: 'This Data Room is ready to receive its first controlled document.',
+    search: 'Search documents',
+    searchPlaceholder: 'Search by name or folder',
+    accessPublic: 'Teaser',
+    accessNda: 'Guest/counterparty NDA',
+    accessPrivate: 'Private',
+    deleteTitle: 'Remove from the room?',
+    deleteDescription: (name, isTeamDelivery) =>
+      `Remove ${name ?? 'this document'} from your Data Room? Guests will no longer see it. The history and audit evidence are kept.${
+        isTeamDelivery
+          ? ' This is a team deliverable: we will let the team know you removed it.'
+          : ''
+      }`,
+    delete: 'Remove from the room',
+    fileTypeError: `File type not allowed. Use: ${ALLOWED_VDR_EXTENSIONS.join(', ')}`,
+    fileSizeError: `File too large. Maximum ${MAX_VDR_FILE_SIZE / 1024 / 1024}MB`,
+    unsafeFileError:
+      'We could not verify this file as safe. Use a valid, unencrypted PDF or Office file.',
+    signInRequired: 'You must sign in to upload documents',
+    missingFile: 'Select a file and give it a name',
+    uploadSuccess: 'Document uploaded successfully',
+    uploadErrorFallback: 'Error uploading the document',
+    purgeErrorFallback:
+      'We could not delete the selection. Check that all the documents are still in this room.',
+    purgeTeamDeliverableError: (names: readonly string[]) =>
+      names.length === 1
+        ? `“${names[0]}” was prepared by the Sherlock team. Ask the team to withdraw it and try again.`
+        : `${names.map((name) => `“${name}”`).join(', ')} were prepared by the Sherlock team. Ask the team to withdraw them and try again.`,
+    deleteSuccess: 'Document removed from the room',
+    deleteError: 'We could not remove the document',
+    open: 'Open',
+    openUnavailable: 'This document has no downloadable file or has expired',
+    openError: 'The document could not be opened',
+    editTitle: 'Edit document',
+    editDescription: 'Rename it, move it, change its access or set an expiry date.',
+    expiresAt: 'Expiry date',
+    expiresAtHint: 'Optional. After this date, open access is revoked.',
+    save: 'Save changes',
+    editSuccess: 'Document updated',
+    editError: 'Error updating the document',
+    declassifyWarning:
+      'You are widening access. Once saved, this file will be available to more people.',
+    bulkUpdateError:
+      'We could not update the selection. Check that all the documents are still in this room.',
+    bulkUpdated: (count) => (count === 1 ? '1 document updated.' : `${count} documents updated.`),
+    batchUploaded: (successful) =>
+      `${successful} ${successful === 1 ? 'document uploaded' : 'documents uploaded'}.`,
+    batchStopped: (successful, pending, failed) =>
+      `${successful} uploaded; ${pending} pending; ${failed} ${
+        failed === 1 ? 'needs' : 'need'
+      } attention.`,
+    batchPartial: (successful, failed) =>
+      `${successful} uploaded; ${failed} ${failed === 1 ? 'needs' : 'need'} attention.`,
+    denialReasons: EN_DENIAL_REASONS,
+    mutationErrors: EN_MUTATION_ERRORS,
   },
 }

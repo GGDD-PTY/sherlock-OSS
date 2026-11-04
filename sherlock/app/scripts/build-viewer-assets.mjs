@@ -23,9 +23,12 @@
 
 import { spawnSync } from 'node:child_process'
 import {
+  closeSync,
   cpSync,
   existsSync,
+  fstatSync,
   mkdirSync,
+  openSync,
   readdirSync,
   readFileSync,
   rmSync,
@@ -58,17 +61,43 @@ function isFresh(output, sources) {
   return statSync(output).mtimeMs >= newestMtime(sources)
 }
 
-function copiedPathMatches(source, output) {
-  if (!existsSync(source) || !existsSync(output)) return false
-  const sourceStat = statSync(source)
-  const outputStat = statSync(output)
-  if (sourceStat.isFile() !== outputStat.isFile()) return false
-  if (sourceStat.isDirectory() !== outputStat.isDirectory()) return false
-
-  if (sourceStat.isFile()) {
-    return sourceStat.size === outputStat.size && readFileSync(source).equals(readFileSync(output))
+// Abre la ruta una sola vez y lee tipo y contenido del mismo descriptor, para
+// que nada pueda cambiar el archivo entre la comprobacion y la lectura.
+function openEntry(path) {
+  try {
+    const fd = openSync(path, 'r')
+    return { fd, stat: fstatSync(fd) }
+  } catch {
+    return null
   }
-  if (!sourceStat.isDirectory()) return false
+}
+
+function sameFileOrDirectoryKind(sourceStat, outputStat) {
+  return (
+    sourceStat.isFile() === outputStat.isFile() &&
+    sourceStat.isDirectory() === outputStat.isDirectory()
+  )
+}
+
+function copiedPathMatches(source, output) {
+  const sourceEntry = openEntry(source)
+  const outputEntry = openEntry(output)
+  try {
+    if (!sourceEntry || !outputEntry) return false
+    const { stat: sourceStat } = sourceEntry
+    const { stat: outputStat } = outputEntry
+    if (!sameFileOrDirectoryKind(sourceStat, outputStat)) return false
+    if (sourceStat.isFile()) {
+      return (
+        sourceStat.size === outputStat.size &&
+        readFileSync(sourceEntry.fd).equals(readFileSync(outputEntry.fd))
+      )
+    }
+    if (!sourceStat.isDirectory()) return false
+  } finally {
+    if (sourceEntry) closeSync(sourceEntry.fd)
+    if (outputEntry) closeSync(outputEntry.fd)
+  }
 
   const sourceEntries = readdirSync(source).sort()
   const outputEntries = readdirSync(output).sort()
@@ -78,9 +107,7 @@ function copiedPathMatches(source, output) {
   ) {
     return false
   }
-  return sourceEntries.every((entry) =>
-    copiedPathMatches(join(source, entry), join(output, entry))
-  )
+  return sourceEntries.every((entry) => copiedPathMatches(join(source, entry), join(output, entry)))
 }
 
 // ===== pdfjs-dist ===========================================================

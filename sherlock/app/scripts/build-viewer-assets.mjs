@@ -16,16 +16,26 @@
 //   - `scripts/vercel-build.sh` (deploy manual, ambas ramas)
 // y tambien antes del `next dev` que levanta Playwright.
 //
-// Idempotente: si la salida ya es mas nueva que sus fuentes, no reconstruye.
 // `--force` la regenera; `SKIP_MOG_SIDECAR=true` salta solo el sidecar (para
 // entornos sin el workspace instalado), y entonces el visor XLSX cae a la
 // descarga en vez de romper el build.
 // ============================================================================
 
 import { spawnSync } from 'node:child_process'
-import { cpSync, existsSync, mkdirSync, rmSync, statSync } from 'node:fs'
+import {
+  closeSync,
+  cpSync,
+  existsSync,
+  fstatSync,
+  mkdirSync,
+  openSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  statSync,
+} from 'node:fs'
 import { createRequire } from 'node:module'
-import { dirname, join } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const APP_DIR = dirname(dirname(fileURLToPath(import.meta.url)))
@@ -51,6 +61,55 @@ function isFresh(output, sources) {
   return statSync(output).mtimeMs >= newestMtime(sources)
 }
 
+// Abre la ruta una sola vez y lee tipo y contenido del mismo descriptor, para
+// que nada pueda cambiar el archivo entre la comprobacion y la lectura.
+function openEntry(path) {
+  try {
+    const fd = openSync(path, 'r')
+    return { fd, stat: fstatSync(fd) }
+  } catch {
+    return null
+  }
+}
+
+function sameFileOrDirectoryKind(sourceStat, outputStat) {
+  return (
+    sourceStat.isFile() === outputStat.isFile() &&
+    sourceStat.isDirectory() === outputStat.isDirectory()
+  )
+}
+
+function copiedPathMatches(source, output) {
+  const sourceEntry = openEntry(source)
+  const outputEntry = openEntry(output)
+  try {
+    if (!sourceEntry || !outputEntry) return false
+    const { stat: sourceStat } = sourceEntry
+    const { stat: outputStat } = outputEntry
+    if (!sameFileOrDirectoryKind(sourceStat, outputStat)) return false
+    if (sourceStat.isFile()) {
+      return (
+        sourceStat.size === outputStat.size &&
+        readFileSync(sourceEntry.fd).equals(readFileSync(outputEntry.fd))
+      )
+    }
+    if (!sourceStat.isDirectory()) return false
+  } finally {
+    if (sourceEntry) closeSync(sourceEntry.fd)
+    if (outputEntry) closeSync(outputEntry.fd)
+  }
+
+  const sourceEntries = readdirSync(source).sort()
+  const outputEntries = readdirSync(output).sort()
+  if (
+    sourceEntries.length !== outputEntries.length ||
+    sourceEntries.some((entry, index) => entry !== outputEntries[index])
+  ) {
+    return false
+  }
+  return sourceEntries.every((entry) => copiedPathMatches(join(source, entry), join(output, entry)))
+}
+
 // ===== pdfjs-dist ===========================================================
 const require = createRequire(join(APP_DIR, 'package.json'))
 
@@ -59,26 +118,33 @@ function resolvePdfjsDir() {
   return dirname(dirname(require.resolve('pdfjs-dist')))
 }
 
-function buildPdfjsAssets() {
-  const pdfjsDir = resolvePdfjsDir()
-  const sources = [
-    join(pdfjsDir, 'build/pdf.worker.min.mjs'),
-    join(pdfjsDir, 'cmaps'),
-    join(pdfjsDir, 'standard_fonts'),
-    join(pdfjsDir, 'wasm'),
-    join(pdfjsDir, 'iccs'),
+export function buildPdfjsAssets({
+  pdfjsDir = resolvePdfjsDir(),
+  pdfjsOut = PDFJS_OUT,
+  forceBuild = force,
+} = {}) {
+  const copiedPaths = [
+    ['build/pdf.worker.min.mjs', 'pdf.worker.min.mjs'],
+    ['cmaps', 'cmaps'],
+    ['standard_fonts', 'standard_fonts'],
+    ['wasm', 'wasm'],
+    ['iccs', 'iccs'],
   ]
 
-  if (isFresh(join(PDFJS_OUT, 'pdf.worker.min.mjs'), sources)) {
+  if (
+    !forceBuild &&
+    copiedPaths.every(([source, output]) =>
+      copiedPathMatches(join(pdfjsDir, source), join(pdfjsOut, output))
+    )
+  ) {
     console.log('[viewer-assets] public/pdfjs esta al dia')
     return
   }
 
-  rmSync(PDFJS_OUT, { recursive: true, force: true })
-  mkdirSync(PDFJS_OUT, { recursive: true })
-  cpSync(join(pdfjsDir, 'build/pdf.worker.min.mjs'), join(PDFJS_OUT, 'pdf.worker.min.mjs'))
-  for (const directory of ['cmaps', 'standard_fonts', 'wasm', 'iccs']) {
-    cpSync(join(pdfjsDir, directory), join(PDFJS_OUT, directory), { recursive: true })
+  rmSync(pdfjsOut, { recursive: true, force: true })
+  mkdirSync(pdfjsOut, { recursive: true })
+  for (const [source, output] of copiedPaths) {
+    cpSync(join(pdfjsDir, source), join(pdfjsOut, output), { recursive: true })
   }
   console.log('[viewer-assets] public/pdfjs regenerado')
 }
@@ -130,5 +196,7 @@ function buildMogSidecar() {
   console.log('[viewer-assets] public/mog regenerado')
 }
 
-buildPdfjsAssets()
-buildMogSidecar()
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  buildPdfjsAssets()
+  buildMogSidecar()
+}

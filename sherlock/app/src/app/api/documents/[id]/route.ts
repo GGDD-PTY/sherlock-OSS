@@ -1,4 +1,5 @@
-import { Effect } from 'effect'
+import { ConvexError } from 'convex/values'
+import { Effect, Schema } from 'effect'
 import { NextRequest } from 'next/server'
 import { respond, routePromise, runRouteEffect } from '@/lib/api/effect-route'
 import { apiError, apiSuccess, getOrCreateRequestId, withRequestIdHeader } from '@/lib/api/response'
@@ -21,6 +22,16 @@ import { createLogger } from '@/lib/logger'
 
 const log = createLogger('API:Documents')
 const ROUTE = '/api/documents/[id]'
+const isAuthorizationDenialData = Schema.is(
+  Schema.Struct({
+    code: Schema.Literals([
+      'AUTHZ_UNAUTHORIZED',
+      'AUTHZ_NOT_OWNER',
+      'AUTHZ_ROLE_REQUIRED',
+      'AUTHZ_ADMIN_REQUIRED',
+    ]),
+  })
+)
 
 interface RouteContext {
   params: Promise<{ id: string }>
@@ -141,7 +152,21 @@ const deleteDocument = Effect.fn('Documents.DELETE')(function* (
 
 export function DELETE(request: NextRequest, context: RouteContext): Promise<Response> {
   const requestId = getOrCreateRequestId(request)
-  return runRouteEffect(request, ROUTE, deleteDocument(request, context, requestId), {
+  const effect = deleteDocument(request, context, requestId).pipe(
+    Effect.catch((failure) => {
+      if (
+        failure._tag === 'RouteOperationError' &&
+        failure.cause instanceof ConvexError &&
+        isAuthorizationDenialData(failure.cause.data)
+      ) {
+        return Effect.succeed(
+          apiError(requestId, 403, { error: 'No tienes permiso para eliminar este documento' })
+        )
+      }
+      return Effect.fail(failure)
+    })
+  )
+  return runRouteEffect(request, ROUTE, effect, {
     internalErrorMessage: 'Error interno',
     requestId,
   })

@@ -1,4 +1,5 @@
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -69,6 +70,23 @@ describe('GET /api/dev/jwks', () => {
     expect(response.status).toBe(200)
     expect(response.headers.get('cache-control')).toBe('no-store')
     await expect(response.json()).resolves.toEqual(JWKS)
+  })
+
+  it('serves keys from the selected isolated database rather than the default database', async () => {
+    const stateDir = mkdtempSync(join(tmpdir(), 'sherlock-jwks-'))
+    const isolatedKeys = { keys: [{ ...JWKS.keys[0], kid: 'isolated-database-key' }] }
+    writeFileSync(join(stateDir, 'dev-jwks.json'), JSON.stringify(isolatedKeys))
+    vi.stubEnv('CONVEX_LOCAL_STATE_DIR', stateDir)
+    vi.stubEnv('NODE_ENV', 'development')
+    vi.stubEnv('NEXT_PUBLIC_DEV_AUTH_ENABLED', 'true')
+    try {
+      const { GET } = await loadRoute()
+      const response = await GET(new Request('http://localhost:3410/api/dev/jwks'))
+      expect(response.status).toBe(200)
+      await expect(response.json()).resolves.toEqual(isolatedKeys)
+    } finally {
+      rmSync(stateDir, { recursive: true, force: true })
+    }
   })
 
   it('hides every verb except a gated GET', async () => {

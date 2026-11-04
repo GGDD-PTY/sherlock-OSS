@@ -9,8 +9,10 @@ const rootPackage = JSON.parse(readFileSync(resolve(repoRoot, 'package.json'), '
 
 describe('explicit local verification commands', () => {
   it('runs the complete app test suite without a private delivery wrapper', () => {
-    expect(rootPackage.scripts.test).toBe('bun --cwd=sherlock/app run test:run')
-    expect(rootPackage.scripts.typecheck).toBe('bun --cwd=sherlock/app run typecheck:all')
-    expect(rootPackage.scripts.lint).toBe('bun --cwd=sherlock/app run lint')
+    expect(rootPackage.scripts.test).toBe('"$npm_execpath" --cwd=sherlock/app run test:run')
+    expect(rootPackage.scripts.typecheck).toBe(
+      '"$npm_execpath" --cwd=sherlock/app run typecheck:all'
+    )
+    expect(rootPackage.scripts.lint).toBe('"$npm_execpath" --cwd=sherlock/app run lint')
   })
 })

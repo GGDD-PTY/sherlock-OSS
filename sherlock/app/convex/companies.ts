@@ -78,7 +78,14 @@ async function resolveCompanyVisibilityAuthorization(
 const getMyVdrWorkspaceProgram = Effect.fn('Companies.getMyVdrWorkspace')(function* (
   ctx: QueryCtx
 ) {
-  const auth = yield* requireAuthEffect(ctx)
+  // Un primer acceso puede preceder al usuario o perfil local. Solo esos dos
+  // fallos significan "sin espacio"; una cuenta desactivada sigue denegada.
+  const auth = yield* requireAuthEffect(ctx).pipe(
+    Effect.catch((error) =>
+      isBootstrapRecoverableAuthError(error) ? Effect.succeed(null) : Effect.fail(error)
+    )
+  )
+  if (!auth) return null
   const authorization = yield* convexPromise(() => resolveCurrentCompanyAuthorization(ctx, auth))
   if (!authorization) return null
 

@@ -242,10 +242,9 @@ export function isProfileUsable(profile: Doc<'profiles'> | null | undefined): bo
 }
 
 /**
- * Las tres condiciones que el bypass de desarrollo cubre —sin identidad, sin
- * fila de usuario, sin perfil— comparten una sola decisión: en un deployment
- * declarado `dev` se resuelve la sesión de dev; en cualquier otro el fallo sale
- * por el canal de error. Antes esa decisión estaba escrita tres veces.
+ * Solo una llamada sin identidad puede usar la sesión de desarrollo. Una
+ * identidad explícita sin usuario o perfil debe conservar su fallo: sustituirla
+ * por el admin impediría aprovisionar su propio espacio en el primer acceso.
  */
 function devAuthOr(ctx: AuthContext, liveFailure: AppError): ConvexEffect<AuthResult> {
   return Effect.suspend(() =>
@@ -268,7 +267,7 @@ export const requireAuthEffect = Effect.fn('ConvexAuth.requireAuth')(function* (
   const user = yield* convexPromise(() => findUserByAuthIdentity(ctx, identity))
 
   if (!user) {
-    return yield* devAuthOr(ctx, userNotFound(identity.subject))
+    return yield* Effect.fail(userNotFound(identity.subject))
   }
 
   const authProvider = yield* convexSync(() => getIdentityAuthProvider(identity))
@@ -288,7 +287,7 @@ export const requireAuthEffect = Effect.fn('ConvexAuth.requireAuth')(function* (
   )
 
   if (!profile) {
-    return yield* devAuthOr(ctx, profileNotFound())
+    return yield* Effect.fail(profileNotFound())
   }
 
   if (!isProfileUsable(profile)) {

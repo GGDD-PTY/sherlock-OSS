@@ -105,15 +105,14 @@ test.describe('Critical Path: Auth Flows', () => {
 // ============================================================================
 
 test.describe('Critical Path: API Health', () => {
-  test('health endpoint responds', async ({ request }) => {
+  test('health endpoint reports dependency status', async ({ request }) => {
     const response = await request.get('/api/health')
-    expect(response.status()).toBe(200)
-
     const data = await response.json()
     // NOTE (tier b, 2026-07-24): /api/health dropped the 8-microservice pings
     // in T9 — the response now only ever reports 'healthy' | 'unhealthy'
     // (convex up/down is the sole check). See src/app/api/health/route.ts.
     expect(['healthy', 'unhealthy']).toContain(data.status)
+    expect(response.status()).toBe(data.status === 'healthy' ? 200 : 503)
   })
 
   test('static pages have security headers', async ({ request }) => {

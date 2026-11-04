@@ -201,6 +201,20 @@ describe('adminOverview — tabla de empresas', () => {
     expect(row.supportUnread).toBe(0)
   })
 
+  it('no enseña como dueño la dirección sintética de un usuario sin correo', async () => {
+    const seed = baseSeed()
+    seed.users = seed.users.map((user) =>
+      user._id === 'user_owner'
+        ? { ...user, email: 'user_01M2C767MS3SFGKS080GATQZ1A@workos.user' }
+        : user
+    )
+    const harness = createCtx(seed)
+
+    const { rows } = await buildCompanyRows(harness.ctx as never)
+
+    expect(rows[0].ownerEmail).toBeNull()
+  })
+
   it('cuenta los mensajes de soporte sin leer de la empresa en su propia fila', async () => {
     const seed = baseSeed()
     seed.supportThreads = [

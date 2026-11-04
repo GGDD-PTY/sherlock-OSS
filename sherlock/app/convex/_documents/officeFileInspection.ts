@@ -398,80 +398,50 @@ function readZipEntryDataPrefix(
 // simples), o null si no está. El nombre puede venir de contenido del archivo
 // (xmlns:<prefijo>), así que se escapa antes de armar el patrón.
 function readXmlAttribute(attributes: string, name: string): string | null {
-  const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const match = new RegExp(`(?:^|\\s)${escapedName}\\s*=\\s*("([^"]*)"|'([^']*)')`).exec(attributes)
-  if (!match) return null
-  return match[2] ?? match[3] ?? null
-}
+  let index = 0
+  let found: string | null = null
 
-// ¿El manifiesto declara (vía <Override>) el content type principal del
-// subtipo para su parte principal? ECMA-376: todo escritor Office real
-// (Word/Excel/PowerPoint, LibreOffice, POI) declara la parte principal con un
-// Override explícito. Comparaciones case-insensitive: los nombres de parte de
-// OPC se resuelven sin distinguir mayúsculas y los media types tampoco las
-// distinguen.
-function ooxmlManifestDeclaresMainPart(manifest: string, rule: OoxmlSubtypeRule): boolean {
-  if (!manifest.includes(OOXML_CONTENT_TYPES_NAMESPACE)) return false
-
-  const expectedPartName = `/${rule.requiredPart}`.toLowerCase()
-  const expectedContentType = rule.mainPartContentType.toLowerCase()
-
-  for (const override of manifest.matchAll(/<(?:[A-Za-z0-9._-]+:)?Override\b([^>]*)>/g)) {
-    const partName = readXmlAttribute(override[1], 'PartName')
-    const contentType = readXmlAttribute(override[1], 'ContentType')
-    if (
-      partName?.toLowerCase() === expectedPartName &&
-      contentType?.trim().toLowerCase() === expectedContentType
-    ) {
-      return true
+  while (index < attributes.length) {
+    while (/\s/.test(attributes[index] ?? '')) index += 1
+    if (index >= attributes.length) break
+    if (attributes[index] === '/') {
+      index += 1
+      while (/\s/.test(attributes[index] ?? '')) index += 1
+      return index === attributes.length ? found : null
     }
+    if (!/[A-Za-z_]/.test(attributes[index] ?? '')) return null
+
+    const nameStart = index
+    index += 1
+    while (/[A-Za-z0-9_.:-]/.test(attributes[index] ?? '')) index += 1
+    const attributeName = attributes.slice(nameStart, index)
+
+    while (/\s/.test(attributes[index] ?? '')) index += 1
+    if (attributes[index] !== '=') return null
+    index += 1
+    while (/\s/.test(attributes[index] ?? '')) index += 1
+
+    const quote = attributes[index]
+    if (quote !== '"' && quote !== "'") return null
+    const valueStart = index + 1
+    const valueEnd = attributes.indexOf(quote, valueStart)
+    if (valueEnd < 0) return null
+
+    if (attributeName === name) {
+      if (found !== null) return null
+      found = attributes.slice(valueStart, valueEnd)
+    }
+    index = valueEnd + 1
   }
 
-  return false
+  return found
 }
 
-// ¿Las relaciones raíz del paquete (_rels/.rels) traen una <Relationship>
-// de tipo officeDocument que apunta a la parte principal del subtipo? OPC
-// exige ese grafo: sin la relación raíz, Office ni siquiera encuentra el
-// documento dentro del paquete. Un ZIP genérico con manifiesto copiado no la
-// trae. Target relativo a la raíz del paquete ("xl/workbook.xml", a veces
-// "/xl/workbook.xml" o "./xl/workbook.xml"); TargetMode External no prueba
-// nada (apunta fuera del paquete).
-function ooxmlRootRelationshipTargetsMainPart(
-  relationships: string,
-  rule: OoxmlSubtypeRule
+function xmlRootElementMatchesNamespace(
+  xmlPrefix: string,
+  expectedLocalName: string,
+  allowedNamespaces: readonly string[]
 ): boolean {
-  if (!relationships.includes(OOXML_RELATIONSHIPS_NAMESPACE)) return false
-
-  const expectedTarget = rule.requiredPart.toLowerCase()
-
-  for (const relationship of relationships.matchAll(
-    /<(?:[A-Za-z0-9._-]+:)?Relationship\b([^>]*)>/g
-  )) {
-    const type = readXmlAttribute(relationship[1], 'Type')
-    const target = readXmlAttribute(relationship[1], 'Target')
-    if (!type || !target) continue
-    const targetMode = readXmlAttribute(relationship[1], 'TargetMode')
-    if (targetMode !== null && targetMode.trim().toLowerCase() !== 'internal') continue
-    if (!OOXML_OFFICE_DOCUMENT_RELATIONSHIP_TYPES.includes(type.trim().toLowerCase())) continue
-
-    const normalizedTarget = target
-      .trim()
-      .replace(/^\.?\//, '')
-      .toLowerCase()
-    if (normalizedTarget === expectedTarget) return true
-  }
-
-  return false
-}
-
-// ¿El prefijo XML de la parte principal abre con el elemento raíz del subtipo
-// en su namespace ECMA-376? Se salta BOM, espacios, declaración XML,
-// comentarios y processing instructions; el primer start-tag tiene que ser el
-// raíz esperado Y declarar el namespace del subtipo para su propio prefijo
-// (xmlns:<p> si el tag viene prefijado, xmlns si no). Un DOCTYPE rechaza:
-// OPC no lo admite en sus partes. Fail closed en cualquier malformación.
-function ooxmlMainPartRootElementMatches(xmlPrefix: string, rule: OoxmlSubtypeRule): boolean {
   let index = xmlPrefix.charCodeAt(0) === 0xfeff ? 1 : 0
 
   while (index < xmlPrefix.length) {
@@ -506,14 +476,96 @@ function ooxmlMainPartRootElementMatches(xmlPrefix: string, rule: OoxmlSubtypeRu
     const colon = qualifiedName.indexOf(':')
     const prefix = colon >= 0 ? qualifiedName.slice(0, colon) : null
     const localName = colon >= 0 ? qualifiedName.slice(colon + 1) : qualifiedName
-    if (localName !== rule.mainPartRootLocalName) return false
+    if (localName !== expectedLocalName) return false
 
     const namespace = readXmlAttribute(attributes, prefix ? `xmlns:${prefix}` : 'xmlns')
-    if (namespace === null) return false
-    return rule.mainPartNamespaces.includes(namespace.trim())
+    return namespace !== null && allowedNamespaces.includes(namespace.trim())
   }
 
   return false
+}
+
+// ¿El manifiesto declara (vía <Override>) el content type principal del
+// subtipo para su parte principal? ECMA-376: todo escritor Office real
+// (Word/Excel/PowerPoint, LibreOffice, POI) declara la parte principal con un
+// Override explícito. Comparaciones case-insensitive: los nombres de parte de
+// OPC se resuelven sin distinguir mayúsculas y los media types tampoco las
+// distinguen.
+function ooxmlManifestDeclaresMainPart(manifest: string, rule: OoxmlSubtypeRule): boolean {
+  if (!xmlRootElementMatchesNamespace(manifest, 'Types', [OOXML_CONTENT_TYPES_NAMESPACE])) {
+    return false
+  }
+
+  const expectedPartName = `/${rule.requiredPart}`.toLowerCase()
+  const expectedContentType = rule.mainPartContentType.toLowerCase()
+
+  for (const override of manifest.matchAll(/<(?:[A-Za-z0-9._-]+:)?Override\b([^>]*)>/g)) {
+    const partName = readXmlAttribute(override[1], 'PartName')
+    const contentType = readXmlAttribute(override[1], 'ContentType')
+    if (
+      partName?.toLowerCase() === expectedPartName &&
+      contentType?.trim().toLowerCase() === expectedContentType
+    ) {
+      return true
+    }
+  }
+
+  return false
+}
+
+// ¿Las relaciones raíz del paquete (_rels/.rels) traen una <Relationship>
+// de tipo officeDocument que apunta a la parte principal del subtipo? OPC
+// exige ese grafo: sin la relación raíz, Office ni siquiera encuentra el
+// documento dentro del paquete. Un ZIP genérico con manifiesto copiado no la
+// trae. Target relativo a la raíz del paquete ("xl/workbook.xml", a veces
+// "/xl/workbook.xml" o "./xl/workbook.xml"); TargetMode External no prueba
+// nada (apunta fuera del paquete).
+function ooxmlRootRelationshipTargetsMainPart(
+  relationships: string,
+  rule: OoxmlSubtypeRule
+): boolean {
+  if (
+    !xmlRootElementMatchesNamespace(relationships, 'Relationships', [
+      OOXML_RELATIONSHIPS_NAMESPACE,
+    ])
+  ) {
+    return false
+  }
+
+  const expectedTarget = rule.requiredPart.toLowerCase()
+
+  for (const relationship of relationships.matchAll(
+    /<(?:[A-Za-z0-9._-]+:)?Relationship\b([^>]*)>/g
+  )) {
+    const type = readXmlAttribute(relationship[1], 'Type')
+    const target = readXmlAttribute(relationship[1], 'Target')
+    if (!type || !target) continue
+    const targetMode = readXmlAttribute(relationship[1], 'TargetMode')
+    if (targetMode !== null && targetMode.trim().toLowerCase() !== 'internal') continue
+    if (!OOXML_OFFICE_DOCUMENT_RELATIONSHIP_TYPES.includes(type.trim().toLowerCase())) continue
+
+    const normalizedTarget = target
+      .trim()
+      .replace(/^\.?\//, '')
+      .toLowerCase()
+    if (normalizedTarget === expectedTarget) return true
+  }
+
+  return false
+}
+
+// ¿El prefijo XML de la parte principal abre con el elemento raíz del subtipo
+// en su namespace ECMA-376? Se salta BOM, espacios, declaración XML,
+// comentarios y processing instructions; el primer start-tag tiene que ser el
+// raíz esperado Y declarar el namespace del subtipo para su propio prefijo
+// (xmlns:<p> si el tag viene prefijado, xmlns si no). Un DOCTYPE rechaza:
+// OPC no lo admite en sus partes. Fail closed en cualquier malformación.
+function ooxmlMainPartRootElementMatches(xmlPrefix: string, rule: OoxmlSubtypeRule): boolean {
+  return xmlRootElementMatchesNamespace(
+    xmlPrefix,
+    rule.mainPartRootLocalName,
+    rule.mainPartNamespaces
+  )
 }
 
 // Requiere los bytes COMPLETOS del archivo (el central directory vive al

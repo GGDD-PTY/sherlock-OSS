@@ -42,7 +42,7 @@ export function AdminStepUpBanner({ locale }: AdminStepUpBannerProps) {
   // anchor plano: `Link` de `@/i18n/navigation` le pondría prefijo de idioma a
   // una ruta que no lo tiene. El destino sí se localiza, en el returnTo.
   const returnTo = `/${isLocale(locale) ? locale : defaultLocale}/admin`
-  const signInHref = `/login?returnTo=${encodeURIComponent(returnTo)}`
+  const signInHref = `/login?returnTo=${encodeURIComponent(returnTo)}&stepUp=1`
 
   return (
     <Alert className="border-warning/30 bg-warning/10">

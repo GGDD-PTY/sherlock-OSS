@@ -25,6 +25,8 @@ bun run dev:local
 
 The launcher downloads the local Convex backend if necessary. Its database, files and generated development secrets stay under `sherlock/app/.convex-local/`, which is ignored by Git. No production credentials are needed for this mode.
 
+For an isolated test database, set `CONVEX_LOCAL_STATE_DIR` to a new directory. Relative paths resolve from `sherlock/app/`. Pass the same value to every local command for that database. Set distinct `PORT`, `CONVEX_LOCAL_CLOUD_PORT` and `CONVEX_LOCAL_SITE_PORT` values when another local instance is running. The default database stays unchanged.
+
 Open the local URL printed by the launcher. Local development identities are a development testing tool, not an authentication system for a public deployment. Do not expose this development server to the internet.
 
 A normal startup does not load any company's documents. To deliberately create fictional development records while the local backend is running:

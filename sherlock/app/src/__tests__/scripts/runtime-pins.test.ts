@@ -71,4 +71,31 @@ describe('project runtime pins', () => {
     expect(wrapper).not.toContain('22.22.3')
     expect(wrapper).not.toContain('1.3.6')
   })
+
+  it('reuses the invoking Bun for root workspace scripts', () => {
+    const scripts = readJson('package.json').scripts as Record<string, string>
+    const bunScripts = [
+      'dev',
+      'dev:local',
+      'convex:local',
+      'seed:local',
+      'seed:company',
+      'lint',
+      'typecheck',
+      'test',
+      'build',
+      'start',
+      'viewer:assets',
+      'effect:status',
+      'verify:quick',
+      'verify:gate',
+      'verify:local',
+      'journeys:local',
+    ]
+
+    for (const name of bunScripts) {
+      expect(scripts[name], name).toContain('"$npm_execpath"')
+      expect(scripts[name], name).not.toMatch(/(^|\s)bun(?:\s|$)/)
+    }
+  })
 })

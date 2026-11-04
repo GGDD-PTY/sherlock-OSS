@@ -26,8 +26,8 @@ describe('open-source checkout hook policy', () => {
 
   it('exposes quality checks as explicit commands', () => {
     const [{ scripts }] = packages
-    expect(scripts.typecheck).toBe('bun --cwd=sherlock/app run typecheck:all')
-    expect(scripts.lint).toBe('bun --cwd=sherlock/app run lint')
-    expect(scripts.test).toBe('bun --cwd=sherlock/app run test:run')
+    expect(scripts.typecheck).toBe('"$npm_execpath" --cwd=sherlock/app run typecheck:all')
+    expect(scripts.lint).toBe('"$npm_execpath" --cwd=sherlock/app run lint')
+    expect(scripts.test).toBe('"$npm_execpath" --cwd=sherlock/app run test:run')
   })
 })

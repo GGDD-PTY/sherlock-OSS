@@ -48,6 +48,58 @@ describe('Office container inspection', () => {
     expect(officeBytesMatchContentType(XLSX, buildOoxmlFixture('xlsx', options))).toBe(false)
   })
 
+  it('rejects a manifest whose expected namespace appears only in a comment', () => {
+    const manifestXml =
+      '<evil:Types xmlns:evil="urn:evil">' +
+      '<!-- http://schemas.openxmlformats.org/package/2006/content-types -->' +
+      '<evil:Override PartName="/xl/workbook.xml" ' +
+      'ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>' +
+      '</evil:Types>'
+
+    expect(officeBytesMatchContentType(XLSX, buildOoxmlFixture('xlsx', { manifestXml }))).toBe(
+      false
+    )
+  })
+
+  it('rejects root relationships whose expected namespace appears only in a comment', () => {
+    const rootRelsXml =
+      '<evil:Relationships xmlns:evil="urn:evil">' +
+      '<!-- http://schemas.openxmlformats.org/package/2006/relationships -->' +
+      '<evil:Relationship Id="rId1" ' +
+      'Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" ' +
+      'Target="xl/workbook.xml"/>' +
+      '</evil:Relationships>'
+
+    expect(officeBytesMatchContentType(XLSX, buildOoxmlFixture('xlsx', { rootRelsXml }))).toBe(
+      false
+    )
+  })
+
+  it('rejects a manifest whose expected namespace appears inside another attribute', () => {
+    const manifestXml =
+      '<evil:Types note=\' xmlns:evil="http://schemas.openxmlformats.org/package/2006/content-types"\' xmlns:evil="urn:evil">' +
+      '<evil:Override PartName="/xl/workbook.xml" ' +
+      'ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>' +
+      '</evil:Types>'
+
+    expect(officeBytesMatchContentType(XLSX, buildOoxmlFixture('xlsx', { manifestXml }))).toBe(
+      false
+    )
+  })
+
+  it('rejects root relationships whose expected namespace appears inside another attribute', () => {
+    const rootRelsXml =
+      '<evil:Relationships note=\' xmlns:evil="http://schemas.openxmlformats.org/package/2006/relationships"\' xmlns:evil="urn:evil">' +
+      '<evil:Relationship Id="rId1" ' +
+      'Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" ' +
+      'Target="xl/workbook.xml"/>' +
+      '</evil:Relationships>'
+
+    expect(officeBytesMatchContentType(XLSX, buildOoxmlFixture('xlsx', { rootRelsXml }))).toBe(
+      false
+    )
+  })
+
   it('rejects data appended after an otherwise valid package', () => {
     const disguised = zipWithAppendedTail(
       buildOoxmlFixture('xlsx'),
